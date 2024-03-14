@@ -1,0 +1,23 @@
+.btn {
+   cursor: pointer;
+
+   @media (hover: hover) and (pointer: fine) {
+      &:hover {
+         border: 1px solid transparent;
+         background-color: #fc8f0a;
+
+         span {
+            color: $grey-light;
+         }
+      }
+   }
+
+   &:active {
+      border: 1px solid transparent;
+      background-color: #fc8f0a;
+
+      span {
+         color: $grey-light;
+      }
+   }
+}

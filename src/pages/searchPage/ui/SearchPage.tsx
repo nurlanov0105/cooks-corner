@@ -7,6 +7,7 @@ import { ChefsCard } from '@/features/chefsCard';
 import { StandartCard } from '@/features/standartCard';
 import { useAppDispatch, useAppSelector } from '@/app/appStore';
 import { addSearchCategory } from '@/entities/search';
+import { AddRecipeBtn } from '@/entities/addRecipeBtn';
 
 const SearchPage = () => {
    const dispatch = useAppDispatch();
@@ -40,19 +41,24 @@ const SearchPage = () => {
          </div>
          <p className={styles.search__result}>Search results</p>
          {/* <p className={styles.search__notfound}>No results found</p> */}
-         {category === 'Chefs' ? (
-            <div className={styles.search__row}>
-               {[...Array(24)].map((_, i) => (
-                  <ChefsCard image='sd' key={i} />
-               ))}
-            </div>
-         ) : (
-            <div className={classNames(styles.search__row, styles.search__row_mt)}>
-               {[...Array(24)].map((_, i) => (
-                  <StandartCard image='sd' isLiked={false} isSaved={false} key={i} />
-               ))}
-            </div>
-         )}
+         <div className={styles.search__section}>
+            {category === 'Chefs' ? (
+               <div className={styles.search__row}>
+                  {[...Array(24)].map((_, i) => (
+                     <ChefsCard image='sd' key={i} />
+                  ))}
+               </div>
+            ) : (
+               <div className={classNames(styles.search__row, styles.search__row_mt)}>
+                  {[...Array(24)].map((_, i) => (
+                     <StandartCard image='sd' isLiked={false} isSaved={false} key={i} />
+                  ))}
+               </div>
+            )}
+         </div>
+         <div className={styles.search__btn}>
+            <AddRecipeBtn />
+         </div>
       </div>
    );
 };

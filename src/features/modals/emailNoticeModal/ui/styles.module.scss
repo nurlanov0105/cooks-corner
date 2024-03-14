@@ -1,0 +1,21 @@
+.block {
+   padding: 24px;
+
+   display: flex;
+   flex-direction: column;
+   row-gap: 2.4rem;
+   max-width: 48rem;
+   width: 100%;
+   text-align: center;
+
+   &__title {
+      font-size: 2.4rem;
+      font-weight: 500;
+   }
+
+   &__descr {
+      font-size: 2rem;
+      color: $text-fedded;
+      font-weight: 500;
+   }
+}

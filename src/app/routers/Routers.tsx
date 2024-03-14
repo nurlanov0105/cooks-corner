@@ -11,6 +11,9 @@ import { DetailsRecipe } from '@/pages/detailsRecipe';
 import { NotFound } from '@/pages/notFound';
 import { SearchPage } from '@/pages/searchPage';
 import { Modal } from '@/widgets/modal';
+import { Verification } from '@/pages/verification';
+import { ForgotPassword } from '@/pages/forgotPassword';
+import { ResetPassword } from '@/pages/resetPassword';
 
 const Routers = () => {
    return (
@@ -28,6 +31,9 @@ const Routers = () => {
                <Route path='signin' element={<SignIn />} />
                <Route path='signup' element={<SignUp />} />
                <Route path='confirm' element={<Confirm />} />
+               <Route path='verification' element={<Verification />} />
+               <Route path='forgot-password' element={<ForgotPassword />} />
+               <Route path='reset-password' element={<ResetPassword />} />
             </Route>
 
             <Route path='*' element={<NotFound />} />

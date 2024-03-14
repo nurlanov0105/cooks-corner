@@ -1,0 +1,12 @@
+.block {
+   max-width: 48rem;
+
+   &__descr {
+      text-align: center;
+      font-size: 32px;
+   }
+
+   &__btn {
+      margin-top: 20px;
+   }
+}

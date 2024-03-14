@@ -110,7 +110,17 @@
       }
    }
 
+   &__login {
+      svg {
+         fill: $text-color;
+      }
+   }
+
    &__logout {
-      margin-top: auto;
+      svg {
+         path {
+            fill: #ff5151;
+         }
+      }
    }
 }

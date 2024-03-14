@@ -35,10 +35,14 @@ export const registerValidationSchema = yup.object({
 });
 
 // password
-// export const pswValidationSchema = yup.object({
-//    password: passwordSchema,
-//    passwordConfirm: passwordConfirmSchema,
-// });
+export const pswValidationSchema = yup.object({
+   password: passwordSchema,
+   passwordConfirm: passwordConfirmSchema,
+});
+
+export const singleEmailValidationSchema = yup.object({
+   email: emailSchema,
+});
 
 // new password
 // export const newPswValidationSchema = yup.object({
