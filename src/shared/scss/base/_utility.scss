@@ -1,0 +1,23 @@
+.none {
+   display: none !important;
+}
+
+.visually-hidden {
+   opacity: 0;
+   visibility: hidden;
+   width: 0px;
+   height: 0px;
+   display: block;
+   margin-left: -10000px;
+   background: transparent;
+   font-size: 0;
+}
+
+.mt-8 {
+   margin-top: 8rem;
+}
+
+.accent-color {
+   color: $primary-color !important;
+   font-weight: 500;
+}

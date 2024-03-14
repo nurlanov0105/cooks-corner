@@ -1,0 +1,32 @@
+html {
+   font-size: 62.5%;
+   scroll-behavior: smooth;
+   scrollbar-width: none;
+}
+
+body {
+   font-family: 'Poppins', sans-serif;
+   color: $text-color;
+   font-size: $font-size-paragraph;
+   font-weight: 400;
+
+   text-rendering: optimizeSpeed;
+   text-rendering: optimizeLegibility;
+   -webkit-font-smoothing: antialiased;
+   -ms-text-size-adjust: 100%;
+   -moz-text-size-adjust: 100%;
+   -webkit-text-size-adjust: 100%;
+}
+
+/* Grid styles */
+
+.container {
+   width: 100%;
+   padding: 0 32px;
+   position: relative;
+}
+
+.wrapper {
+   width: 100%;
+   overflow-y: auto;
+}

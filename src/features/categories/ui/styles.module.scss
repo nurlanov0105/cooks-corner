@@ -1,0 +1,39 @@
+.categories {
+   display: flex;
+   align-items: center;
+   column-gap: 6.4rem;
+
+   &__btn {
+      color: $text-fedded;
+      font-size: 16px;
+      line-height: 1.06;
+      position: relative;
+
+      @include transition;
+
+      &:after {
+         content: '';
+         position: absolute;
+         bottom: -5px;
+         left: 50%;
+         right: 50%;
+         transform: translate(-50%, -50%);
+
+         width: 0;
+         height: 0;
+         background-color: unset;
+         @include transition;
+      }
+   }
+
+   .active {
+      color: $text-color;
+      text-shadow: 0 0 1px $text-color;
+
+      &:after {
+         width: 32px;
+         height: 2px;
+         background-color: $text-color;
+      }
+   }
+}

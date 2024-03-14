@@ -1,0 +1,42 @@
+.search {
+   overflow-y: auto;
+   scrollbar-width: none;
+   height: 100%;
+   background-color: $grey-light;
+   padding-top: 32px;
+
+   &__title {
+      margin-bottom: 24px;
+      text-align: center;
+   }
+
+   &__category {
+      margin-bottom: 28px;
+   }
+
+   &__input {
+      margin-bottom: 16px;
+   }
+
+   &__result {
+      color: $text-fedded;
+      font-size: 14px;
+   }
+
+   &__notfound {
+      margin-top: 6.4rem;
+      text-align: center;
+      font-size: 18px;
+   }
+
+   &__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 28px;
+
+      &_mt {
+         margin-top: 36px;
+      }
+   }
+}

@@ -1,0 +1,72 @@
+.profile {
+   display: flex;
+   align-items: center;
+   column-gap: 5rem;
+
+   max-width: 73rem;
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 35px;
+
+   &__img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: $grey-light;
+   }
+
+   &__body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+   }
+
+   &__social {
+      display: flex;
+      align-items: center;
+      column-gap: 24px;
+      margin-bottom: 16px;
+   }
+
+   &__box {
+      display: flex;
+      flex-direction: column;
+   }
+
+   &__amount {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.16;
+   }
+
+   &__explain {
+      line-height: 1.75;
+      color: $text-fedded;
+   }
+
+   &__title {
+      margin-bottom: 5px;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.55;
+   }
+
+   &__about {
+      margin-bottom: 20px;
+      font-size: 14px;
+      line-height: 1.21;
+
+      color: $text-fedded;
+   }
+
+   &__btn {
+      border-radius: 12px;
+      background-color: #fff6de;
+
+      span {
+         color: $primary-color;
+      }
+   }
+}

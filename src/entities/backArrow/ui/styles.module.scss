@@ -1,0 +1,16 @@
+.btn {
+   position: absolute;
+   top: 32px;
+   left: 32px;
+
+   width: 48px;
+   height: 48px;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+
+   background-color: #fafafa;
+   border-radius: 50%;
+   overflow: hidden;
+   cursor: pointer;
+}

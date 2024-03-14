@@ -1,0 +1,52 @@
+.modal {
+   display: flex;
+   flex-direction: column;
+   row-gap: 25px;
+   text-align: center;
+
+   padding: 28px 54px 36px;
+
+   h2 {
+      max-width: 288px;
+   }
+
+   &__btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      column-gap: 16px;
+   }
+
+   &__btn {
+      width: 14.8rem;
+      border-radius: 10px;
+   }
+
+   &__btn_pink {
+      background-color: #fff6de;
+
+      span {
+         color: $text-color;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+         &:hover {
+            border: 1px solid transparent;
+            background-color: $primary-color;
+
+            span {
+               color: $grey-light;
+            }
+         }
+      }
+
+      &:active {
+         border: 1px solid transparent;
+         background-color: $primary-color;
+
+         span {
+            color: $grey-light;
+         }
+      }
+   }
+}

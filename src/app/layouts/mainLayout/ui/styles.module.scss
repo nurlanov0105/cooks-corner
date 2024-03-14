@@ -1,0 +1,11 @@
+.main {
+   height: 100vh;
+   display: grid;
+   grid-template-columns: 96px 1fr;
+   overflow: hidden;
+}
+
+.wrapper {
+   overflow-y: auto;
+   scrollbar-width: none;
+}
