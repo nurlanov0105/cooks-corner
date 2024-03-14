@@ -58,6 +58,9 @@
 }
 
 .wrapper__bottom {
+   display: flex;
+   flex-direction: column;
+   row-gap: 20px;
    margin-top: 5.6rem;
    font-size: 14px;
    text-align: center;
@@ -67,4 +70,12 @@
    margin-top: 8px;
    margin-left: 5px;
    color: $error-color;
+}
+
+.wrapper {
+   &__span {
+      font-size: 20px;
+      color: $primary-color !important;
+      cursor: pointer;
+   }
 }

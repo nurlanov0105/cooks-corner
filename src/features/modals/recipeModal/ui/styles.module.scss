@@ -1,0 +1,237 @@
+.wrapper {
+   padding: 32px;
+   &__title {
+      margin-bottom: 24px;
+   }
+}
+
+.form {
+   &__group {
+      display: flex;
+      flex-direction: column;
+      row-gap: 4px;
+      margin-bottom: 20px;
+      width: 48rem;
+   }
+
+   &__label {
+      color: $text-fedded;
+      font-size: 14px;
+      font-weight: 500;
+   }
+
+   &__fileUpload {
+      display: flex;
+      align-items: center;
+      column-gap: 24px;
+      height: 9.3rem;
+      padding: 0 24px;
+
+      border-radius: 20px;
+      background: $bg-input;
+      position: relative;
+   }
+
+   &__uploadImg {
+      width: 8rem;
+      height: 8rem;
+      border-radius: 16px;
+      overflow: hidden;
+   }
+
+   &__fileInput {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+   }
+
+   &__labelUpload {
+      color: #8a8a8a;
+      text-decoration-line: underline;
+
+      &_active {
+         color: $primary-color;
+      }
+   }
+
+   &__input {
+      width: 100%;
+      height: 56px;
+      padding: 0 24px;
+      border-radius: 42px;
+
+      background-color: $bg-input;
+      color: $text-color;
+      font-size: 16px;
+      font-weight: 400;
+
+      &::placeholder {
+         color: #8a8a8a;
+         font-size: 16px;
+         font-weight: 400;
+      }
+   }
+
+   &__textarea {
+      resize: none;
+      padding-top: 16px;
+      padding-bottom: 16px;
+
+      &:active,
+      &:focus {
+         outline: none;
+      }
+   }
+
+   &__row {
+      display: flex;
+      align-items: center;
+      column-gap: 6px;
+   }
+
+   &__select {
+      position: relative;
+      border-radius: 16px;
+   }
+
+   &__selected {
+      width: 123px;
+      height: 56px;
+      padding: 0 19px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      background-color: $bg-input;
+      border-radius: 16px;
+      cursor: pointer;
+
+      img {
+         width: 24px;
+         height: 24px;
+         @include transition;
+      }
+   }
+
+   &__add {
+      cursor: pointer;
+   }
+
+   .arrowSelected {
+      transform: rotate(-180deg);
+   }
+
+   &__inputCount {
+      text-align: center;
+      max-width: 25px !important;
+      background-color: transparent;
+
+      color: #8a8a8a;
+      font-size: 16px;
+      font-weight: 400;
+   }
+
+   &__thin {
+      color: #8a8a8a;
+   }
+
+   &__list {
+      position: absolute;
+      top: 43px;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      border-radius: 0px 0px 20px 20px;
+      background-color: $bg-input;
+      overflow: hidden;
+   }
+
+   &__item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 19px;
+      color: #8a8a8a;
+      font-size: 16px;
+      cursor: pointer;
+   }
+
+   &__btns {
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+   }
+
+   &__btnRadio {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 56px;
+      padding: 0 24px;
+      border-radius: 100px;
+      background-color: $bg-input;
+      @include transition;
+
+      &_active {
+         background-color: $primary-color;
+         color: $grey-light;
+      }
+   }
+
+   &__categorySelect {
+      position: relative;
+      background-color: $bg-input;
+      border-radius: 20px;
+   }
+
+   &__categorySelected {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 56px;
+      padding: 0 24px;
+      border-radius: 42px;
+
+      background-color: $bg-input;
+      color: $text-color;
+      font-size: 16px;
+      font-weight: 400;
+
+      &::placeholder {
+         color: #8a8a8a;
+         font-size: 16px;
+         font-weight: 400;
+      }
+      cursor: pointer;
+   }
+
+   &__categoryList {
+      position: absolute;
+      top: 38px;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      border-radius: 0px 0px 20px 20px;
+      background-color: $bg-input;
+      overflow: hidden;
+
+      li {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         padding: 9px 24px;
+         color: #8a8a8a;
+         font-size: 16px;
+         cursor: pointer;
+      }
+   }
+
+   &__btn {
+   }
+}

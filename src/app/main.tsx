@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './appStore';
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
    <React.StrictMode>

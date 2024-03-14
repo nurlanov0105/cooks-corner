@@ -92,9 +92,23 @@ const SignInForm: FC<Props> = ({ handleLogin, isLoading }) => {
             </button>
          </form>
          <div className={styles.wrapper__bottom}>
-            I don’t have an account?{' '}
-            <Link to='/signup' className='accent-color'>
-               Sign Up Now
+            <div>
+               <p>
+                  I don’t have an account?{' '}
+                  <Link to='/signup' className='accent-color'>
+                     Sign Up Now
+                  </Link>
+               </p>
+               or
+               <p>
+                  Forgot password?{' '}
+                  <Link to='/forgot-password' className='accent-color'>
+                     Forgot password
+                  </Link>
+               </p>
+            </div>
+            <Link to='/' className='accent-color'>
+               Go to Home page
             </Link>
          </div>
       </div>

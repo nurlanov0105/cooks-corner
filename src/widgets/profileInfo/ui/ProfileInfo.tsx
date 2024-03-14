@@ -1,12 +1,20 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
+import { useAppDispatch } from '@/app/appStore';
+import { showModal } from '@/widgets/modal';
 
 interface Props {
    image: string;
 }
 
 const ProfileInfo: FC<Props> = ({ image }) => {
+   const dispatch = useAppDispatch();
+
+   const handleManageProfile = () => {
+      dispatch(showModal('ManageProfileModal'));
+   };
+
    return (
       <div className={styles.profile}>
          <div className={styles.profile__img} style={{ backgroundImage: `url(${image})` }}></div>
@@ -29,7 +37,9 @@ const ProfileInfo: FC<Props> = ({ image }) => {
             <div className={styles.profile__about}>
                I'm a passionate chef who loves creating delicious dishes with flair.
             </div>
-            <button className={classNames('btn', styles.profile__btn)}>
+            <button
+               className={classNames('btn', styles.profile__btn)}
+               onClick={handleManageProfile}>
                <span>Manage Profile</span>
             </button>
          </div>
