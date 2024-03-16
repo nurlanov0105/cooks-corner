@@ -2,10 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
    category: 'Chefs',
-   chefsSearchValue: '',
-   recipesSearchValue: '',
    chefsCards: [],
-   receiptsCards: [],
+   recipesCards: [],
+   chefsSearchParams: '',
+   recipesSearchParams: '',
+
+   chefsPage: 0,
+   chefsLimit: 12,
+   recipesPage: 0,
+   recipesLimit: 12,
 };
 
 const searchSlice = createSlice({
@@ -15,9 +20,28 @@ const searchSlice = createSlice({
       addSearchCategory(state, action) {
          state.category = action.payload;
       },
+      setChefsSearchParams(state, action) {
+         state.chefsSearchParams = action.payload;
+         console.log(state.chefsSearchParams);
+      },
+      setRecipesSearchParams(state, action) {
+         state.chefsSearchParams = action.payload;
+      },
+      setChefsCards(state, action) {
+         state.chefsCards = action.payload;
+      },
+      setRecipesCards(state, action) {
+         state.recipesCards = action.payload;
+      },
    },
 });
 
-export const { addSearchCategory } = searchSlice.actions;
+export const {
+   addSearchCategory,
+   setChefsSearchParams,
+   setRecipesSearchParams,
+   setChefsCards,
+   setRecipesCards,
+} = searchSlice.actions;
 
 export default searchSlice.reducer;
