@@ -4,7 +4,7 @@ import profileSlice, {
    setProfileRecipes,
 } from './model/profileSlice';
 
-import { profileApi, useGetUserProfileQuery, useGetProfileRecipesQuery } from './api/profileApi';
+import { profileApi, useGetUserProfileQuery, useGetProfileRecipesQuery } from './api/profileAPi';
 
 export {
    profileApi,
