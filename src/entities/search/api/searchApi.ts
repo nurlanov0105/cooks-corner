@@ -1,12 +1,19 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from './baseQueryWithReauth';
 import { RecipesEndpoints, Tags, UsersEndpoints } from '@/shared/api';
-import { setChefsCards, setRecipesCards } from '../model/searchSlice';
+import {
+   addChefsTotalPages,
+   addRecipesTotalPages,
+   setChefsCards,
+   setChefsPage,
+   setRecipesCards,
+   setRecipesPage,
+} from '../model/searchSlice';
 
 export const searchApi = createApi({
    reducerPath: 'searchApi',
    baseQuery: baseQueryWithReauth,
-   tagTypes: [Tags.USERS],
+   tagTypes: [Tags.USERS, Tags.RECIPES],
    endpoints: (builder) => ({
       searchUsers: builder.query({
          keepUnusedDataFor: 0,
@@ -28,6 +35,8 @@ export const searchApi = createApi({
             const data = JSON.parse(result.data);
 
             dispatch(setChefsCards(data.content));
+            dispatch(addChefsTotalPages(data.totalPages));
+            dispatch(setChefsPage(data.number));
          },
       }),
       getSearchRecipes: builder.query({
@@ -49,6 +58,8 @@ export const searchApi = createApi({
             const data = result.data;
 
             dispatch(setRecipesCards(data.content));
+            dispatch(addRecipesTotalPages(data.totalPages));
+            dispatch(setRecipesPage(data.number));
          },
       }),
    }),

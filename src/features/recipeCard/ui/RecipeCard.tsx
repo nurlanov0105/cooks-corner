@@ -53,34 +53,34 @@ const RecipeCard: FC<Props> = ({
    const [localBookmarks, setLocalBookmarks] = useState(bookmarks);
 
    const handleLikeClick = () => {
-      handleLikenBookmark(
-         localIsLiked,
-         setLocalIsLiked,
-         like,
-         dislike,
-         dispatch,
-         showModal,
-         isAuth,
-         toast,
-         recipeId,
-         localLikes,
-         setLocalLikes
-      );
+      handleLikenBookmark({
+         isItem: localIsLiked,
+         setLocalItem: setLocalIsLiked,
+         item: like,
+         removeItem: dislike,
+         dispatch: dispatch,
+         showModal: showModal,
+         isAuth: isAuth,
+         toast: toast,
+         recipeId: recipeId,
+         count: localLikes,
+         setCount: setLocalLikes,
+      });
    };
    const handleBookmarkClick = () => {
-      handleLikenBookmark(
-         localIsBookmarked,
-         setLocalIsBookmarked,
-         bookmark,
-         removeBookmark,
-         dispatch,
-         showModal,
-         isAuth,
-         toast,
-         recipeId,
-         localBookmarks,
-         setLocalBookmarks
-      );
+      handleLikenBookmark({
+         isItem: localIsBookmarked,
+         setLocalItem: setLocalIsBookmarked,
+         item: bookmark,
+         removeItem: removeBookmark,
+         dispatch: dispatch,
+         showModal: showModal,
+         isAuth: isAuth,
+         toast: toast,
+         recipeId: recipeId,
+         count: localBookmarks,
+         setCount: setLocalBookmarks,
+      });
    };
 
    return (

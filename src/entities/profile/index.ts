@@ -1,18 +1,17 @@
-import profileSlice, { addUser, addProfileCategory } from './model/profileSlice';
+import profileSlice, {
+   addUserProfile,
+   addProfileCategory,
+   setProfileRecipes,
+} from './model/profileSlice';
 
-import {
-   profileAPi,
-   useGetUserQuery,
-   useFollowMutation,
-   useUnfollowMutation,
-} from './api/profileAPi';
+import { profileApi, useGetUserProfileQuery, useGetProfileRecipesQuery } from './api/profileApi';
 
 export {
-   profileAPi,
+   profileApi,
    profileSlice,
-   addUser,
+   addUserProfile,
    addProfileCategory,
-   useGetUserQuery,
-   useFollowMutation,
-   useUnfollowMutation,
+   useGetUserProfileQuery,
+   setProfileRecipes,
+   useGetProfileRecipesQuery,
 };

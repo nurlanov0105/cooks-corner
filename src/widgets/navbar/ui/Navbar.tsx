@@ -30,10 +30,11 @@ const Navbar: FC = () => {
 
    const onBtnClick = (item: any) => {
       setBtnSelected(item.name);
-      if (item.path !== '/profile') {
-         dispatch(closeModal());
+      if (!isAuth && item.path === '/profile') {
+         dispatch(showModal('NotAuthNotice'));
+         return;
       }
-      navigate(item.path);
+      dispatch(closeModal());
       navigate(item.path);
    };
 

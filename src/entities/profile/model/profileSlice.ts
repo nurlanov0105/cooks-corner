@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-   category: 'Saved recipe',
+   category: 'my',
    user: {},
+   profileRecipes: [],
 };
 
 const profileSlice = createSlice({
@@ -12,12 +13,15 @@ const profileSlice = createSlice({
       addProfileCategory(state, action) {
          state.category = action.payload;
       },
-      addUser(state, action) {
+      addUserProfile(state, action) {
          state.user = action.payload;
+      },
+      setProfileRecipes(state, action) {
+         state.profileRecipes = action.payload;
       },
    },
 });
 
-export const { addUser, addProfileCategory } = profileSlice.actions;
+export const { addUserProfile, addProfileCategory, setProfileRecipes } = profileSlice.actions;
 
 export default profileSlice.reducer;

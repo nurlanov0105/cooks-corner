@@ -1,14 +1,25 @@
 import classNames from 'classnames';
 import styles from './styles.module.scss';
-import { FC, memo } from 'react';
+import { FC, useState } from 'react';
+import { useAppDispatch } from '@/app/appStore';
+import { addProfileCategory } from '@/entities/profile';
 
-interface Props {
-   value: string;
-   onClickCategory: (category: string) => void;
-}
+const categories = ['My recipe', 'Saved recipe'];
+const endpointCategories = {
+   'My recipe': 'my',
+   'Saved recipe': 'saved',
+};
 
-const ProfileCategories: FC<Props> = memo(({ value, onClickCategory }) => {
-   const categories = ['My recipe', 'Saved recipe'];
+const ProfileCategories: FC = () => {
+   const dispatch = useAppDispatch();
+
+   const [activeCategory, setActiveCategory] = useState('My recipe');
+
+   const onClickCategory = (category: string) => {
+      setActiveCategory(category);
+      dispatch(addProfileCategory(endpointCategories[category as keyof typeof endpointCategories]));
+   };
+
    return (
       <div className={styles.categories}>
          {categories.map((category) => (
@@ -16,7 +27,7 @@ const ProfileCategories: FC<Props> = memo(({ value, onClickCategory }) => {
                onClick={() => onClickCategory(category)}
                className={classNames(
                   styles.categories__btn,
-                  value === category ? styles.active : ''
+                  activeCategory === category ? styles.active : ''
                )}
                key={category}>
                {category}
@@ -24,6 +35,6 @@ const ProfileCategories: FC<Props> = memo(({ value, onClickCategory }) => {
          ))}
       </div>
    );
-});
+};
 
 export default ProfileCategories;

@@ -35,9 +35,6 @@ export const recipeApi = createApi({
                responseHandler: (response) => response.text(),
                url: RecipesEndpoints.RECIPES_LIKE + recipeId,
                method: 'PUT',
-               params: {
-                  recipeId,
-               },
             };
          },
          invalidatesTags: [Tags.RECIPES],
@@ -48,9 +45,6 @@ export const recipeApi = createApi({
                responseHandler: (response) => response.text(),
                url: RecipesEndpoints.RECIPES_DISLIKE + recipeId,
                method: 'PUT',
-               params: {
-                  recipeId,
-               },
             };
          },
          invalidatesTags: [Tags.RECIPES],
@@ -61,9 +55,6 @@ export const recipeApi = createApi({
                responseHandler: (response) => response.text(),
                url: RecipesEndpoints.RECIPES_BOOKMARK + recipeId,
                method: 'PUT',
-               params: {
-                  recipeId,
-               },
             };
          },
          invalidatesTags: [Tags.RECIPES],
@@ -74,9 +65,6 @@ export const recipeApi = createApi({
                responseHandler: (response) => response.text(),
                url: RecipesEndpoints.RECIPES_REMOVE_BOOKMARK + recipeId,
                method: 'PUT',
-               params: {
-                  recipeId,
-               },
             };
          },
          invalidatesTags: [Tags.RECIPES],

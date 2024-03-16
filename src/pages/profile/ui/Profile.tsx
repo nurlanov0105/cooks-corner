@@ -1,40 +1,43 @@
-import { useAppDispatch, useAppSelector } from '@/app/appStore';
-import { useCallback } from 'react';
+import { useAppSelector } from '@/app/appStore';
 
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import { ProfileInfo } from '@/widgets/profileInfo';
 import { CardsSection } from '@/widgets/cardsSection';
-import { addProfileCategory } from '@/entities/profile';
+import { useGetProfileRecipesQuery, useGetUserProfileQuery } from '@/entities/profile';
 import { ProfileCategories } from '@/features/profileCategories';
+import { useAuth } from '@/shared/lib/hooks';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-   // const { isAuth } = useAuth();
-   // const { id } = useParams();
-   const dispatch = useAppDispatch();
-   // const navigate = useNavigate();
+   const { isAuth } = useAuth();
+   const navigate = useNavigate();
 
-   // if (isAuth) {
-   //    const { data, isLoading } = useGetUserQuery({ userId: id });
-   //    if (!isLoading) {
-   //       console.log(data);
-   //    }
-   // }
+   if (!isAuth) {
+      navigate('/');
+      return;
+   }
 
-   const category = useAppSelector((state) => state.profile.category);
-   const onClickCategory = useCallback((category: string) => {
-      dispatch(addProfileCategory(category));
-   }, []);
+   const userObj: any = localStorage.getItem('currentUserId');
+   const readyObj = JSON.parse(userObj);
+
+   const { category, profileRecipes } = useAppSelector((state) => state.profile);
+
+   const { data, isLoading, isError } = useGetUserProfileQuery({ userId: readyObj.userId });
+   const { isLoading: recipeLoading } = useGetProfileRecipesQuery({ category });
+
+   const preparedCards = recipeLoading ? [...Array(12)] : profileRecipes;
 
    return (
       <div className='container'>
          <h2 className={classNames('h2', styles.title)}>Profile</h2>
-         <ProfileInfo image='srtin' />
+
+         <ProfileInfo {...data} isLoading={isLoading} isError={isError} />
          <div className={styles.categories}>
-            <ProfileCategories value={category} onClickCategory={onClickCategory} />
+            <ProfileCategories />
          </div>
 
-         <CardsSection cards={[...Array(24)]} isLoading={true} />
+         <CardsSection cards={preparedCards} isLoading={recipeLoading} />
       </div>
    );
 };

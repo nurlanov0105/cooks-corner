@@ -1,43 +1,48 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from './baseQueryWithReauth';
-import { Tags, UsersEndpoints } from '@/shared/api';
+import { RecipesEndpoints, Tags, UsersEndpoints } from '@/shared/api';
+import { addUserProfile, setProfileRecipes } from '..';
 
-export const profileAPi = createApi({
-   reducerPath: 'profileAPi',
+export const profileApi = createApi({
+   reducerPath: 'profileApi',
    baseQuery: baseQueryWithReauth,
-   tagTypes: [Tags.USERS],
+   tagTypes: [Tags.RECIPES],
    endpoints: (builder) => ({
-      getUser: builder.query({
+      getUserProfile: builder.query({
          query: ({ userId }) => {
             return {
                url: UsersEndpoints.USERS + `/${userId}`,
                method: 'GET',
             };
          },
+         async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+            const result = await queryFulfilled;
+            const data = result.data;
 
-         providesTags: [Tags.USERS],
+            dispatch(addUserProfile(data));
+         },
+         providesTags: [Tags.RECIPES],
       }),
-      follow: builder.mutation({
-         query: ({ userId }) => {
+      getProfileRecipes: builder.query({
+         keepUnusedDataFor: 0,
+         query: ({ category }) => {
             return {
-               responseHandler: (response) => response.text(),
-               url: UsersEndpoints.USERS_FOLLOW + userId,
-               method: 'POST',
+               url: RecipesEndpoints.RECIPES,
+               method: 'GET',
+               params: {
+                  query: category,
+               },
             };
          },
-         invalidatesTags: [Tags.USERS],
-      }),
-      unfollow: builder.mutation({
-         query: ({ userId }) => {
-            return {
-               responseHandler: (response) => response.text(),
-               url: UsersEndpoints.USERS_UNFOLLOW + userId,
-               method: 'POST',
-            };
+         providesTags: [Tags.RECIPES],
+         async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+            const result = await queryFulfilled;
+            const data = result.data;
+
+            dispatch(setProfileRecipes(data.content));
          },
-         invalidatesTags: [Tags.USERS],
       }),
    }),
 });
 
-export const { useGetUserQuery, useFollowMutation, useUnfollowMutation } = profileAPi;
+export const { useGetUserProfileQuery, useGetProfileRecipesQuery } = profileApi;
