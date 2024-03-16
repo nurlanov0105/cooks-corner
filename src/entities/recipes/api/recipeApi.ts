@@ -1,8 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from './baseQueryWithReauth';
-import { RECIPES } from '@/shared/api/endpoints';
 import { setRecipes } from '..';
-import { Tags } from '@/shared/api';
+import { RecipesEndpoints, Tags } from '@/shared/api';
 
 export const recipeApi = createApi({
    reducerPath: 'recipeApi',
@@ -13,7 +12,7 @@ export const recipeApi = createApi({
          keepUnusedDataFor: 0,
          query: ({ size, page, category }) => {
             return {
-               url: RECIPES,
+               url: RecipesEndpoints.RECIPES,
                method: 'GET',
                params: {
                   query: `category:${category}`,
@@ -34,7 +33,7 @@ export const recipeApi = createApi({
          query: ({ recipeId }) => {
             return {
                responseHandler: (response) => response.text(),
-               url: RECIPES + `/${recipeId}/like`,
+               url: RecipesEndpoints.RECIPES_LIKE + recipeId,
                method: 'PUT',
                params: {
                   recipeId,
@@ -47,7 +46,7 @@ export const recipeApi = createApi({
          query: ({ recipeId }) => {
             return {
                responseHandler: (response) => response.text(),
-               url: RECIPES + `/${recipeId}/dislike`,
+               url: RecipesEndpoints.RECIPES_DISLIKE + recipeId,
                method: 'PUT',
                params: {
                   recipeId,
@@ -60,7 +59,7 @@ export const recipeApi = createApi({
          query: ({ recipeId }) => {
             return {
                responseHandler: (response) => response.text(),
-               url: RECIPES + `/${recipeId}/bookmark`,
+               url: RecipesEndpoints.RECIPES_BOOKMARK + recipeId,
                method: 'PUT',
                params: {
                   recipeId,
@@ -73,7 +72,7 @@ export const recipeApi = createApi({
          query: ({ recipeId }) => {
             return {
                responseHandler: (response) => response.text(),
-               url: RECIPES + `/${recipeId}/remove-bookmark`,
+               url: RecipesEndpoints.RECIPES_REMOVE_BOOKMARK + recipeId,
                method: 'PUT',
                params: {
                   recipeId,
@@ -85,7 +84,7 @@ export const recipeApi = createApi({
       getDetailRecipe: builder.query({
          query: ({ recipeId }) => {
             return {
-               url: RECIPES + `/${recipeId}`,
+               url: RecipesEndpoints.RECIPES + `/${recipeId}`,
                method: 'GET',
             };
          },

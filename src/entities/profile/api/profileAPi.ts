@@ -1,7 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from './baseQueryWithReauth';
-import { USERS } from '@/shared/api/endpoints';
-import { Tags } from '@/shared/api';
+import { Tags, UsersEndpoints } from '@/shared/api';
 
 export const profileAPi = createApi({
    reducerPath: 'profileAPi',
@@ -11,17 +10,18 @@ export const profileAPi = createApi({
       getUser: builder.query({
          query: ({ userId }) => {
             return {
-               url: USERS + `/${userId}`,
+               url: UsersEndpoints.USERS + `/${userId}`,
                method: 'GET',
             };
          },
+
          providesTags: [Tags.USERS],
       }),
       follow: builder.mutation({
          query: ({ userId }) => {
             return {
                responseHandler: (response) => response.text(),
-               url: USERS + `/${userId}/follow`,
+               url: UsersEndpoints.USERS_FOLLOW + userId,
                method: 'POST',
             };
          },
@@ -31,7 +31,7 @@ export const profileAPi = createApi({
          query: ({ userId }) => {
             return {
                responseHandler: (response) => response.text(),
-               url: USERS + `/${userId}/unfollow`,
+               url: UsersEndpoints.USERS_UNFOLLOW + userId,
                method: 'POST',
             };
          },

@@ -10,5 +10,16 @@ export const AuthEndpoints = {
    RESET_PASSWORD: '/v1/auth/reset-password',
 };
 
-export const RECIPES = '/v1/recipes';
-export const USERS = '/v1/users';
+export const RecipesEndpoints = {
+   RECIPES: '/v1/recipes',
+   RECIPES_LIKE: '/v1/recipes/like/',
+   RECIPES_DISLIKE: '/v1/recipes/dislike/',
+   RECIPES_BOOKMARK: '/v1/recipes/dislike/',
+   RECIPES_REMOVE_BOOKMARK: '/v1/recipes/remove-bookmark/',
+};
+export const UsersEndpoints = {
+   USERS: '/v1/users',
+   USERS_FOLLOW: '/v1/users/follow/',
+   USERS_UNFOLLOW: '/v1/users/follow/',
+   USERS_SEARCH: '/v1/users/search',
+};

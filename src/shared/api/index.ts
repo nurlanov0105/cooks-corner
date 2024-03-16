@@ -1,3 +1,3 @@
-import { AuthEndpoints } from './endpoints';
+import { AuthEndpoints, RecipesEndpoints, UsersEndpoints } from './endpoints';
 import { Tags } from './tags';
-export { AuthEndpoints, Tags };
+export { AuthEndpoints, RecipesEndpoints, UsersEndpoints, Tags };

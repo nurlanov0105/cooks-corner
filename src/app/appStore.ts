@@ -3,7 +3,8 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { rootReducer } from './appReducer';
 import { authApi } from '@/features/authentication';
 import { recipeApi } from '@/entities/recipes';
-import { profileAPi } from '@/entities/profile/api/profileAPi';
+import { searchApi } from '@/entities/search';
+import { profileAPi } from '@/entities/profile';
 
 export const store = configureStore({
    reducer: rootReducer,
@@ -11,6 +12,7 @@ export const store = configureStore({
       getDefaultMiddleware().concat(
          authApi.middleware,
          recipeApi.middleware,
+         searchApi.middleware,
          profileAPi.middleware
       ),
 });

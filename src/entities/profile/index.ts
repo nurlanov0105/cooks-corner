@@ -1,6 +1,14 @@
 import profileSlice, { addUser, addProfileCategory } from './model/profileSlice';
-import { useGetUserQuery, useFollowMutation, useUnfollowMutation } from './api/profileAPi';
+
+import {
+   profileAPi,
+   useGetUserQuery,
+   useFollowMutation,
+   useUnfollowMutation,
+} from './api/profileAPi';
+
 export {
+   profileAPi,
    profileSlice,
    addUser,
    addProfileCategory,

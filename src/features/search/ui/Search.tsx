@@ -1,9 +1,12 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
 import searchIcon from '@/shared/assets/imgs/search/search.svg';
 import crossIcon from '@/shared/assets/imgs/search/cross.svg';
 import classNames from 'classnames';
+import { useDebounce } from '@/shared/lib/hooks';
+import { useAppDispatch } from '@/app/appStore';
+import { setChefsSearchParams, setRecipesSearchParams } from '@/entities/search';
 
 interface Props {
    handleChefsSearch?: (value: string) => void;
@@ -11,34 +14,35 @@ interface Props {
    type: string;
 }
 
-const Search: FC<Props> = ({ handleChefsSearch, handleRecipesSearch, type }) => {
+const Search: FC<Props> = ({ type }) => {
+   const dispatch = useAppDispatch();
    const [chefsSearchValue, setChefsSearchValue] = useState('');
    const [recipesSearchValue, setRecipesSearchValue] = useState('');
 
+   const debouncedChefsSearchValue = useDebounce(chefsSearchValue);
+   const debouncedRecipesSearchValue = useDebounce(recipesSearchValue);
+
+   useEffect(() => {
+      dispatch(setChefsSearchParams(debouncedChefsSearchValue));
+   }, [debouncedChefsSearchValue]);
+
+   useEffect(() => {
+      dispatch(setRecipesSearchParams(debouncedRecipesSearchValue));
+   }, [debouncedRecipesSearchValue]);
+
    const onChefsInputChange = (e: any) => {
       setChefsSearchValue(e.target.value);
-   };
-
-   const onChefsSearchClick = () => {
-      if (handleChefsSearch) {
-         handleChefsSearch(chefsSearchValue);
-      }
-   };
-   const onChefsCrossClick = () => {
-      setChefsSearchValue('');
    };
 
    const onRecipesInputChange = (e: any) => {
       setRecipesSearchValue(e.target.value);
    };
 
-   const onRecipesSearchClick = () => {
-      if (handleRecipesSearch) {
-         handleRecipesSearch(recipesSearchValue);
-      }
-   };
    const onRecipesCrossClick = () => {
       setRecipesSearchValue('');
+   };
+   const onChefsCrossClick = () => {
+      setChefsSearchValue('');
    };
 
    return type === 'Chefs' ? (
@@ -58,12 +62,7 @@ const Search: FC<Props> = ({ handleChefsSearch, handleRecipesSearch, type }) => 
                onClick={onChefsCrossClick}
             />
          ) : (
-            <img
-               src={searchIcon}
-               className={styles.search__img}
-               alt='search icon'
-               onClick={onChefsSearchClick}
-            />
+            <img src={searchIcon} className={styles.search__img} alt='search icon' />
          )}
       </label>
    ) : (
@@ -83,12 +82,7 @@ const Search: FC<Props> = ({ handleChefsSearch, handleRecipesSearch, type }) => 
                onClick={onRecipesCrossClick}
             />
          ) : (
-            <img
-               src={searchIcon}
-               className={styles.search__img}
-               alt='search icon'
-               onClick={onRecipesSearchClick}
-            />
+            <img src={searchIcon} className={styles.search__img} alt='search icon' />
          )}
       </label>
    );
