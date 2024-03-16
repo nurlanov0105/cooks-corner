@@ -2,8 +2,8 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from './baseQueryWithReauth';
 import { Tags, UsersEndpoints } from '@/shared/api';
 
-export const profileApi = createApi({
-   reducerPath: 'profileApi',
+export const profileAPi = createApi({
+   reducerPath: 'profileAPi',
    baseQuery: baseQueryWithReauth,
    tagTypes: [Tags.USERS],
    endpoints: (builder) => ({
@@ -40,4 +40,4 @@ export const profileApi = createApi({
    }),
 });
 
-export const { useGetUserQuery, useFollowMutation, useUnfollowMutation } = profileApi;
+export const { useGetUserQuery, useFollowMutation, useUnfollowMutation } = profileAPi;

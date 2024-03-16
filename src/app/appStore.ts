@@ -4,7 +4,7 @@ import { rootReducer } from './appReducer';
 import { authApi } from '@/features/authentication';
 import { recipeApi } from '@/entities/recipes';
 import { searchApi } from '@/entities/search';
-import { profileApi } from '@/entities/profile';
+import { profileAPi } from '@/entities/profile';
 
 export const store = configureStore({
    reducer: rootReducer,
@@ -13,7 +13,7 @@ export const store = configureStore({
          authApi.middleware,
          recipeApi.middleware,
          searchApi.middleware,
-         profileApi.middleware
+         profileAPi.middleware
       ),
 });
 
