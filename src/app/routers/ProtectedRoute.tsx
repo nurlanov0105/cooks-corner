@@ -1,21 +1,24 @@
 import { useAuth } from '@/shared/lib/hooks';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { MainLayout } from '../layouts';
 import { useAppDispatch, useAppSelector } from '../appStore';
-import { ModalBlur, closeModalBlur, showModalBlur } from '@/widgets/modalBlur';
+import { ModalBlur } from '@/widgets/modalBlur';
 import { useEffect } from 'react';
+import { closeModal, showModal } from '@/widgets/modal';
 
 const ProtectedRoute = () => {
    const { isAuth } = useAuth();
    const pathname = useLocation().pathname;
+   const navigate = useNavigate();
    const dispatch = useAppDispatch();
    const isOpen = useAppSelector((state) => state.modalBlur.isOpen);
 
    useEffect(() => {
       if (!isAuth && pathname === '/profile') {
-         dispatch(showModalBlur('NotAuthNotice'));
+         navigate('/');
+         dispatch(showModal('NotAuthNotice'));
       } else if (isOpen) {
-         dispatch(closeModalBlur());
+         dispatch(closeModal());
       }
    }, [isAuth, pathname, isOpen, dispatch]);
 

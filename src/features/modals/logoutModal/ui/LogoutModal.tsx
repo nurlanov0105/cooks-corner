@@ -19,6 +19,7 @@ const LogoutModal = () => {
          console.log('error in try', respone.error);
       } else {
          dispatch(removeAccessToken());
+         localStorage.removeItem('currentUserId');
          toast.success('Succefsully logout!');
          localStorage.removeItem('currentTokens');
       }

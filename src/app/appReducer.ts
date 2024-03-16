@@ -1,10 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { recipeApi, recipeSLice } from '@/entities/recipes';
-import { profileAPi, profileSlice } from '@/entities/profile';
+import { profileApi, profileSlice } from '@/entities/profile';
 import { searchApi, searchSlice } from '@/entities/search';
 import { modalSlice } from '@/widgets/modal';
 import { modalBlurSlice } from '@/widgets/modalBlur';
 import { authApi, authSlice } from '@/features/authentication';
+import { usersAPi } from '@/entities/users';
 
 export const rootReducer = combineReducers({
    auth: authSlice,
@@ -16,5 +17,6 @@ export const rootReducer = combineReducers({
    [authApi.reducerPath]: authApi.reducer,
    [recipeApi.reducerPath]: recipeApi.reducer,
    [searchApi.reducerPath]: searchApi.reducer,
-   [profileAPi.reducerPath]: profileAPi.reducer,
+   [usersAPi.reducerPath]: usersAPi.reducer,
+   [profileApi.reducerPath]: profileApi.reducer,
 });

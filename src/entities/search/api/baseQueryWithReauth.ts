@@ -31,8 +31,8 @@ export const baseQueryWithReauth: BaseQueryFn<
 
    if (result.error && result.error.status === 401) {
       const { refreshToken } = getTokensFromLS();
-      localStorage.removeItem('currentTokens');
-      api.dispatch(removeAccessToken());
+      // localStorage.removeItem('currentTokens');
+      // api.dispatch(removeAccessToken());
       // send refresh token to get new access token
       console.log('before refrsh - ', refreshToken);
       const refreshResult: any = await baseQuery(
@@ -70,6 +70,7 @@ export const baseQueryWithReauth: BaseQueryFn<
          console.log('token not valid - ', refreshResult);
          api.dispatch(closeModal());
          api.dispatch(removeAccessToken());
+         localStorage.removeItem('currentUserId');
          localStorage.removeItem('currentTokens');
       }
    }

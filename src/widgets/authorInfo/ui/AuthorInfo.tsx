@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useAuth } from '@/shared/lib/hooks';
 import { useAppDispatch } from '@/app/appStore';
 import { showModal } from '@/widgets/modal';
-import { useFollowMutation, useUnfollowMutation } from '@/entities/profile';
+import { useFollowMutation, useUnfollowMutation } from '@/entities/users';
 import { toast } from 'react-toastify';
 
 interface Props {
@@ -35,8 +35,8 @@ const AuthorInfo: FC<Props> = ({
    const { isAuth } = useAuth();
    const dispatch = useAppDispatch();
 
-   const [follow] = useFollowMutation();
-   const [unfollow] = useUnfollowMutation();
+   const [follow, { isLoading: followLoading }] = useFollowMutation();
+   const [unfollow, { isLoading: unfollowLoading }] = useUnfollowMutation();
 
    const handlefollowClick = async () => {
       if (!isAuth) {
@@ -106,7 +106,7 @@ const AuthorInfo: FC<Props> = ({
          </div>
          <button
             onClick={handlefollowClick}
-            disabled={isError || isLoading}
+            disabled={isError || isLoading || followLoading || unfollowLoading}
             className={classNames(
                'btn',
                styles.author__btn,

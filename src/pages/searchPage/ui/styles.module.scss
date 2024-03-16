@@ -38,6 +38,7 @@
       scrollbar-width: none;
       padding-bottom: 4rem;
       margin-bottom: 3rem;
+      width: 100%;
    }
 
    &__row {
@@ -49,6 +50,12 @@
       &_mt {
          margin-top: 36px;
       }
+   }
+
+   &__pagination {
+      text-align: center;
+      margin-top: auto;
+      margin-bottom: 3rem;
    }
 
    &__btn {

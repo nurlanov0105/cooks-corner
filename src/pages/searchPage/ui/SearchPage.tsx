@@ -45,11 +45,11 @@ const SearchPage = () => {
 
    const preparedChefsCards = chefsLoading
       ? [...Array(12)].map((_, i) => <RecipeCardSkeleton key={i} />)
-      : chefsCards.map((data: any) => <ChefsCard {...data} key={data.id} />);
+      : chefsCards.map((data: any) => <ChefsCard {...data} key={data.userId} />);
 
    const preparedRecipesCards = recipesLoading
       ? [...Array(12)].map((_, i) => <RecipeCardSkeleton key={i} />)
-      : recipesCards.map((data: any) => <StandartCard {...data} key={data.id} />);
+      : recipesCards.map((data: any) => <StandartCard {...data} key={data.recipeId} />);
 
    return (
       <div className={classNames('container', styles.search)}>
@@ -63,15 +63,23 @@ const SearchPage = () => {
          </div>
          <p className={styles.search__result}>Search results</p>
          {/* <p className={styles.search__notfound}>No results found</p> */}
-         <div className={styles.search__section}>
-            {category === 'Chefs' ? (
-               <div className={styles.search__row}>{preparedChefsCards}</div>
-            ) : (
-               <div className={classNames(styles.search__row, styles.search__row_mt)}>
-                  {preparedRecipesCards}
+
+         {category === 'Chefs' ? (
+            <>
+               <div className={styles.search__section}>
+                  <div className={styles.search__row}>{preparedChefsCards}</div>
                </div>
-            )}
-         </div>
+            </>
+         ) : (
+            <>
+               <div className={styles.search__section}>
+                  <div className={classNames(styles.search__row, styles.search__row_mt)}>
+                     {preparedRecipesCards}
+                  </div>
+               </div>
+            </>
+         )}
+
          <div className={styles.search__btn}>
             <AddRecipeBtn />
          </div>

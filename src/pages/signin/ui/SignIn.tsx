@@ -22,12 +22,15 @@ const SignIn = () => {
             // remove email from Local Storage
             localStorage.removeItem('currentEmail');
 
-            const { accessToken, refreshToken } = res.data;
+            const { accessToken, refreshToken, userId } = res.data;
             // save in redux
             dispatch(addAccessToken(accessToken));
 
             // save in local storage
             const newTokens = JSON.stringify({ accessToken, refreshToken });
+            const currentUserId = JSON.stringify({ userId });
+
+            localStorage.setItem('currentUserId', currentUserId);
             localStorage.setItem('currentTokens', newTokens);
             navigate('/');
          }

@@ -1,5 +1,7 @@
 import searchSlice, {
    addSearchCategory,
+   setChefsPage,
+   setRecipesPage,
    setChefsSearchParams,
    setRecipesSearchParams,
    setChefsCards,
@@ -10,6 +12,8 @@ import { searchApi, useSearchUsersQuery, useGetSearchRecipesQuery } from './api/
 
 export {
    searchSlice,
+   setChefsPage,
+   setRecipesPage,
    addSearchCategory,
    setChefsSearchParams,
    setRecipesSearchParams,

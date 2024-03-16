@@ -14,12 +14,13 @@ export const RecipesEndpoints = {
    RECIPES: '/v1/recipes',
    RECIPES_LIKE: '/v1/recipes/like/',
    RECIPES_DISLIKE: '/v1/recipes/dislike/',
-   RECIPES_BOOKMARK: '/v1/recipes/dislike/',
+   RECIPES_BOOKMARK: '/v1/recipes/bookmark/',
    RECIPES_REMOVE_BOOKMARK: '/v1/recipes/remove-bookmark/',
 };
 export const UsersEndpoints = {
    USERS: '/v1/users',
+   USERS_RECIPES: '/v1/users/recipes/',
    USERS_FOLLOW: '/v1/users/follow/',
-   USERS_UNFOLLOW: '/v1/users/follow/',
+   USERS_UNFOLLOW: '/v1/users/unfollow/',
    USERS_SEARCH: '/v1/users/search',
 };
