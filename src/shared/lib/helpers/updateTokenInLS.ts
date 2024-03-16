@@ -1,10 +1,12 @@
-import { ITokens } from '../interfaces/interface';
+// import { getTokensFromLS } from '.';
+// import { ITokens } from '../interfaces/interface';
 
-export const updateTokensInLS = (tokens: ITokens) => {
+export const updateTokenInLS = ({ tokens }: any) => {
    const { accessToken, refreshToken } = tokens;
+
    const updatedTokensData = {
-      accessToken: accessToken,
-      refreshToken: refreshToken,
+      accessToken,
+      refreshToken,
    };
 
    if (updatedTokensData) {

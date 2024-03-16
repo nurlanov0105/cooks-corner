@@ -40,12 +40,17 @@
 
    &__row {
       display: inline-flex;
-      column-gap: 2px;
+      column-gap: 4px;
    }
 
    &__box {
       display: inline-flex;
+      align-items: center;
       column-gap: 4px;
+
+      &:disabled {
+         cursor: default;
+      }
    }
 
    &__icon {
@@ -60,5 +65,6 @@
    }
 
    &__count {
+      color: $white-color;
    }
 }

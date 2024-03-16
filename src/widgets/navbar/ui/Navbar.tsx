@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
-import { showModal } from '@/widgets/modal';
-import { useAuth } from '@/shared/lib/hooks/useAuth';
+import { closeModal, showModal } from '@/widgets/modal';
+import { useAuth } from '@/shared/lib/hooks';
 
 const Navbar: FC = () => {
    const dispatch = useAppDispatch();
@@ -29,8 +29,12 @@ const Navbar: FC = () => {
    }, [location, navBtns]);
 
    const onBtnClick = (item: any) => {
-      navigate(item.path);
       setBtnSelected(item.name);
+      if (item.path !== '/profile') {
+         dispatch(closeModal());
+      }
+      navigate(item.path);
+      navigate(item.path);
    };
 
    const onLoginClick = () => {

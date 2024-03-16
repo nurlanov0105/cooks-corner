@@ -1,8 +1,13 @@
+import { FC } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import { CommonSection } from '@/widgets/commonSection';
 import styles from './styles.module.scss';
-import { Outlet, useLocation } from 'react-router-dom';
 
-const AuthLayout = () => {
+interface Props {
+   children?: React.ReactNode;
+}
+
+const AuthLayout: FC<Props> = () => {
    const pathname = useLocation().pathname.slice(1);
 
    return (

@@ -1,10 +1,10 @@
-import classNames from 'classnames';
-import styles from './styles.module.scss';
 import { useAppDispatch } from '@/app/appStore';
+import { getTokensFromLS } from '@/shared/lib/helpers';
 import { closeModal } from '@/widgets/modal';
-import { getTokensFromLS } from '@/shared/lib/helpers/getTokensFromLS';
 import { removeAccessToken, useLogoutMutation } from '@/features/authentication';
 import { toast } from 'react-toastify';
+import classNames from 'classnames';
+import styles from './styles.module.scss';
 
 const LogoutModal = () => {
    const dispatch = useAppDispatch();

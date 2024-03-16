@@ -1,12 +1,20 @@
+import { useGetDetailRecipeQuery } from '@/entities/recipes';
 import { DetailsBackground } from '@/widgets/detailsBackground';
 import { DetailsRecipeInfo } from '@/widgets/detailsRecipeInfo';
+import { useParams } from 'react-router-dom';
 
 const DetailsRecipe = () => {
-   return (
-      <>
-         <DetailsBackground imageUrl='some link' />
+   const { id } = useParams();
+   const { data, isLoading, isError } = useGetDetailRecipeQuery({ recipeId: id });
 
-         <DetailsRecipeInfo isLiked={false} isSaved={false} />
+   return isError ? (
+      <h1 className='h1'>Error</h1>
+   ) : isLoading ? (
+      <h1 className='h1'>Loading...</h1>
+   ) : (
+      <>
+         <DetailsBackground imageUrl={data.imageUrl} />
+         <DetailsRecipeInfo {...data} isLoading={isLoading} />
       </>
    );
 };

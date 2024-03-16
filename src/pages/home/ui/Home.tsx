@@ -1,18 +1,22 @@
 import { FC, useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from '@/app/appStore';
+import { addRecipeCategory, useGetRecipesQuery } from '@/entities/recipes';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 import { Categories } from '@/features/categories';
-import { useAppDispatch, useAppSelector } from '@/app/appStore';
 import { CardsSection } from '@/widgets/cardsSection';
-import { addCategory } from '@/entities/category';
 
 const Home: FC = () => {
    const dispatch = useAppDispatch();
-   const category = useAppSelector((state) => state.category.category);
+   const { category, limit, currentPage, recipes } = useAppSelector((state) => state.recipe);
+
+   const { isLoading } = useGetRecipesQuery({ size: limit, page: currentPage, category });
 
    const onClickCategory = useCallback((category: string) => {
-      dispatch(addCategory(category));
+      dispatch(addRecipeCategory(category));
    }, []);
+
+   const preparedCards = isLoading ? [...Array(12)] : recipes;
 
    return (
       <div className='container'>
@@ -25,7 +29,7 @@ const Home: FC = () => {
                   <h2 className='h2'>Category</h2>
                   <Categories value={category} onClickCategory={onClickCategory} />
                </div>
-               <CardsSection cards={[...Array(24)]} />
+               <CardsSection cards={preparedCards} isLoading={isLoading} />
             </div>
          </section>
       </div>

@@ -53,6 +53,13 @@
       span {
          font-size: 14px;
       }
+
+      &:disabled {
+         span {
+            color: $text-color;
+         }
+         cursor: default;
+      }
    }
 
    &__description {
@@ -95,6 +102,12 @@
       }
 
       font-size: 16px;
+
+      p {
+         display: flex;
+         align-items: center;
+         column-gap: 5px;
+      }
 
       span {
          color: $text-fedded;

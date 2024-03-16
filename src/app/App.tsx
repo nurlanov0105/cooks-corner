@@ -1,5 +1,5 @@
-import '../shared/scss/index.scss';
 import Routers from './routers/Routers';
+import '../shared/scss/index.scss';
 
 const App = () => {
    return <Routers />;

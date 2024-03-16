@@ -1,5 +1,5 @@
-import { getTokensFromLS } from '@/shared/lib/helpers/getTokensFromLS';
 import { createSlice } from '@reduxjs/toolkit';
+import { getTokensFromLS } from '@/shared/lib/helpers';
 
 const { accessToken } = getTokensFromLS();
 

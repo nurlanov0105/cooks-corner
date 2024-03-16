@@ -1,4 +1,4 @@
-import { getEmailFromLS } from '@/shared/lib/helpers/getEmailFromLS';
+import { getEmailFromLS } from '@/shared/lib/helpers';
 import styles from './styles.module.scss';
 import { FC } from 'react';
 
