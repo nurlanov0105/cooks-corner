@@ -1,0 +1,22 @@
+.wrapper {
+   padding: 24px 30px;
+   h2 {
+      font-size: 3.2rem;
+      margin-bottom: 2.5rem;
+      text-align: center;
+   }
+   &__block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      row-gap: 10px;
+
+      p {
+         font-size: 2.4rem;
+      }
+
+      a {
+         color: $primary-color !important;
+      }
+   }
+}

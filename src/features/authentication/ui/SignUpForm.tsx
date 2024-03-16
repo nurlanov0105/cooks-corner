@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { useFormik } from 'formik';
 import { registerValidationSchema } from '../model/validation';
@@ -10,13 +10,26 @@ import userIcon from '@/shared/assets/imgs/auth/user.svg';
 import dogIcon from '@/shared/assets/imgs/auth/dog.svg';
 import eyeClosedIcon from '@/shared/assets/imgs/auth/eye-closed.svg';
 import eyeOpenedIcon from '@/shared/assets/imgs/auth/eye-opened.svg';
+import { useDebounce } from '@/shared/lib/hooks/useDebounce';
 
 interface Props {
    handleRegister: (name: string, email: string, password: string) => void;
+   checkEmailAvailable: (email: string) => void;
    isLoading: boolean;
+   emailLoading: boolean;
+   emailSucces: boolean;
 }
 
-const SignUpForm: FC<Props> = ({ handleRegister, isLoading }) => {
+const SignUpForm: FC<Props> = ({
+   handleRegister,
+   checkEmailAvailable,
+   isLoading,
+   emailLoading,
+   emailSucces,
+}) => {
+   const [email, setEmail] = useState('');
+   const debouncedEmail = useDebounce(email, 700);
+
    const [showPassword, setShowPassword] = useState(false);
    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -39,6 +52,24 @@ const SignUpForm: FC<Props> = ({ handleRegister, isLoading }) => {
       },
       validateOnMount: true,
    });
+
+   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const email = event.target.value;
+      formik.handleChange(event);
+      formik.validateField('email');
+
+      const isEmailValid = !formik.errors.email;
+
+      if (isEmailValid) {
+         setEmail(email);
+      }
+   };
+
+   useEffect(() => {
+      if (debouncedEmail) {
+         checkEmailAvailable(debouncedEmail);
+      }
+   }, [debouncedEmail]);
 
    const nameClassNames = getInputClassNames(formik, 'name');
    const emailClassNames = getInputClassNames(formik, 'email');
@@ -76,11 +107,28 @@ const SignUpForm: FC<Props> = ({ handleRegister, isLoading }) => {
                            className={emailClassNames}
                            placeholder='Enter your Gmail'
                            name='email'
-                           onChange={formik.handleChange}
+                           onChange={handleEmailChange}
                            onBlur={formik.handleBlur}
                            value={formik.values.email}
                         />
-                        <img src={dogIcon} alt='dog icon' className={styles.form__icon} />
+                        {emailLoading ? (
+                           <div className={styles.form__emailAnswer}>
+                              <div className='loader'></div>
+                           </div>
+                        ) : emailSucces && !formik.errors.email ? (
+                           <div className={styles.form__emailAnswer}>
+                              <svg viewBox='0 0 50 50'>
+                                 <polyline
+                                    points='10,25 20,35 40,15'
+                                    stroke='#009900'
+                                    strokeWidth='4'
+                                    fill='none'
+                                 />
+                              </svg>
+                           </div>
+                        ) : (
+                           <img src={dogIcon} alt='dog icon' className={styles.form__icon} />
+                        )}
                      </div>
                      <ErrorMessage formik={formik} name='email' />
                   </div>

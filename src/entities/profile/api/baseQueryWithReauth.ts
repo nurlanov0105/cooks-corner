@@ -1,13 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { updateTokensInLS } from '@/shared/lib/helpers/updateTokensInLS';
+import { RootState } from '@/app/appStore';
 import { closeModal } from '@/widgets/modal';
 import { toast } from 'react-toastify';
-import { AuthEndpoints } from '@/shared/api/endpoints';
 
-import { getTokensFromLS } from '@/shared/lib/helpers/getTokensFromLS';
-import { RootState } from '@/app/appStore';
 import { removeAccessToken } from '@/features/authentication';
+import { AuthEndpoints } from '@/shared/api';
+import { getTokensFromLS, updateTokenInLS } from '@/shared/lib/helpers';
 const BASE_URL = import.meta.env.VITE_TOURS_BASE_API_URL;
 
 const baseQuery = fetchBaseQuery({
@@ -23,25 +22,25 @@ const baseQuery = fetchBaseQuery({
    },
 });
 
-const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
-   args,
-   api,
-   extraOptions
-) => {
+export const baseQueryWithReauth: BaseQueryFn<
+   string | FetchArgs,
+   unknown,
+   FetchBaseQueryError
+> = async (args, api, extraOptions) => {
    let result = await baseQuery(args, api, extraOptions);
 
    if (result.error && result.error.status === 401) {
-      // send refresh token to get new access token
-
       const { refreshToken } = getTokensFromLS();
-
+      localStorage.removeItem('currentTokens');
+      api.dispatch(removeAccessToken());
+      // send refresh token to get new access token
+      console.log('before refrsh - ', refreshToken);
       const refreshResult: any = await baseQuery(
          {
+            responseHandler: (response) => response.text(),
             url: AuthEndpoints.REFRESH_TOKEN,
             method: 'POST',
-            body: {
-               refreshToken: refreshToken,
-            },
+            body: `Bearer ${refreshToken}`,
          },
          api,
          extraOptions
@@ -50,7 +49,9 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
       console.log('refreshResult FROM AUTH API - ', refreshResult);
 
       if (refreshResult.data) {
-         updateTokensInLS(refreshResult.data);
+         console.log('refreshResult.data - ', refreshResult.data);
+
+         updateTokenInLS({ accessTooken: refreshResult.data, refreshToken });
 
          // Здесь access токен при первом запросе не актуален,
          //  поэтому выходит ошибка при первом logout, срабатывает только во второй раз,
@@ -74,11 +75,3 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
    }
    return result;
 };
-
-export const baseApi = createApi({
-   reducerPath: 'authApi',
-   baseQuery: baseQueryWithReauth,
-   endpoints: () => ({}),
-});
-
-export const {} = baseApi;

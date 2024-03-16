@@ -1,9 +1,9 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Navbar } from '@/widgets/navbar';
 import styles from './styles.module.scss';
-import { useEffect, useRef } from 'react';
 
-const MainLayout = () => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
    const pathname = useLocation();
    const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -15,7 +15,7 @@ const MainLayout = () => {
       <main className={styles.main}>
          <Navbar />
          <div ref={wrapperRef} className={styles.wrapper}>
-            <Outlet />
+            {children}
          </div>
       </main>
    );

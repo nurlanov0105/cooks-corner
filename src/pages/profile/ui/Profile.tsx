@@ -9,11 +9,23 @@ import { addProfileCategory } from '@/entities/profile';
 import { ProfileCategories } from '@/features/profileCategories';
 
 const Profile = () => {
+   // const { isAuth } = useAuth();
+   // const { id } = useParams();
    const dispatch = useAppDispatch();
+   // const navigate = useNavigate();
+
+   // if (isAuth) {
+   //    const { data, isLoading } = useGetUserQuery({ userId: id });
+   //    if (!isLoading) {
+   //       console.log(data);
+   //    }
+   // }
+
    const category = useAppSelector((state) => state.profile.category);
    const onClickCategory = useCallback((category: string) => {
       dispatch(addProfileCategory(category));
    }, []);
+
    return (
       <div className='container'>
          <h2 className={classNames('h2', styles.title)}>Profile</h2>
@@ -22,7 +34,7 @@ const Profile = () => {
             <ProfileCategories value={category} onClickCategory={onClickCategory} />
          </div>
 
-         <CardsSection cards={[...Array(24)]} />
+         <CardsSection cards={[...Array(24)]} isLoading={true} />
       </div>
    );
 };

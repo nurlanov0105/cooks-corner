@@ -5,6 +5,7 @@ import { LogoutModal } from '@/features/modals';
 import { ManageProfileModal } from '@/features/modals';
 import { RecipeModal } from '@/features/modals';
 import { EmailNoticeModal } from '@/features/modals';
+import { NotAuthNotice } from '@/features/modals';
 
 import styles from './styles.module.scss';
 
@@ -17,7 +18,13 @@ const Modal = () => {
    };
    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
-   const componentsLookUp = { LogoutModal, ManageProfileModal, RecipeModal, EmailNoticeModal };
+   const componentsLookUp = {
+      LogoutModal,
+      ManageProfileModal,
+      RecipeModal,
+      EmailNoticeModal,
+      NotAuthNotice,
+   };
    let RenderComponent;
    if (componentName) {
       const SelectedComponent = componentsLookUp[componentName] as React.ElementType;

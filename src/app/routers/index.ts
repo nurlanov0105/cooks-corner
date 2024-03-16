@@ -1,2 +1,3 @@
 import Routers from './Routers';
-export { Routers };
+import ProtectedRoute from './ProtectedRoute';
+export { Routers, ProtectedRoute };

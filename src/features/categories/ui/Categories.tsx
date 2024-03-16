@@ -2,7 +2,15 @@ import { FC, memo } from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 
-const categories = ['Breakfast', 'Lunch', 'Dinner'];
+const categories = [
+   'main dishes',
+   'breakfasts',
+   'seafoods',
+   'beverages',
+   'salads',
+   'desserts',
+   'soups',
+];
 
 interface CategoriesProps {
    value: string;
@@ -18,7 +26,7 @@ const Categories: FC<CategoriesProps> = memo(({ value, onClickCategory }) => {
                   onClick={() => onClickCategory(category)}
                   className={classNames(
                      styles.categories__btn,
-                     value === category ? styles.active : ''
+                     category === value ? styles.active : ''
                   )}>
                   {category}
                </button>

@@ -9,3 +9,6 @@ export const AuthEndpoints = {
    EMAIL_AVAILABLE: '/v1/auth/email-available',
    RESET_PASSWORD: '/v1/auth/reset-password',
 };
+
+export const RECIPES = '/v1/recipes';
+export const USERS = '/v1/users';

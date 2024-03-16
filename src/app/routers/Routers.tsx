@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router';
-import { AuthLayout, MainLayout } from '../layouts';
+import { AuthLayout } from '../layouts';
 
 import { SignIn } from '@/pages/signin';
 import { SignUp } from '@/pages/signup';
@@ -14,16 +14,17 @@ import { Modal } from '@/widgets/modal';
 import { Verification } from '@/pages/verification';
 import { ForgotPassword } from '@/pages/forgotPassword';
 import { ResetPassword } from '@/pages/resetPassword';
+import ProtectedRoute from './ProtectedRoute';
 
 const Routers = () => {
    return (
       <>
          <Routes>
-            <Route path='/' element={<MainLayout />}>
+            <Route path='/' element={<ProtectedRoute />}>
                <Route index element={<Home />} />
                <Route path='details-recipe/:id' element={<DetailsRecipe />} />
-               <Route path='authors/:id' element={<Author />} />
                <Route path='profile' element={<Profile />} />
+               <Route path='authors/:id' element={<Author />} />
                <Route path='search' element={<SearchPage />} />
             </Route>
 
@@ -35,7 +36,6 @@ const Routers = () => {
                <Route path='forgot-password' element={<ForgotPassword />} />
                <Route path='reset-password' element={<ResetPassword />} />
             </Route>
-
             <Route path='*' element={<NotFound />} />
          </Routes>
          <Modal />

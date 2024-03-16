@@ -1,24 +1,34 @@
 import * as yup from 'yup';
 
-const nameSchema = yup.string().min(4, 'Минимум 4 символа').required('Требуется логин');
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const nameSchema = yup
+   .string()
+   .min(4, 'Minimum 4 characters')
+   .required('Login required')
+   .test('is-not-email', 'Name should not be an email address', (value) => {
+      return !emailRegex.test(value);
+   });
 const emailSchema = yup
    .string()
-   .email('Неверный адрес электронной почты')
-   .required('Требуется адрес электронной почты');
-
+   .required('Email address required')
+   .test('is-valid-email', 'Invalid email address', (value) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(value);
+   });
 const passwordSchema = yup
    .string()
-   .min(8, 'Минимум 8 символов')
-   .matches(/[a-z]/, 'Строчные и прописные буквы')
-   .matches(/[A-Z]/, 'Строчные и прописные буквы')
-   .matches(/\d/, 'Минимум 1 цифра')
-   .matches(/[^a-zA-Z0-9]/, 'Минимум 1 спецсимвол (!, ", #, $...)')
-   .required('Требуется пароль');
+   .min(8, 'Minimum 8 characters')
+   .matches(/[a-z]/, 'Lowercase and uppercase letters')
+   .matches(/[A-Z]/, 'Lowercase and uppercase letters')
+   .matches(/\d/, 'At least 1 digit')
+   .matches(/[^a-zA-Z0-9]/, 'At least 1 special character (!, ", #, $...)')
+   .required('Password required');
 
 const passwordConfirmSchema = yup
    .string()
-   .oneOf([yup.ref('password'), undefined], 'Пароли должны совпадать')
-   .required('Пароли должны совпадать');
+   .oneOf([yup.ref('password'), undefined], 'Passwords must match')
+   .required('Passwords must match');
 
 // login
 export const loginValidationSchema = yup.object({

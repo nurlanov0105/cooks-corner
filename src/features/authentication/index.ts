@@ -3,7 +3,8 @@ import SignUpForm from './ui/SignUpForm';
 import ForgetPasswordForm from './ui/ForgotPasswordForm';
 import ResetPasswordForm from './ui/ResetPasswordForm';
 
-import { addAccessToken, removeAccessToken } from './model/authSlice';
+import authSlice, { addAccessToken, removeAccessToken } from './model/authSlice';
+import { authApi } from './api/authApi';
 import {
    useRegisterMutation,
    useLoginMutation,
@@ -11,19 +12,23 @@ import {
    useResendConfirmationMutation,
    useLogoutMutation,
    useForgotPasswordMutation,
-} from './model/authApiEndpoints';
+   useEmailAvailableMutation,
+} from './api/authApi';
 
 export {
    SignInForm,
    SignUpForm,
    ForgetPasswordForm,
    ResetPasswordForm,
+   authSlice,
    addAccessToken,
    removeAccessToken,
+   authApi,
    useRegisterMutation,
    useLoginMutation,
    useConfirmationMutation,
    useResendConfirmationMutation,
    useLogoutMutation,
    useForgotPasswordMutation,
+   useEmailAvailableMutation,
 };

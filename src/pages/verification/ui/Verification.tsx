@@ -1,9 +1,9 @@
 import { VerifyBlock } from '@/features/verifyBlock';
 import { useAppDispatch } from '@/app/appStore';
 import { showModal } from '@/widgets/modal';
-import { getEmailFromLS } from '@/shared/lib/helpers/getEmailFromLS';
 import { useResendConfirmationMutation } from '@/features/authentication';
 import { toast } from 'react-toastify';
+import { getEmailFromLS } from '@/shared/lib/helpers';
 
 const Verification = () => {
    const dispatch = useAppDispatch();
