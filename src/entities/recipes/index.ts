@@ -8,6 +8,7 @@ import {
    useBookmarkRecipeMutation,
    useRemoveBookmarkRecipeMutation,
    useGetDetailRecipeQuery,
+   useAddRecipeMutation,
 } from './api/recipeApi';
 export {
    recipeSLice,
@@ -20,4 +21,5 @@ export {
    useBookmarkRecipeMutation,
    useRemoveBookmarkRecipeMutation,
    useGetDetailRecipeQuery,
+   useAddRecipeMutation,
 };

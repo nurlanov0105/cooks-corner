@@ -90,7 +90,7 @@ const RecipeCard: FC<Props> = ({
             <Link to={`/details-recipe/${recipeId}`} className={styles.card__title}>
                {title}
             </Link>
-            <Link to={`/authors/${recipeId}`} className={styles.card__author}>
+            <Link to={`/details-recipe/${recipeId}`} className={styles.card__author}>
                by {author}
             </Link>
             <div className={styles.card__row}>

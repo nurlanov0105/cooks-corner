@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import classNames from 'classnames';
 import { useAppDispatch } from '@/app/appStore';
 import { showModal } from '@/widgets/modal';
+import { addProfileData } from '@/entities/profile';
 
 interface Props {
    isLoading: boolean;
@@ -32,6 +33,7 @@ const ProfileInfo: FC<Props> = ({
    const dispatch = useAppDispatch();
 
    const handleManageProfile = () => {
+      dispatch(addProfileData({ name, bio }));
       dispatch(showModal('ManageProfileModal'));
    };
 

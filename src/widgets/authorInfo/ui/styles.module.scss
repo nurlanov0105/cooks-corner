@@ -19,6 +19,10 @@
       border-radius: 12px;
       overflow: hidden;
       background-color: $grey-light;
+
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
    }
 
    &__title {

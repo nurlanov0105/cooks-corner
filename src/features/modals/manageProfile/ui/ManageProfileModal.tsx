@@ -6,13 +6,36 @@ import cameraIcon from '@/shared/assets/imgs/modals/camera.svg';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import { profileValidationSchema } from '../../model/yupSchemas';
-import { useAppDispatch } from '@/app/appStore';
+import { useAppDispatch, useAppSelector } from '@/app/appStore';
 import { closeModal } from '@/widgets/modal';
+import { useUpdateProfileMutation } from '@/entities/profile';
+import { toast } from 'react-toastify';
 
 const ManageProfileModal = () => {
    const dispatch = useAppDispatch();
+   const profileData = useAppSelector((state) => state.profile.profileData);
+
    const [image, setImage] = useState(cameraIcon);
    const [label, setLabel] = useState('Upload a new photo');
+   const userId = useAppSelector((state) => state.auth.userId);
+
+   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+
+   const handleUpdateProfile = async (formData: any) => {
+      try {
+         const response: any = await updateProfile({ formData });
+         if (response.error) {
+            console.log(response.error);
+            toast.error(response.error.data);
+         } else {
+            console.log(response);
+            toast.success('Succesfully update profile!');
+         }
+      } catch (error) {
+         console.log(error);
+         toast.error('error catch udpate profile');
+      }
+   };
 
    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files.length > 0) {
@@ -29,7 +52,22 @@ const ManageProfileModal = () => {
       },
       validationSchema: profileValidationSchema,
       onSubmit: (values) => {
-         console.log(values);
+         const { name, bio, photo } = values;
+         // Создайте новый объект для отправки на сервер
+         const fields: any = { userId };
+
+         // Добавьте только те поля, которые были изменены
+         name ? (fields.name = name) : (fields.name = profileData.name);
+         bio ? (fields.bio = bio) : (fields.bio = profileData.bio);
+
+         const formData = new FormData();
+         formData.append('dto', JSON.stringify(fields));
+         if (photo) {
+            formData.append('image', photo);
+         }
+
+         handleUpdateProfile(formData);
+
          dispatch(closeModal());
       },
    });
@@ -47,7 +85,6 @@ const ManageProfileModal = () => {
                   type='text'
                   id='name'
                   className={styles.form__input}
-                  required
                   {...formik.getFieldProps('name')}
                />
             </div>

@@ -1,9 +1,7 @@
 // import { getTokensFromLS } from '.';
 // import { ITokens } from '../interfaces/interface';
 
-export const updateTokenInLS = ({ tokens }: any) => {
-   const { accessToken, refreshToken } = tokens;
-
+export const addTokensToLS = ({ accessToken, refreshToken }: any) => {
    const updatedTokensData = {
       accessToken,
       refreshToken,

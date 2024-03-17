@@ -14,6 +14,9 @@
       border-radius: 50%;
       overflow: hidden;
       background-color: $grey-light;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
    }
 
    &__body {
