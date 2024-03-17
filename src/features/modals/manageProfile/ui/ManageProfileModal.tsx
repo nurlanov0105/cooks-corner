@@ -19,7 +19,7 @@ const ManageProfileModal = () => {
    const [label, setLabel] = useState('Upload a new photo');
    const userId = useAppSelector((state) => state.auth.userId);
 
-   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+   const [updateProfile] = useUpdateProfileMutation();
 
    const handleUpdateProfile = async (formData: any) => {
       try {

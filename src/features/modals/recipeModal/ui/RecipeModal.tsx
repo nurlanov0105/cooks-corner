@@ -9,8 +9,7 @@ import { useFormik } from 'formik';
 import { recipeValidationSchema } from '../../model/yupSchemas';
 
 import crossIcon from '@/shared/assets/imgs/search/cross.svg';
-import { useAuth } from '@/shared/lib/hooks';
-import { useAppDispatch, useAppSelector } from '@/app/appStore';
+import { useAppDispatch } from '@/app/appStore';
 import { useAddRecipeMutation } from '@/entities/recipes';
 import { toast } from 'react-toastify';
 import { closeModal } from '@/widgets/modal';
@@ -36,7 +35,6 @@ const RecipeModal = () => {
    const [ingredients, setIngredients] = useState<any>([]);
 
    const dispatch = useAppDispatch();
-   const userId = useAppSelector((state) => state.auth.userId);
 
    const [addRecipe] = useAddRecipeMutation();
 
