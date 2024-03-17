@@ -13,7 +13,7 @@ interface Props {
    userId: number;
    name: 'string';
    bio: 'string';
-   photoUrl: 'string';
+   imageUrl: 'string';
    recipes: number;
    followers: number;
    following: number;
@@ -26,7 +26,7 @@ const AuthorInfo: FC<Props> = ({
    userId,
    name,
    bio,
-   photoUrl,
+   imageUrl,
    recipes,
    followers,
    following,
@@ -77,7 +77,7 @@ const AuthorInfo: FC<Props> = ({
       <div className={styles.author}>
          <div
             className={styles.author__img}
-            style={{ backgroundImage: `url(${isError ? '' : isLoading ? '' : photoUrl})` }}></div>
+            style={{ backgroundImage: `url(${isError ? '' : isLoading ? '' : imageUrl})` }}></div>
          <h4 className={styles.author__title}>
             {isError ? 'Error' : isLoading ? 'Loading...' : name}
          </h4>

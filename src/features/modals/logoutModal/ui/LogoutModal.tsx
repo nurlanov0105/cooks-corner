@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@/app/appStore';
 import { getTokensFromLS } from '@/shared/lib/helpers';
 import { closeModal } from '@/widgets/modal';
-import { removeAccessToken, useLogoutMutation } from '@/features/authentication';
+import { removeAccessToken, removeUserId, useLogoutMutation } from '@/features/authentication';
 import { toast } from 'react-toastify';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
@@ -18,10 +18,13 @@ const LogoutModal = () => {
       if (respone.error) {
          console.log('error in try', respone.error);
       } else {
-         dispatch(removeAccessToken());
          localStorage.removeItem('currentUserId');
-         toast.success('Succefsully logout!');
          localStorage.removeItem('currentTokens');
+
+         dispatch(removeAccessToken());
+         dispatch(removeUserId());
+
+         toast.success('Succefsully logout!');
       }
       dispatch(closeModal());
    };

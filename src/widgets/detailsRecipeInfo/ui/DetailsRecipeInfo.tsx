@@ -47,6 +47,7 @@ const DetailsRecipeInfo: FC<Props> = ({
    recipeId,
    title,
    author,
+   authorId,
    cookingTimeMinutes,
    difficulty,
    description,
@@ -101,7 +102,7 @@ const DetailsRecipeInfo: FC<Props> = ({
       <section className={styles.section}>
          <div className={styles.section__top}>
             <h2 className={classNames('h2', styles.section__title)}>{title}</h2>
-            <Link to={`/authors/${recipeId}`} className={styles.section__author}>
+            <Link to={`/authors/${authorId}`} className={styles.section__author}>
                by {author}
             </Link>
          </div>

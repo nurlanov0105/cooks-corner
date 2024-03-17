@@ -39,6 +39,7 @@ const Navbar: FC = () => {
    };
 
    const onLoginClick = () => {
+      dispatch(closeModal());
       navigate('/signin');
    };
    const onLogoutClick = () => {

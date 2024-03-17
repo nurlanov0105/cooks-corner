@@ -4,9 +4,14 @@ import { RootState } from '@/app/appStore';
 import { closeModal } from '@/widgets/modal';
 import { toast } from 'react-toastify';
 
-import { removeAccessToken } from '@/features/authentication';
+import {
+   addAccessToken,
+   addUserId,
+   removeAccessToken,
+   removeUserId,
+} from '@/features/authentication';
 import { AuthEndpoints } from '@/shared/api';
-import { getTokensFromLS, updateTokenInLS } from '@/shared/lib/helpers';
+import { getTokensFromLS, addTokensToLS } from '@/shared/lib/helpers';
 const BASE_URL = import.meta.env.VITE_TOURS_BASE_API_URL;
 
 const baseQuery = fetchBaseQuery({
@@ -17,7 +22,7 @@ const baseQuery = fetchBaseQuery({
       if (accessToken) {
          headers.set('authorization', `Bearer ${accessToken}`);
       }
-      headers.set('Content-Type', 'application/json');
+      // headers.set('Content-Type', 'application/json');
       return headers;
    },
 });
@@ -30,33 +35,37 @@ export const baseQueryWithReauth: BaseQueryFn<
    let result = await baseQuery(args, api, extraOptions);
 
    if (result.error && result.error.status === 401) {
-      const { refreshToken } = getTokensFromLS();
-      // localStorage.removeItem('currentTokens');
-      // api.dispatch(removeAccessToken());
+      const { refreshToken, accessToken } = getTokensFromLS();
+
+      localStorage.removeItem('currentTokens');
+      api.dispatch(removeAccessToken());
+      console.log('before access recipes - ', accessToken);
+      // console.log('before refresh auth - ', refreshToken);
+
       // send refresh token to get new access token
-      console.log('before refrsh - ', refreshToken);
       const refreshResult: any = await baseQuery(
          {
             responseHandler: (response) => response.text(),
             url: AuthEndpoints.REFRESH_TOKEN,
             method: 'POST',
-            body: `Bearer ${refreshToken}`,
+            body: 'Bearer ' + refreshToken,
          },
          api,
          extraOptions
       );
 
-      console.log('refreshResult FROM AUTH API - ', refreshResult);
+      console.log('refreshResult FROM recipes API - ', refreshResult);
 
       if (refreshResult.data) {
-         console.log('refreshResult.data - ', refreshResult.data);
+         const parsedResult = JSON.parse(refreshResult.data);
+         addTokensToLS({
+            accessTooken: parsedResult.accessToken,
+            refreshToken: parsedResult.refreshToken,
+         });
+         addUserId(parsedResult.userId);
 
-         updateTokenInLS({ accessTooken: refreshResult.data, refreshToken });
-
-         // Здесь access токен при первом запросе не актуален,
-         //  поэтому выходит ошибка при первом logout, срабатывает только во второй раз,
-         //  когда получает акутальный access токен.
-         // Я не смог установить сюда актульное значение accesss токена. SOS
+         api.dispatch(addAccessToken(parsedResult.accessToken));
+         api.dispatch(addUserId(parsedResult.userId));
 
          result = await baseQuery(args, api, extraOptions);
 
@@ -67,11 +76,15 @@ export const baseQueryWithReauth: BaseQueryFn<
 
          api.dispatch(closeModal());
       } else {
-         console.log('token not valid - ', refreshResult);
-         api.dispatch(closeModal());
-         api.dispatch(removeAccessToken());
          localStorage.removeItem('currentUserId');
          localStorage.removeItem('currentTokens');
+
+         api.dispatch(removeAccessToken());
+         api.dispatch(removeUserId());
+
+         api.dispatch(closeModal());
+         console.log('token not valid - ', refreshResult);
+         toast.error('Перезайдите пожалуйста!');
       }
    }
    return result;

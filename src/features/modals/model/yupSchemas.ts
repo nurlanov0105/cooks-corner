@@ -1,12 +1,12 @@
 import * as Yup from 'yup';
 
 export const profileValidationSchema = Yup.object({
-   name: Yup.string().required('Required'), // это поле обязательно
-   bio: Yup.string().required('Required'), // это поле обязательно
+   name: Yup.string(), // это поле обязательно
+   bio: Yup.string(), // это поле обязательно
 });
 
 export const recipeValidationSchema = Yup.object({
-   recipe: Yup.string().required('Required'),
-   description: Yup.string().required('Required'),
-   ingredient: Yup.string().required('Required'),
+   recipe: Yup.string().required(),
+   description: Yup.string().required(),
+   time: Yup.string().required(),
 });

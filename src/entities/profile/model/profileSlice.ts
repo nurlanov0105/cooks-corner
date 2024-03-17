@@ -4,6 +4,10 @@ const initialState = {
    category: 'my',
    user: {},
    profileRecipes: [],
+   profileData: {
+      name: null,
+      bio: null,
+   },
 };
 
 const profileSlice = createSlice({
@@ -19,9 +23,16 @@ const profileSlice = createSlice({
       setProfileRecipes(state, action) {
          state.profileRecipes = action.payload;
       },
+
+      addProfileData(state, action) {
+         const { name, bio } = action.payload;
+         state.profileData.name = name;
+         state.profileData.bio = bio;
+      },
    },
 });
 
-export const { addUserProfile, addProfileCategory, setProfileRecipes } = profileSlice.actions;
+export const { addUserProfile, addProfileCategory, setProfileRecipes, addProfileData } =
+   profileSlice.actions;
 
 export default profileSlice.reducer;

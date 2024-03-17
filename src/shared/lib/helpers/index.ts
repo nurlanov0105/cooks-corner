@@ -1,5 +1,6 @@
 import { getTokensFromLS } from './getTokensFromLS';
 import { getEmailFromLS } from './getEmailFromLS';
-import { updateTokenInLS } from './updateTokenInLS';
+import { addTokensToLS } from './addTokensToLS';
 import { handleLikenBookmark } from './handleLikenBookmark';
-export { getTokensFromLS, getEmailFromLS, updateTokenInLS, handleLikenBookmark };
+import { addUserIdToLS } from './addUserIdToLS';
+export { getTokensFromLS, getEmailFromLS, addTokensToLS, handleLikenBookmark, addUserIdToLS };

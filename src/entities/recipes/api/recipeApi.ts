@@ -78,6 +78,17 @@ export const recipeApi = createApi({
          },
          providesTags: [Tags.RECIPES],
       }),
+      addRecipe: builder.mutation({
+         query: ({ formData }) => {
+            return {
+               responseHandler: (response) => response.text(),
+               url: RecipesEndpoints.RECIPES,
+               method: 'POST',
+               body: formData,
+            };
+         },
+         invalidatesTags: [Tags.RECIPES],
+      }),
    }),
 });
 
@@ -88,4 +99,5 @@ export const {
    useBookmarkRecipeMutation,
    useRemoveBookmarkRecipeMutation,
    useGetDetailRecipeQuery,
+   useAddRecipeMutation,
 } = recipeApi;

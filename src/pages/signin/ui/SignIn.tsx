@@ -1,5 +1,6 @@
 import { useAppDispatch } from '@/app/appStore';
-import { SignInForm, addAccessToken, useLoginMutation } from '@/features/authentication';
+import { SignInForm, addAccessToken, addUserId, useLoginMutation } from '@/features/authentication';
+import { addTokensToLS, addUserIdToLS } from '@/shared/lib/helpers';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -23,15 +24,15 @@ const SignIn = () => {
             localStorage.removeItem('currentEmail');
 
             const { accessToken, refreshToken, userId } = res.data;
-            // save in redux
-            dispatch(addAccessToken(accessToken));
 
             // save in local storage
-            const newTokens = JSON.stringify({ accessToken, refreshToken });
-            const currentUserId = JSON.stringify({ userId });
+            addTokensToLS({ accessToken, refreshToken });
+            addUserIdToLS(userId);
 
-            localStorage.setItem('currentUserId', currentUserId);
-            localStorage.setItem('currentTokens', newTokens);
+            // save in redux
+            dispatch(addAccessToken(accessToken));
+            dispatch(addUserId(userId));
+
             navigate('/');
          }
       } catch (error) {

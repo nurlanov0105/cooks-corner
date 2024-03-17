@@ -42,7 +42,19 @@ export const profileApi = createApi({
             dispatch(setProfileRecipes(data.content));
          },
       }),
+      updateProfile: builder.mutation({
+         query: ({ formData }) => {
+            console.log(formData);
+            return {
+               url: UsersEndpoints.USERS,
+               method: 'PUT',
+               body: formData,
+            };
+         },
+         invalidatesTags: [Tags.RECIPES],
+      }),
    }),
 });
 
-export const { useGetUserProfileQuery, useGetProfileRecipesQuery } = profileApi;
+export const { useGetUserProfileQuery, useGetProfileRecipesQuery, useUpdateProfileMutation } =
+   profileApi;
