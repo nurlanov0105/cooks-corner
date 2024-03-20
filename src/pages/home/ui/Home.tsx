@@ -1,8 +1,8 @@
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/appStore';
 import { Categories } from '@/features/categories';
 import { CardsSection } from '@/widgets/cardsSection';
-import { addRecipeCategory, getrecipes, setRecipes } from '@/entities/recipes';
+import { addRecipeCategory, getrecipes } from '@/entities/recipes';
 
 import styles from './styles.module.scss';
 import classNames from 'classnames';

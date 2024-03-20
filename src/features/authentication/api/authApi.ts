@@ -1,22 +1,25 @@
 import { baseApiInstance } from '@/shared/api/instance';
 import {
    ILoginRequest,
-   ILoginResponse,
    IRegisterRequest,
    IResendEmailRequest,
    IResetPasswordRequest,
 } from '@/shared/lib/types';
 import { AuthEndpoints } from '@/shared/api';
-import { toast } from 'react-toastify';
 import { apiErrorMessages } from '@/shared/lib/helpers/apiErrorMessages';
 
 export const login = async (params: ILoginRequest) => {
+   // try {
+   //    const { data }: any = await baseApiInstance.post(AuthEndpoints.LOGIN, params);
+   //    return data;
+   // } catch (error) {
+   //    apiErrorMessages({ queryName: 'Login', error });
+   // }
    try {
-      const { data } = await baseApiInstance.post<ILoginResponse>(AuthEndpoints.LOGIN, params);
-
-      return data;
-   } catch (error: any) {
-      apiErrorMessages({ queryName: 'Login', error });
+      const { data }: any = await baseApiInstance.post(AuthEndpoints.LOGIN, params);
+      return { data };
+   } catch (error) {
+      apiErrorMessages({ queryName: 'Register', error });
    }
 };
 export const register = async (params: IRegisterRequest) => {
@@ -24,7 +27,7 @@ export const register = async (params: IRegisterRequest) => {
       const { data } = await baseApiInstance.post(AuthEndpoints.REGISTER, params);
 
       return data;
-   } catch (error: any) {
+   } catch (error) {
       apiErrorMessages({ queryName: 'Register', error });
    }
 };

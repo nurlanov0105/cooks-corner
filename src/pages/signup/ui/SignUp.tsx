@@ -14,8 +14,10 @@ const SignUp: FC = () => {
 
    const { mutate: registerMutate, isPending } = useMutation({
       mutationFn: (params: IRegisterRequest) => register(params),
-      onSuccess: () => {
-         navigate('/verification');
+      onSuccess: (data) => {
+         if (data) {
+            navigate('/verification');
+         }
       },
    });
 
