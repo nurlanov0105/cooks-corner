@@ -25,11 +25,7 @@ const SignUp: FC = () => {
       },
    });
 
-   const {
-      mutate: emailAvailableMutate,
-      isPending: emailLoading,
-      isSuccess: emailSucces,
-   } = useMutation({
+   const { mutate: emailAvailableMutate, isPending: emailLoading } = useMutation({
       mutationFn: (email: string) => emailAvailable(email),
       onSuccess: (data) => {
          setIsEmailAvailable(data?.data);

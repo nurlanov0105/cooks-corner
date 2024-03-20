@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/shared/lib/hooks';
 import { useAppDispatch } from '@/app/appStore';
 import { showModal } from '@/widgets/modal';
-import { handleLikenBookmark } from '@/shared/lib/helpers';
+// import { handleLikenBookmark } from '@/shared/lib/helpers';
 
 import { toast } from 'react-toastify';
 import styles from './styles.module.scss';
@@ -12,8 +12,8 @@ import unlikeIcon from '@/shared/assets/imgs/cards/unlike.svg';
 import savedIcon from '@/shared/assets/imgs/cards/saved.svg';
 import unsavedIcon from '@/shared/assets/imgs/cards/unsaved.svg';
 import { action } from '@/entities/recipes';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Tags } from '@/shared/api';
+import { useMutation } from '@tanstack/react-query';
+// import { Tags } from '@/shared/api';
 
 interface Props {
    imageUrl: string;

@@ -1,11 +1,11 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '@/app/appStore';
-import { handleLikenBookmark } from '@/shared/lib/helpers';
-import { useAuth } from '@/shared/lib/hooks';
-import { showModal } from '@/widgets/modal';
+// import { useAppDispatch } from '@/app/appStore';
+// import { handleLikenBookmark } from '@/shared/lib/helpers';
+// import { useAuth } from '@/shared/lib/hooks';
+// import { showModal } from '@/widgets/modal';
 
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import styles from './styles.module.scss';
 import likeIcon from '@/shared/assets/imgs/search/like.svg';
 import unlikeIcon from '@/shared/assets/imgs/search/unlike.svg';
@@ -32,13 +32,13 @@ const StandartCard: FC<Props> = ({
    isBookmarked,
    recipeId,
 }) => {
-   const { isAuth } = useAuth();
-   const dispatch = useAppDispatch();
+   // const { isAuth } = useAuth();
+   // const dispatch = useAppDispatch();
 
-   const [localIsLiked, setLocalIsLiked] = useState(isLiked);
-   const [localIsBookmarked, setLocalIsBookmarked] = useState(isBookmarked);
-   const [localLikes, setLocalLikes] = useState(likes);
-   const [localBookmarks, setLocalBookmarks] = useState(bookmarks);
+   // const [localIsLiked, setLocalIsLiked] = useState(isLiked);
+   // const [localIsBookmarked, setLocalIsBookmarked] = useState(isBookmarked);
+   // const [localLikes, setLocalLikes] = useState(likes);
+   // const [localBookmarks, setLocalBookmarks] = useState(bookmarks);
 
    const handleLikeClick = () => {
       // handleLikenBookmark({
@@ -86,15 +86,15 @@ const StandartCard: FC<Props> = ({
                // disabled={isLoadingLike || isLoadingDislike}
                className={styles.card__actions}
                onClick={handleLikeClick}>
-               <img src={localIsLiked ? likeIcon : unlikeIcon} alt='like icon' />
-               <span>{localLikes}</span>
+               <img src={isLiked ? likeIcon : unlikeIcon} alt='like icon' />
+               <span>{likes}</span>
             </button>
             <button
                // disabled={isLoadingBookmark || isLoadingRemoveMark}
                className={styles.card__actions}
                onClick={handleBookmarkClick}>
-               <img src={localIsBookmarked ? savedIcon : unsavedIcon} alt='save icon' />
-               <span>{localBookmarks}</span>
+               <img src={isBookmarked ? savedIcon : unsavedIcon} alt='save icon' />
+               <span>{bookmarks}</span>
             </button>
          </div>
       </div>

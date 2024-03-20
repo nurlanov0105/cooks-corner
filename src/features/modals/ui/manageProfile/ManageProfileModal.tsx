@@ -14,7 +14,7 @@ import { updateProfile } from '@/entities/user';
 
 const ManageProfileModal: FC = () => {
    const dispatch = useAppDispatch();
-   const profileData = useAppSelector((state) => state.profile.profileData);
+   const profileData = useAppSelector((state) => state.user.profileData);
 
    const [image, setImage] = useState(cameraIcon);
    const [label, setLabel] = useState('Upload a new photo');

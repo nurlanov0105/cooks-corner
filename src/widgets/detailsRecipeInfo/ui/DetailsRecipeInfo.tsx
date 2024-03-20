@@ -1,10 +1,10 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '@/app/appStore';
-import { useAuth } from '@/shared/lib/hooks';
-import { handleLikenBookmark } from '@/shared/lib/helpers';
-import { showModal } from '@/widgets/modal';
-import { toast } from 'react-toastify';
+// import { useAppDispatch } from '@/app/appStore';
+// import { useAuth } from '@/shared/lib/hooks';
+// import { handleLikenBookmark } from '@/shared/lib/helpers';
+// import { showModal } from '@/widgets/modal';
+// import { toast } from 'react-toastify';
 
 import classNames from 'classnames';
 import styles from './styles.module.scss';
@@ -39,7 +39,7 @@ interface Props {
 
 const DetailsRecipeInfo: FC<Props> = ({
    // isLoading,
-   recipeId,
+   // recipeId,
    title,
    author,
    authorId,
@@ -52,12 +52,12 @@ const DetailsRecipeInfo: FC<Props> = ({
    isBookmarked,
    ingredients,
 }) => {
-   const { isAuth } = useAuth();
-   const dispatch = useAppDispatch();
+   // const { isAuth } = useAuth();
+   // const dispatch = useAppDispatch();
 
-   const [localIsLiked, setLocalIsLiked] = useState(isLiked);
-   const [localIsBookmarked, setLocalIsBookmarked] = useState(isBookmarked);
-   const [localLikes, setLocalLikes] = useState(likes);
+   // const [localIsLiked, setLocalIsLiked] = useState(isLiked);
+   // const [localIsBookmarked, setLocalIsBookmarked] = useState(isBookmarked);
+   // const [localLikes, setLocalLikes] = useState(likes);
    // const [localBookmarks, setLocalBookmarks] = useState(bookmarks);
 
    const handleLikeClick = () => {
@@ -109,15 +109,15 @@ const DetailsRecipeInfo: FC<Props> = ({
                className={styles.section__btn}
                // disabled={isLoadingLike || isLoadingDislike}
             >
-               <img src={localIsLiked ? likeIcon : unlikeIcon} alt='icon like' />
-               <span>{localLikes} likes</span>
+               <img src={isLiked ? likeIcon : unlikeIcon} alt='icon like' />
+               <span>{likes} likes</span>
             </button>
             <button
                onClick={handleBookmarkClick}
                className={styles.section__btn}
                // disabled={isLoadingBookmark || isLoadingRemoveMark}
             >
-               <img src={localIsBookmarked ? saveIcon : unsaveIcon} alt='icon save' />
+               <img src={isBookmarked ? saveIcon : unsaveIcon} alt='icon save' />
             </button>
          </div>
          <div className={styles.section__description}>
