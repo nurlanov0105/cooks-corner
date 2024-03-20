@@ -1,10 +1,11 @@
-import { FC } from 'react';
-import { Link } from 'react-router-dom';
-// import { useAppDispatch } from '@/app/appStore';
-// import { useAuth } from '@/shared/lib/hooks';
-// import { handleLikenBookmark } from '@/shared/lib/helpers';
-// import { showModal } from '@/widgets/modal';
-// import { toast } from 'react-toastify';
+import { FC, useState } from 'react';
+import { useAuth } from '@/shared/lib/hooks';
+import { useAppDispatch } from '@/app/appStore';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { action } from '@/entities/recipes';
+import { toast } from 'react-toastify';
+import { showModal } from '@/widgets/modal';
+import { handleActionClick } from '@/shared/lib/helpers';
 
 import classNames from 'classnames';
 import styles from './styles.module.scss';
@@ -14,6 +15,8 @@ import likeIcon from '@/shared/assets/imgs/detailsRecipe/like.svg';
 import unlikeIcon from '@/shared/assets/imgs/detailsRecipe/unlike.svg';
 import saveIcon from '@/shared/assets/imgs/detailsRecipe/save.svg';
 import unsaveIcon from '@/shared/assets/imgs/detailsRecipe/unsave.svg';
+import { Link } from 'react-router-dom';
+import { Tags } from '@/shared/api';
 
 interface Props {
    recipeId: number;
@@ -24,9 +27,9 @@ interface Props {
    difficulty: 'string';
    description: 'string';
    likes: number;
-   bookmarks: number;
    isLiked: true;
    isBookmarked: true;
+   bookmarks: number;
    ingredients: [
       {
          ingredient: 'string';
@@ -39,7 +42,7 @@ interface Props {
 
 const DetailsRecipeInfo: FC<Props> = ({
    // isLoading,
-   // recipeId,
+   recipeId,
    title,
    author,
    authorId,
@@ -47,47 +50,86 @@ const DetailsRecipeInfo: FC<Props> = ({
    difficulty,
    description,
    likes,
-   // bookmarks,
    isLiked,
    isBookmarked,
+   bookmarks,
    ingredients,
 }) => {
-   // const { isAuth } = useAuth();
-   // const dispatch = useAppDispatch();
+   const { isAuth } = useAuth();
+   const dispatch = useAppDispatch();
+   const [isLocalLike, setIsLocalLike] = useState<boolean>(isLiked);
+   const [isLocalBookmark, setIsLocalBookmark] = useState<boolean>(isBookmarked);
+   const [localLikes, setLocalLikes] = useState(likes);
+   const [localBookmarks, setLocalBookmarks] = useState(bookmarks);
+   const queryClient = useQueryClient();
 
-   // const [localIsLiked, setLocalIsLiked] = useState(isLiked);
-   // const [localIsBookmarked, setLocalIsBookmarked] = useState(isBookmarked);
-   // const [localLikes, setLocalLikes] = useState(likes);
-   // const [localBookmarks, setLocalBookmarks] = useState(bookmarks);
+   const { mutate: actionLike, isPending: isLikeLoading } = useMutation({
+      mutationFn: (params: any) => action(params),
+      onSuccess: () => {
+         // @ts-ignore
+         queryClient.invalidateQueries([Tags.RECIPES, { recipeId }]);
+      },
+      onError: (error) => {
+         toast.error('like error');
+         console.log(error);
+      },
+   });
+
+   const { mutate: actionBookmark, isPending: isBookmarkLoading } = useMutation({
+      mutationFn: (params: any) => action(params),
+      onSuccess: () => {
+         // @ts-ignore
+         queryClient.invalidateQueries([Tags.RECIPES, { recipeId }]);
+      },
+      onError: (error) => {
+         toast.error('save error');
+         console.log(error);
+      },
+   });
 
    const handleLikeClick = () => {
-      // handleLikenBookmark({
-      //    isItem: localIsLiked,
-      //    setLocalItem: setLocalIsLiked,
-      //    item: like,
-      //    removeItem: dislike,
-      //    dispatch: dispatch,
-      //    showModal: showModal,
-      //    isAuth: isAuth,
-      //    toast: toast,
-      //    recipeId: recipeId,
-      //    count: localLikes,
-      //    setCount: setLocalLikes,
-      // });
+      if (!isAuth) {
+         dispatch(showModal('NotAuthNotice'));
+         return;
+      }
+
+      if (isLikeLoading) {
+         return;
+      }
+      handleActionClick({
+         isLocalAction: isLocalLike,
+         setLocalAction: setIsLocalLike,
+         localCount: localLikes,
+         setLocalCount: setLocalLikes,
+         actionId: 10,
+         newActionId: 1,
+         recipeId,
+         actionMutate: actionLike,
+      });
    };
+
    const handleBookmarkClick = () => {
-      // handleLikenBookmark({
-      //    isItem: localIsBookmarked,
-      //    setLocalItem: setLocalIsBookmarked,
-      //    item: bookmark,
-      //    removeItem: removeBookmark,
-      //    dispatch: dispatch,
-      //    showModal: showModal,
-      //    isAuth: isAuth,
-      //    toast: toast,
-      //    recipeId: recipeId,
-      // });
+      if (!isAuth) {
+         dispatch(showModal('NotAuthNotice'));
+         return;
+      }
+
+      if (isBookmarkLoading) {
+         return;
+      }
+
+      handleActionClick({
+         isLocalAction: isLocalBookmark,
+         setLocalAction: setIsLocalBookmark,
+         localCount: localBookmarks,
+         setLocalCount: setLocalBookmarks,
+         actionId: 20,
+         newActionId: 2,
+         recipeId,
+         actionMutate: actionBookmark,
+      });
    };
+
    return (
       <section className={styles.section}>
          <div className={styles.section__top}>
@@ -107,17 +149,15 @@ const DetailsRecipeInfo: FC<Props> = ({
             <button
                onClick={handleLikeClick}
                className={styles.section__btn}
-               // disabled={isLoadingLike || isLoadingDislike}
-            >
-               <img src={isLiked ? likeIcon : unlikeIcon} alt='icon like' />
-               <span>{likes} likes</span>
+               disabled={isLikeLoading}>
+               <img src={isLocalLike ? likeIcon : unlikeIcon} alt='icon like' />
+               <span>{localLikes} likes</span>
             </button>
             <button
                onClick={handleBookmarkClick}
                className={styles.section__btn}
-               // disabled={isLoadingBookmark || isLoadingRemoveMark}
-            >
-               <img src={isBookmarked ? saveIcon : unsaveIcon} alt='icon save' />
+               disabled={isBookmarkLoading}>
+               <img src={isLocalBookmark ? saveIcon : unsaveIcon} alt='icon save' />
             </button>
          </div>
          <div className={styles.section__description}>

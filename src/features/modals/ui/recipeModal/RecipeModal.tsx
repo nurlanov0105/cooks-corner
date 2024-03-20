@@ -11,8 +11,11 @@ import styles from './styles.module.scss';
 import arrowDownIcon from '@/shared/assets/imgs/modals/arrow-down.svg';
 import plusIcon from '@/shared/assets/imgs/modals/plus.svg';
 import crossIcon from '@/shared/assets/imgs/search/cross.svg';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addRecipe } from '@/entities/recipes';
+import { Tags } from '@/shared/api';
+import { useAppDispatch } from '@/app/appStore';
+import { closeModal } from '@/widgets/modal';
 
 const levelCategories = ['Easy', 'Medium', 'Hard'];
 const measurementUnits = ['kg', 'grams', 'tablespoon', 'teaspoon', 'cup'];
@@ -33,12 +36,17 @@ const RecipeModal: FC = () => {
    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
    const [isIngredientOpen, setIsIngredientOpen] = useState(false);
    const [ingredients, setIngredients] = useState<any>([]);
+   const queryClient = useQueryClient();
+   const dispatch = useAppDispatch();
 
    const { mutate: addRecipeMutate } = useMutation({
       mutationFn: (formData: any) => addRecipe(formData),
       onSuccess: (data) => {
+         queryClient.invalidateQueries({ queryKey: [Tags.RECIPES] });
+
          console.log(data);
          toast.success('Succesfully added recipe!');
+         dispatch(closeModal());
       },
       onError: (error) => {
          toast.error('add recipe error');

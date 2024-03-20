@@ -13,20 +13,25 @@ const SignIn: FC = () => {
 
    const { mutate: loginMutate, isPending } = useMutation({
       mutationFn: (params: ILoginRequest) => login(params),
-      onSuccess: (data) => {
-         console.log(data);
-         localStorage.removeItem('currentEmail');
-         addTokensToLS({ accessToken: data.accessToken, refreshToken: data.refreshToken });
-         addUserIdToLS(data.userId);
-         dispatch(addAccessToken(data.accessToken));
-         dispatch(addUserId(data.userId));
+      onSuccess: (result: any) => {
+         if (result.data) {
+            console.log(result.data);
+            localStorage.removeItem('currentEmail');
+            addTokensToLS({
+               accessToken: result.data.accessToken,
+               refreshToken: result.data.refreshToken,
+            });
+            addUserIdToLS(result.data.userId);
+            dispatch(addAccessToken(result.data.accessToken));
+            dispatch(addUserId(result.data.userId));
 
-         navigate('/');
-         toast.success('Succesfully login!');
+            navigate('/');
+            toast.success('Succesfully login!');
+         }
       },
-      onError: (error) => {
-         toast.error('login failed');
-         console.log(error);
+      onError: (result: any) => {
+         console.log(result);
+         // apiErrorMessages({ queryName: 'Login', error: result.error });
       },
    });
 

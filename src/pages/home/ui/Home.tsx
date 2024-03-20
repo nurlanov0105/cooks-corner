@@ -18,6 +18,12 @@ const Home: FC = () => {
       queryFn: () => getrecipes({ category: category, size: limit, page: currentPage }),
    });
 
+   // useEffect(() => {
+   //    if (!isLoading && recipesData) {
+   //       dispatch(setRecipes(recipesData.content));
+   //    }
+   // }, [isLoading, recipesData, dispatch]);
+
    // const { isLoading } = useGetRecipesQuery({ size: limit, page: currentPage, category });
 
    const onClickCategory = useCallback((category: string) => {

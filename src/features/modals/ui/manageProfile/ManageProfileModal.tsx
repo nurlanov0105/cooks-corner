@@ -9,10 +9,13 @@ import { toast } from 'react-toastify';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import cameraIcon from '@/shared/assets/imgs/modals/camera.svg';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateProfile } from '@/entities/user';
+import { Tags } from '@/shared/api';
 
 const ManageProfileModal: FC = () => {
+   const queryClient = useQueryClient();
+
    const dispatch = useAppDispatch();
    const profileData = useAppSelector((state) => state.user.profileData);
 
@@ -23,6 +26,7 @@ const ManageProfileModal: FC = () => {
    const { mutate: updateProfileMutate } = useMutation({
       mutationFn: (formData: any) => updateProfile(formData),
       onSuccess: (data) => {
+         queryClient.invalidateQueries({ queryKey: [Tags.USERS] });
          console.log(data);
          toast.success('Succesfully update profile!');
       },

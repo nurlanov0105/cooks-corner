@@ -6,21 +6,29 @@ import {
    IResetPasswordRequest,
 } from '@/shared/lib/types';
 import { AuthEndpoints } from '@/shared/api';
+import { apiErrorMessages } from '@/shared/lib/helpers/apiErrorMessages';
 
 export const login = async (params: ILoginRequest) => {
+   // try {
+   //    const { data }: any = await baseApiInstance.post(AuthEndpoints.LOGIN, params);
+   //    return data;
+   // } catch (error) {
+   //    apiErrorMessages({ queryName: 'Login', error });
+   // }
    try {
-      const { data } = await baseApiInstance.post(AuthEndpoints.LOGIN, params);
-      return data;
+      const { data }: any = await baseApiInstance.post(AuthEndpoints.LOGIN, params);
+      return { data };
    } catch (error) {
-      console.log(error);
+      apiErrorMessages({ queryName: 'Register', error });
    }
 };
 export const register = async (params: IRegisterRequest) => {
    try {
       const { data } = await baseApiInstance.post(AuthEndpoints.REGISTER, params);
+
       return data;
    } catch (error) {
-      console.log(error);
+      apiErrorMessages({ queryName: 'Register', error });
    }
 };
 export const emailAvailable = async (email: string) => {

@@ -15,13 +15,9 @@ const SignUp: FC = () => {
    const { mutate: registerMutate, isPending } = useMutation({
       mutationFn: (params: IRegisterRequest) => register(params),
       onSuccess: (data) => {
-         const newEmail = JSON.stringify({ email: data.email });
-         localStorage.setItem('currentEmail', newEmail);
-         navigate('/verification');
-      },
-      onError: (error) => {
-         toast.error('Register error');
-         console.log(error);
+         if (data) {
+            navigate('/verification');
+         }
       },
    });
 
@@ -38,8 +34,10 @@ const SignUp: FC = () => {
    });
 
    const handleRegister = (name: string, email: string, password: string) => {
+      console.log('name first', email);
       const params = { name, email, password, url: BaseURL };
-      console.log(email);
+      console.log('name second', email);
+
       addEmailToLS(email);
       registerMutate(params);
    };

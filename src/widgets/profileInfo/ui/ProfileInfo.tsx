@@ -12,7 +12,7 @@ interface Props {
    userId: number;
    name: 'string';
    bio: 'string';
-   photoUrl: 'string';
+   imageUrl: 'string';
    recipes: number;
    followers: number;
    following: number;
@@ -25,7 +25,7 @@ const ProfileInfo: FC<Props> = ({
    // userId,
    name,
    bio,
-   photoUrl,
+   imageUrl,
    recipes,
    followers,
    following,
@@ -42,7 +42,7 @@ const ProfileInfo: FC<Props> = ({
       <div className={styles.profile}>
          <div
             className={styles.profile__img}
-            style={{ backgroundImage: `url(${isError ? '' : isLoading ? '' : photoUrl})` }}></div>
+            style={{ backgroundImage: `url(${isError ? '' : isLoading ? '' : imageUrl})` }}></div>
          <div className={styles.profile__body}>
             <div className={styles.profile__social}>
                <div className={styles.profile__box}>
