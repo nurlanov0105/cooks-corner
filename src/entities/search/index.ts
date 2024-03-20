@@ -8,7 +8,7 @@ import searchSlice, {
    setRecipesCards,
 } from './model/searchSlice';
 
-import { searchApi, useSearchUsersQuery, useGetSearchRecipesQuery } from './api/searchApi';
+import { searchUsers, searchRecipes } from './api/searchApi';
 
 export {
    searchSlice,
@@ -19,7 +19,6 @@ export {
    setRecipesSearchParams,
    setChefsCards,
    setRecipesCards,
-   searchApi,
-   useSearchUsersQuery,
-   useGetSearchRecipesQuery,
+   searchUsers,
+   searchRecipes,
 };

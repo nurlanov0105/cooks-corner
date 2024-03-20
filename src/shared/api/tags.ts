@@ -1,4 +1,4 @@
 export const Tags = {
-   RECIPES: 'Recipes',
+   RECIPES: 'RECIPES',
    USERS: 'USERS',
 };

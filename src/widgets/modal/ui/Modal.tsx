@@ -1,15 +1,16 @@
+import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/appStore';
-import classNames from 'classnames';
-import { closeModal } from '..';
-import { LogoutModal } from '@/features/modals';
 import { ManageProfileModal } from '@/features/modals';
-import { RecipeModal } from '@/features/modals';
 import { EmailNoticeModal } from '@/features/modals';
 import { NotAuthNotice } from '@/features/modals';
+import { RecipeModal } from '@/features/modals';
+import { closeModal } from '..';
+import { LogoutModal } from '@/features/modals';
 
+import classNames from 'classnames';
 import styles from './styles.module.scss';
 
-const Modal = () => {
+const Modal: FC = () => {
    const dispatch = useAppDispatch();
    const { isOpen, componentName } = useAppSelector((state) => state.modal);
 

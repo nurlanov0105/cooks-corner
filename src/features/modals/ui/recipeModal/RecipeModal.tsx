@@ -1,18 +1,18 @@
-import classNames from 'classnames';
-import styles from './styles.module.scss';
-import { CloseModalBtn } from '@/entities/closeModalBtn';
-
-import arrowDownIcon from '@/shared/assets/imgs/modals/arrow-down.svg';
-import plusIcon from '@/shared/assets/imgs/modals/plus.svg';
-import { useState } from 'react';
+import { FC, useState } from 'react';
+// import { useAppDispatch } from '@/app/appStore';
 import { useFormik } from 'formik';
 import { recipeValidationSchema } from '../../model/yupSchemas';
-
-import crossIcon from '@/shared/assets/imgs/search/cross.svg';
-import { useAppDispatch } from '@/app/appStore';
-import { useAddRecipeMutation } from '@/entities/recipes';
+// import { closeModal } from '@/widgets/modal';
+import { CloseModalBtn } from '@/entities/closeModalBtn';
 import { toast } from 'react-toastify';
-import { closeModal } from '@/widgets/modal';
+
+import classNames from 'classnames';
+import styles from './styles.module.scss';
+import arrowDownIcon from '@/shared/assets/imgs/modals/arrow-down.svg';
+import plusIcon from '@/shared/assets/imgs/modals/plus.svg';
+import crossIcon from '@/shared/assets/imgs/search/cross.svg';
+import { useMutation } from '@tanstack/react-query';
+import { addRecipe } from '@/entities/recipes';
 
 const levelCategories = ['Easy', 'Medium', 'Hard'];
 const measurementUnits = ['kg', 'grams', 'tablespoon', 'teaspoon', 'cup'];
@@ -26,7 +26,7 @@ const mealCategories = [
    'soups',
 ];
 
-const RecipeModal = () => {
+const RecipeModal: FC = () => {
    const [image, setImage] = useState<any>(null);
    const [selectedDifficulty, setSelectedDifficulty] = useState('Easy');
    const [selectedCategory, setSelectedCategory] = useState('breakfasts');
@@ -34,25 +34,20 @@ const RecipeModal = () => {
    const [isIngredientOpen, setIsIngredientOpen] = useState(false);
    const [ingredients, setIngredients] = useState<any>([]);
 
-   const dispatch = useAppDispatch();
-
-   const [addRecipe] = useAddRecipeMutation();
+   const { mutate: addRecipeMutate } = useMutation({
+      mutationFn: (formData: any) => addRecipe(formData),
+      onSuccess: (data) => {
+         console.log(data);
+         toast.success('Succesfully added recipe!');
+      },
+      onError: (error) => {
+         toast.error('add recipe error');
+         console.log(error);
+      },
+   });
 
    const handleRecipeAdd = async (formData: any) => {
-      try {
-         const response: any = await addRecipe({ formData });
-         if (response.error) {
-            console.log(response.error);
-            toast.error(response.error.data);
-         } else {
-            console.log(response);
-            toast.success('Succesfully add recipe!');
-            dispatch(closeModal());
-         }
-      } catch (error) {
-         console.log(error);
-         toast.error('error catch add recipe');
-      }
+      addRecipeMutate(formData);
    };
 
    const formik = useFormik({

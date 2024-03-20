@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
 
-const NotFound = () => {
+const NotFound: FC = () => {
    return (
       <main className={styles.main}>
          <div className={styles.block}>

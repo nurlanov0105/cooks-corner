@@ -1,40 +1,39 @@
-import classNames from 'classnames';
-import styles from './styles.module.scss';
-import { CloseModalBtn } from '@/entities/closeModalBtn';
-
-import cameraIcon from '@/shared/assets/imgs/modals/camera.svg';
-import { useState } from 'react';
+import { FC, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/app/appStore';
 import { useFormik } from 'formik';
 import { profileValidationSchema } from '../../model/yupSchemas';
-import { useAppDispatch, useAppSelector } from '@/app/appStore';
+import { CloseModalBtn } from '@/entities/closeModalBtn';
 import { closeModal } from '@/widgets/modal';
-import { useUpdateProfileMutation } from '@/entities/profile';
 import { toast } from 'react-toastify';
 
-const ManageProfileModal = () => {
+import classNames from 'classnames';
+import styles from './styles.module.scss';
+import cameraIcon from '@/shared/assets/imgs/modals/camera.svg';
+import { useMutation } from '@tanstack/react-query';
+import { updateProfile } from '@/entities/user';
+
+const ManageProfileModal: FC = () => {
    const dispatch = useAppDispatch();
-   const profileData = useAppSelector((state) => state.profile.profileData);
+   const profileData = useAppSelector((state) => state.user.profileData);
 
    const [image, setImage] = useState(cameraIcon);
    const [label, setLabel] = useState('Upload a new photo');
    const userId = useAppSelector((state) => state.auth.userId);
 
-   const [updateProfile] = useUpdateProfileMutation();
-
-   const handleUpdateProfile = async (formData: any) => {
-      try {
-         const response: any = await updateProfile({ formData });
-         if (response.error) {
-            console.log(response.error);
-            toast.error(response.error.data);
-         } else {
-            console.log(response);
-            toast.success('Succesfully update profile!');
-         }
-      } catch (error) {
+   const { mutate: updateProfileMutate } = useMutation({
+      mutationFn: (formData: any) => updateProfile(formData),
+      onSuccess: (data) => {
+         console.log(data);
+         toast.success('Succesfully update profile!');
+      },
+      onError: (error) => {
+         toast.error('update profile error');
          console.log(error);
-         toast.error('error catch udpate profile');
-      }
+      },
+   });
+
+   const handleUpdateProfile = (formData: any) => {
+      updateProfileMutate(formData);
    };
 
    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

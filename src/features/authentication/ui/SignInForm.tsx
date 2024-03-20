@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
-import styles from './styles.module.scss';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { loginValidationSchema } from '../model/validation';
 import { getInputClassNames } from '../model/getInputClassNames';
 import ErrorMessage from './ErrorMessage';
-import { Link } from 'react-router-dom';
+import styles from './styles.module.scss';
 
 import dogIcon from '@/shared/assets/imgs/auth/dog.svg';
 import eyeClosedIcon from '@/shared/assets/imgs/auth/eye-closed.svg';

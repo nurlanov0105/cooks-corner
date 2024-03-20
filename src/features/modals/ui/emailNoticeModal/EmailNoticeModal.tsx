@@ -1,7 +1,7 @@
-import styles from './styles.module.scss';
 import { useAppDispatch } from '@/app/appStore';
 import { getEmailFromLS } from '@/shared/lib/helpers';
 import { closeModal } from '@/widgets/modal';
+import styles from './styles.module.scss';
 
 const EmailNoticeModal = () => {
    const dispatch = useAppDispatch();

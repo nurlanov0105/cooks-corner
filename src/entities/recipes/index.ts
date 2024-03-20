@@ -1,25 +1,12 @@
 import recipeSLice, { addRecipeCategory, setRecipes } from './model/recipeSLice';
+import { getrecipes, getDetailRecipe, addRecipe, action } from './api/recipeApi';
 
-import {
-   recipeApi,
-   useGetRecipesQuery,
-   useLikeRecipeMutation,
-   useDislikeRecipeMutation,
-   useBookmarkRecipeMutation,
-   useRemoveBookmarkRecipeMutation,
-   useGetDetailRecipeQuery,
-   useAddRecipeMutation,
-} from './api/recipeApi';
 export {
    recipeSLice,
    addRecipeCategory,
-   recipeApi,
    setRecipes,
-   useGetRecipesQuery,
-   useLikeRecipeMutation,
-   useDislikeRecipeMutation,
-   useBookmarkRecipeMutation,
-   useRemoveBookmarkRecipeMutation,
-   useGetDetailRecipeQuery,
-   useAddRecipeMutation,
+   getrecipes,
+   getDetailRecipe,
+   addRecipe,
+   action,
 };

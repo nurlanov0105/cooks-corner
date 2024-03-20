@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import Routers from './routers/Routers';
 import '../shared/scss/index.scss';
 
-const App = () => {
+const App: FC = () => {
    return <Routers />;
 };
 

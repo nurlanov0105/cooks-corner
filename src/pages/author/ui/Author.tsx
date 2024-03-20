@@ -1,26 +1,41 @@
-import { BackArrow } from '@/entities/backArrow';
-import styles from './styles.module.scss';
+import { FC } from 'react';
+import { useParams } from 'react-router-dom';
 import { AuthorInfo } from '@/widgets/authorInfo';
 import { CardsSection } from '@/widgets/cardsSection';
-import { useParams } from 'react-router-dom';
-import { useGetUserQuery, useGetUserRecipesQuery } from '@/entities/users';
+import { BackArrow } from '@/entities/backArrow';
 
-const Author = () => {
+import styles from './styles.module.scss';
+import { useQuery } from '@tanstack/react-query';
+import { getUser, getUserRecipes } from '@/entities/user';
+import { Tags } from '@/shared/api';
+
+const Author: FC = () => {
    const { id } = useParams();
 
-   const { data, isLoading, isError } = useGetUserQuery({ userId: id });
+   const {
+      data: userData,
+      isLoading: userLoading,
+      isError: userError,
+   } = useQuery({
+      queryKey: [Tags.USERS, id],
+      queryFn: () => getUser(id!),
+   });
+
    const {
       data: userRecipes,
       isLoading: recipesLoading,
       isError: recipesError,
-   } = useGetUserRecipesQuery({ userId: id });
+   } = useQuery({
+      queryKey: [Tags.RECIPES, id],
+      queryFn: () => getUserRecipes(id!),
+   });
 
-   const preparedRecipes = isLoading ? [...Array(12)] : userRecipes?.content || [];
+   const preparedRecipes = recipesLoading ? [...Array(12)] : userRecipes?.content || [];
 
    return (
       <div className='container'>
          <BackArrow />
-         <AuthorInfo {...data} isLoading={isLoading} isError={isError} />
+         <AuthorInfo {...userData} id={id} isLoading={userLoading} isError={userError} />
          <div className={styles.row}>
             {recipesError ? (
                'Error'

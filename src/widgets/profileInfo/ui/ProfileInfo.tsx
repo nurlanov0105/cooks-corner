@@ -1,9 +1,10 @@
 import { FC } from 'react';
-import styles from './styles.module.scss';
-import classNames from 'classnames';
 import { useAppDispatch } from '@/app/appStore';
 import { showModal } from '@/widgets/modal';
-import { addProfileData } from '@/entities/profile';
+import { addProfileData } from '@/entities/user';
+
+import classNames from 'classnames';
+import styles from './styles.module.scss';
 
 interface Props {
    isLoading: boolean;

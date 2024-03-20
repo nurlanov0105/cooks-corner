@@ -1,59 +1,60 @@
-import {
-   SignUpForm,
-   useEmailAvailableMutation,
-   useRegisterMutation,
-} from '@/features/authentication';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const SignUp = () => {
+import { SignUpForm, emailAvailable, register } from '@/features/authentication';
+import { useMutation } from '@tanstack/react-query';
+import { IRegisterRequest } from '@/shared/lib/types';
+import { BaseURL } from '@/shared/api/endpoints';
+import { addEmailToLS } from '@/shared/lib/helpers';
+
+const SignUp: FC = () => {
    const navigate = useNavigate();
+   const [isEmailAvailable, setIsEmailAvailable] = useState(null);
 
-   const [register, { isLoading }] = useRegisterMutation();
-   const [checkEmailValidate, { isLoading: emailLoading, isSuccess: emailSucces }] =
-      useEmailAvailableMutation();
+   const { mutate: registerMutate, isPending } = useMutation({
+      mutationFn: (params: IRegisterRequest) => register(params),
+      onSuccess: (data) => {
+         const newEmail = JSON.stringify({ email: data.email });
+         localStorage.setItem('currentEmail', newEmail);
+         navigate('/verification');
+      },
+      onError: (error) => {
+         toast.error('Register error');
+         console.log(error);
+      },
+   });
 
-   const handleRegister = async (name: string, email: string, password: string) => {
-      try {
-         const result: any = await register({ name, email, password });
-         if (result.error) {
-            toast.error(result.error.data);
-            console.log(result.error);
-         } else {
-            console.log(result);
+   const { mutate: emailAvailableMutate, isPending: emailLoading } = useMutation({
+      mutationFn: (email: string) => emailAvailable(email),
+      onSuccess: (data) => {
+         setIsEmailAvailable(data?.data);
+      },
 
-            const newEmail = JSON.stringify({ email });
-            localStorage.setItem('currentEmail', newEmail);
+      onError: (error) => {
+         toast.error('email available error');
+         console.log(error);
+      },
+   });
 
-            navigate('/verification');
-         }
-      } catch (error) {
-         console.log('error', error);
-      }
+   const handleRegister = (name: string, email: string, password: string) => {
+      const params = { name, email, password, url: BaseURL };
+      console.log(email);
+      addEmailToLS(email);
+      registerMutate(params);
    };
 
-   const checkEmailAvailable = async (email: string) => {
-      try {
-         const response: any = await checkEmailValidate({ email });
-         if (response.error) {
-            console.log('error in try - ', response.error);
-            toast.error('error in check Email Available');
-         } else {
-            console.log(response);
-         }
-      } catch (error) {
-         console.log(error);
-         toast.error('Error in check Email Available');
-      }
+   const checkEmailAvailable = (email: string) => {
+      emailAvailableMutate(email);
    };
 
    return (
       <SignUpForm
          handleRegister={handleRegister}
          checkEmailAvailable={checkEmailAvailable}
-         isLoading={isLoading}
+         isLoading={isPending}
          emailLoading={emailLoading}
-         emailSucces={emailSucces}
+         emailSucces={isEmailAvailable}
       />
    );
 };

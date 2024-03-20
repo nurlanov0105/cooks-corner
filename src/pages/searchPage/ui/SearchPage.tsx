@@ -1,42 +1,41 @@
-import classNames from 'classnames';
-import styles from './styles.module.scss';
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from '@/app/appStore';
 import { SearchCategories } from '@/features/searchCategories';
 import { Search } from '@/features/search';
 import { ChefsCard } from '@/features/chefsCard';
 import { StandartCard } from '@/features/standartCard';
-import { useAppDispatch, useAppSelector } from '@/app/appStore';
-import {
-   addSearchCategory,
-   useGetSearchRecipesQuery,
-   useSearchUsersQuery,
-} from '@/entities/search';
-import { AddRecipeBtn } from '@/entities/addRecipeBtn';
 import { RecipeCardSkeleton } from '@/shared/ui';
+import { AddRecipeBtn } from '@/entities/addRecipeBtn';
 
-const SearchPage = () => {
+import { addSearchCategory, searchRecipes, searchUsers } from '@/entities/search';
+
+import classNames from 'classnames';
+import styles from './styles.module.scss';
+import { useQuery } from '@tanstack/react-query';
+import { Tags } from '@/shared/api';
+
+const SearchPage: FC = () => {
    const dispatch = useAppDispatch();
    const category = useAppSelector((state) => state.search.category);
    const {
       chefsSearchParams,
-      recipesSearchParams,
       chefsPage,
       chefsLimit,
+      recipesSearchParams,
       recipesLimit,
       recipesPage,
-      chefsCards,
-      recipesCards,
+      // chefsCards,
+      // recipesCards,
    } = useAppSelector((state) => state.search);
 
-   const { isLoading: chefsLoading } = useSearchUsersQuery({
-      searchParams: chefsSearchParams,
-      page: chefsPage,
-      size: chefsLimit,
+   const { data: chefsCards, isLoading: chefsLoading } = useQuery({
+      queryKey: [Tags.USERS, chefsSearchParams, chefsPage, chefsLimit],
+      queryFn: () => searchUsers({ query: chefsSearchParams, size: chefsLimit, page: chefsPage }),
    });
-   const { isLoading: recipesLoading } = useGetSearchRecipesQuery({
-      searchParams: recipesSearchParams,
-      size: recipesLimit,
-      page: recipesPage,
+   const { data: recipesCards, isLoading: recipesLoading } = useQuery({
+      queryKey: [Tags.RECIPES, recipesSearchParams, recipesLimit, recipesPage],
+      queryFn: () =>
+         searchRecipes({ query: recipesSearchParams, size: recipesLimit, page: recipesPage }),
    });
 
    const onClickCategory = useCallback((category: string) => {
@@ -45,11 +44,11 @@ const SearchPage = () => {
 
    const preparedChefsCards = chefsLoading
       ? [...Array(12)].map((_, i) => <RecipeCardSkeleton key={i} />)
-      : chefsCards.map((data: any) => <ChefsCard {...data} key={data.userId} />);
+      : chefsCards.content.map((data: any) => <ChefsCard {...data} key={data.userId} />);
 
    const preparedRecipesCards = recipesLoading
       ? [...Array(12)].map((_, i) => <RecipeCardSkeleton key={i} />)
-      : recipesCards.map((data: any) => <StandartCard {...data} key={data.recipeId} />);
+      : recipesCards.content.map((data: any) => <StandartCard {...data} key={data.recipeId} />);
 
    return (
       <div className={classNames('container', styles.search)}>

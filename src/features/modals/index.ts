@@ -1,6 +1,6 @@
-import LogoutModal from './logoutModal/ui/LogoutModal';
-import ManageProfileModal from './manageProfile/ui/ManageProfileModal.tsx';
-import RecipeModal from './recipeModal/ui/RecipeModal.tsx';
-import EmailNoticeModal from './emailNoticeModal/ui/EmailNoticeModal.tsx';
-import NotAuthNotice from './notAuthNotice/ui/NotAuthNotice.tsx';
+import LogoutModal from './ui/logoutModal/LogoutModal.tsx';
+import ManageProfileModal from './ui/manageProfile/ManageProfileModal.tsx';
+import RecipeModal from './ui/recipeModal/RecipeModal.tsx';
+import EmailNoticeModal from './ui/emailNoticeModal/EmailNoticeModal.tsx';
+import NotAuthNotice from './ui/notAuthNotice/NotAuthNotice.tsx';
 export { LogoutModal, ManageProfileModal, RecipeModal, EmailNoticeModal, NotAuthNotice };

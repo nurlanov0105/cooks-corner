@@ -1,15 +1,19 @@
+import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@/app/appStore';
+import { useAuth } from '@/shared/lib/hooks';
 
-import styles from './styles.module.scss';
-import classNames from 'classnames';
 import { ProfileInfo } from '@/widgets/profileInfo';
 import { CardsSection } from '@/widgets/cardsSection';
-import { useGetProfileRecipesQuery, useGetUserProfileQuery } from '@/entities/profile';
 import { ProfileCategories } from '@/features/profileCategories';
-import { useAuth } from '@/shared/lib/hooks';
-import { useNavigate } from 'react-router-dom';
 
-const Profile = () => {
+import classNames from 'classnames';
+import styles from './styles.module.scss';
+import { getProfileRecipes, getUser } from '@/entities/user';
+import { Tags } from '@/shared/api';
+import { useQuery } from '@tanstack/react-query';
+
+const Profile: FC = () => {
    const { isAuth } = useAuth();
    const navigate = useNavigate();
 
@@ -21,18 +25,29 @@ const Profile = () => {
    const userObj: any = localStorage.getItem('currentUserId');
    const readyObj = JSON.parse(userObj);
 
-   const { category, profileRecipes } = useAppSelector((state) => state.profile);
+   const { category } = useAppSelector((state) => state.user);
 
-   const { data, isLoading, isError } = useGetUserProfileQuery({ userId: readyObj.userId });
-   const { isLoading: recipeLoading } = useGetProfileRecipesQuery({ category });
+   const {
+      data: userData,
+      isLoading: userLoading,
+      isError: userError,
+   } = useQuery({
+      queryKey: [Tags.USERS],
+      queryFn: () => getUser(readyObj.userId),
+   });
 
-   const preparedCards = recipeLoading ? [...Array(12)] : profileRecipes;
+   const { data: profileRecipes, isLoading: recipeLoading } = useQuery({
+      queryKey: [Tags.USERS, category],
+      queryFn: () => getProfileRecipes(category),
+   });
+
+   const preparedCards = recipeLoading ? [...Array(12)] : profileRecipes.content;
 
    return (
       <div className='container'>
          <h2 className={classNames('h2', styles.title)}>Profile</h2>
 
-         <ProfileInfo {...data} isLoading={isLoading} isError={isError} />
+         <ProfileInfo {...userData} isLoading={userLoading} isError={userError} />
          <div className={styles.categories}>
             <ProfileCategories />
          </div>

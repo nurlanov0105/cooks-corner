@@ -1,22 +1,30 @@
 import { FC, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/appStore';
-import { addRecipeCategory, useGetRecipesQuery } from '@/entities/recipes';
-import styles from './styles.module.scss';
-import classNames from 'classnames';
 import { Categories } from '@/features/categories';
 import { CardsSection } from '@/widgets/cardsSection';
+import { addRecipeCategory, getrecipes } from '@/entities/recipes';
+
+import styles from './styles.module.scss';
+import classNames from 'classnames';
+import { useQuery } from '@tanstack/react-query';
+import { Tags } from '@/shared/api';
 
 const Home: FC = () => {
    const dispatch = useAppDispatch();
-   const { category, limit, currentPage, recipes } = useAppSelector((state) => state.recipe);
+   const { category, limit, currentPage } = useAppSelector((state) => state.recipe);
 
-   const { isLoading } = useGetRecipesQuery({ size: limit, page: currentPage, category });
+   const { data: recipes, isLoading } = useQuery({
+      queryKey: [Tags.RECIPES, category, limit, currentPage],
+      queryFn: () => getrecipes({ category: category, size: limit, page: currentPage }),
+   });
+
+   // const { isLoading } = useGetRecipesQuery({ size: limit, page: currentPage, category });
 
    const onClickCategory = useCallback((category: string) => {
       dispatch(addRecipeCategory(category));
    }, []);
 
-   const preparedCards = isLoading ? [...Array(12)] : recipes;
+   const preparedCards = isLoading ? [...Array(12)] : recipes.content;
 
    return (
       <div className='container'>

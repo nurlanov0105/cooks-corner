@@ -1,13 +1,12 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { singleEmailValidationSchema } from '../model/validation';
-import { useNavigate } from 'react-router-dom';
+import ErrorMessage from './ErrorMessage';
 import { getInputClassNames } from '../model/getInputClassNames';
 
 import styles from './styles.module.scss';
-
 import dogIcon from '@/shared/assets/imgs/auth/dog.svg';
-import ErrorMessage from './ErrorMessage';
 
 interface Props {
    handleForgotPassword: (password: string) => void;
