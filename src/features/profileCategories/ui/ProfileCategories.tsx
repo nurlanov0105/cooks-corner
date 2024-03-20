@@ -1,8 +1,9 @@
-import classNames from 'classnames';
-import styles from './styles.module.scss';
 import { FC, useState } from 'react';
 import { useAppDispatch } from '@/app/appStore';
-import { addProfileCategory } from '@/entities/profile';
+import { addProfileCategory } from '@/entities/user';
+
+import classNames from 'classnames';
+import styles from './styles.module.scss';
 
 const categories = ['My recipe', 'Saved recipe'];
 const endpointCategories = {

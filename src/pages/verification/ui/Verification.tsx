@@ -1,28 +1,36 @@
-import { VerifyBlock } from '@/features/verifyBlock';
+import { FC } from 'react';
 import { useAppDispatch } from '@/app/appStore';
 import { showModal } from '@/widgets/modal';
-import { useResendConfirmationMutation } from '@/features/authentication';
-import { toast } from 'react-toastify';
+import { VerifyBlock } from '@/features/verifyBlock';
 import { getEmailFromLS } from '@/shared/lib/helpers';
+import { toast } from 'react-toastify';
+import { resendEmail } from '@/features/authentication';
+import { IResendEmailRequest } from '@/shared/lib/types';
+import { useMutation } from '@tanstack/react-query';
+import { BaseURL } from '@/shared/api/endpoints';
 
-const Verification = () => {
+const Verification: FC = () => {
    const dispatch = useAppDispatch();
 
-   const [resendConfirmation, { isLoading }] = useResendConfirmationMutation();
+   const { mutate: resendEmailMutate, isPending } = useMutation({
+      mutationFn: (params: IResendEmailRequest) => resendEmail(params),
+      onSuccess: () => {
+         dispatch(showModal('EmailNoticeModal'));
+      },
+      onError: (error) => {
+         toast.error('Email resend error');
+         console.log(error);
+      },
+   });
 
    const handelResendConfirmation = async () => {
       const { email } = getEmailFromLS();
+      const params = { email, url: BaseURL };
+      console.log(params);
 
-      const response: any = await resendConfirmation({ email });
-
-      if (response.error) {
-         console.log('error in try', response.error);
-         toast.error('erorr resend confirmation');
-      } else {
-         dispatch(showModal('EmailNoticeModal'));
-      }
+      resendEmailMutate(params);
    };
-   return <VerifyBlock handelResendConfirmation={handelResendConfirmation} isLoading={isLoading} />;
+   return <VerifyBlock handelResendConfirmation={handelResendConfirmation} isLoading={isPending} />;
 };
 
 export default Verification;

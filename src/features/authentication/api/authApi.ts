@@ -1,131 +1,84 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReauth } from './baseQueryWithReauth';
+import { baseApiInstance } from '@/shared/api/instance';
+import {
+   ILoginRequest,
+   IRegisterRequest,
+   IResendEmailRequest,
+   IResetPasswordRequest,
+} from '@/shared/lib/types';
 import { AuthEndpoints } from '@/shared/api';
 
-export const authApi = createApi({
-   reducerPath: 'authApi',
-   baseQuery: baseQueryWithReauth,
-   endpoints: (builder) => ({
-      register: builder.mutation({
-         query: (params) => {
-            const { name, email, password } = params;
-            return {
-               url: AuthEndpoints.REGISTER,
-               responseHandler: (response) => response.text(),
-               method: 'POST',
-               body: {
-                  name,
-                  email,
-                  password,
-                  url: 'https://neobis-cooks-corner.vercel.app/confirm',
-               },
-            };
-         },
-      }),
-      login: builder.mutation({
-         query: (params) => {
-            const { email, password } = params;
-            return {
-               url: AuthEndpoints.LOGIN,
-               method: 'POST',
-               body: {
-                  email,
-                  password,
-               },
-            };
-         },
-      }),
-      confirmation: builder.mutation({
-         query: (params) => {
-            const { ct } = params;
-            return {
-               url: AuthEndpoints.CONFIRMATION,
-               responseHandler: (response) => response.text(),
-               method: 'PUT',
-               params: {
-                  ct: ct,
-               },
-            };
-         },
-      }),
-      resendConfirmation: builder.mutation({
-         query: (params) => {
-            const { email } = params;
-            return {
-               url: AuthEndpoints.RESEND_CONFIRMATION,
-               responseHandler: (response) => response.text(),
-               method: 'POST',
-               body: {
-                  email,
-                  url: 'https://neobis-cooks-corner.vercel.app/confirm',
-               },
-            };
-         },
-      }),
-      logout: builder.mutation({
-         query: (params) => {
-            const { refreshToken } = params;
-            return {
-               url: AuthEndpoints.LOGOUT,
-               responseHandler: (response) => response.text(),
-               method: 'POST',
-               body: `Bearer ${refreshToken}`,
-            };
-         },
-      }),
-      forgotPassword: builder.mutation({
-         query: (params) => {
-            const { email } = params;
-            return {
-               url: AuthEndpoints.FORGOT_PASSWORD,
-               responseHandler: (response) => response.text(),
-               method: 'POST',
-               body: {
-                  email,
-                  url: 'https://neobis-cooks-corner.vercel.app/reset-password',
-               },
-            };
-         },
-      }),
-      resetPassword: builder.mutation({
-         query: (params) => {
-            const { password, token } = params;
-            console.log(password);
-            return {
-               url: AuthEndpoints.RESET_PASSWORD,
-               responseHandler: (response) => response.text(),
-               method: 'PUT',
-               params: {
-                  rpt: token,
-               },
-               body: {
-                  password: password,
-               },
-            };
-         },
-      }),
+export const login = async (params: ILoginRequest) => {
+   try {
+      const { data } = await baseApiInstance.post(AuthEndpoints.LOGIN, params);
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
+export const register = async (params: IRegisterRequest) => {
+   try {
+      const { data } = await baseApiInstance.post(AuthEndpoints.REGISTER, params);
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
+export const emailAvailable = async (email: string) => {
+   try {
+      const data = await baseApiInstance.post(AuthEndpoints.EMAIL_AVAILABLE, email, {
+         headers: { 'Content-Type': 'text/plain' },
+      });
+      console.log('data,', data);
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
+export const resendEmail = async (params: IResendEmailRequest) => {
+   try {
+      const { data } = await baseApiInstance.post(AuthEndpoints.RESEND_CONFIRMATION, params);
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
 
-      emailAvailable: builder.mutation({
-         query: (params) => {
-            const { email } = params;
-            return {
-               url: AuthEndpoints.EMAIL_AVAILABLE,
-               responseHandler: (response) => response.text(),
-               method: 'POST',
-               body: email,
-            };
-         },
-      }),
-   }),
-});
+export const confirm = async (ct: string) => {
+   try {
+      const { data } = await baseApiInstance.put(`${AuthEndpoints.CONFIRMATION}?ct=${ct}`);
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
 
-export const {
-   useRegisterMutation,
-   useLoginMutation,
-   useConfirmationMutation,
-   useResendConfirmationMutation,
-   useLogoutMutation,
-   useForgotPasswordMutation,
-   useResetPasswordMutation,
-   useEmailAvailableMutation,
-} = authApi;
+export const sendForgotPassword = async (params: IResendEmailRequest) => {
+   try {
+      const { data } = await baseApiInstance.post(AuthEndpoints.FORGOT_PASSWORD, params);
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+export const resetPassword = async (params: IResetPasswordRequest) => {
+   try {
+      const { data } = await baseApiInstance.put(
+         `${AuthEndpoints.RESET_PASSWORD}?rpt=${params.rpt}`,
+         { password: params.password }
+      );
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
+export const logout = async (refreshToken: string) => {
+   try {
+      const { data } = await baseApiInstance.post(AuthEndpoints.LOGOUT, `Bearer ${refreshToken}`, {
+         headers: { 'Content-Type': 'text/plain' },
+      });
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};

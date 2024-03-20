@@ -1,103 +1,40 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReauth } from './baseQueryWithReauth';
-import { setRecipes } from '..';
-import { RecipesEndpoints, Tags } from '@/shared/api';
+import { RecipesEndpoints } from '@/shared/api';
+import { baseApiInstance } from '@/shared/api/instance';
 
-export const recipeApi = createApi({
-   reducerPath: 'recipeApi',
-   baseQuery: baseQueryWithReauth,
-   tagTypes: [Tags.RECIPES],
-   endpoints: (builder) => ({
-      getRecipes: builder.query({
-         keepUnusedDataFor: 0,
-         query: ({ size, page, category }) => {
-            return {
-               url: RecipesEndpoints.RECIPES,
-               method: 'GET',
-               params: {
-                  query: `category:${category}`,
-                  size,
-                  page,
-               },
-            };
-         },
-         providesTags: [Tags.RECIPES],
-         async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
-            const result = await queryFulfilled;
-            const data = result.data;
+export const getrecipes = async (params: any) => {
+   try {
+      const { data } = await baseApiInstance.get(
+         `${RecipesEndpoints.RECIPES}?query=category:${params.category}&size=${params.size}&page=${params.page}`
+      );
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
+export const getDetailRecipe = async (recipeId: string) => {
+   try {
+      const { data } = await baseApiInstance.get(RecipesEndpoints.RECIPES + '/' + recipeId);
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
+export const addRecipe = async (formData: string) => {
+   try {
+      const { data } = await baseApiInstance.post(RecipesEndpoints.RECIPES, formData);
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
 
-            dispatch(setRecipes(data.content));
-         },
-      }),
-      likeRecipe: builder.mutation({
-         query: ({ recipeId }) => {
-            return {
-               responseHandler: (response) => response.text(),
-               url: RecipesEndpoints.RECIPES_LIKE + recipeId,
-               method: 'PUT',
-            };
-         },
-         invalidatesTags: [Tags.RECIPES],
-      }),
-      dislikeRecipe: builder.mutation({
-         query: ({ recipeId }) => {
-            return {
-               responseHandler: (response) => response.text(),
-               url: RecipesEndpoints.RECIPES_DISLIKE + recipeId,
-               method: 'PUT',
-            };
-         },
-         invalidatesTags: [Tags.RECIPES],
-      }),
-      bookmarkRecipe: builder.mutation({
-         query: ({ recipeId }) => {
-            return {
-               responseHandler: (response) => response.text(),
-               url: RecipesEndpoints.RECIPES_BOOKMARK + recipeId,
-               method: 'PUT',
-            };
-         },
-         invalidatesTags: [Tags.RECIPES],
-      }),
-      removeBookmarkRecipe: builder.mutation({
-         query: ({ recipeId }) => {
-            return {
-               responseHandler: (response) => response.text(),
-               url: RecipesEndpoints.RECIPES_REMOVE_BOOKMARK + recipeId,
-               method: 'PUT',
-            };
-         },
-         invalidatesTags: [Tags.RECIPES],
-      }),
-      getDetailRecipe: builder.query({
-         query: ({ recipeId }) => {
-            return {
-               url: RecipesEndpoints.RECIPES + `/${recipeId}`,
-               method: 'GET',
-            };
-         },
-         providesTags: [Tags.RECIPES],
-      }),
-      addRecipe: builder.mutation({
-         query: ({ formData }) => {
-            return {
-               responseHandler: (response) => response.text(),
-               url: RecipesEndpoints.RECIPES,
-               method: 'POST',
-               body: formData,
-            };
-         },
-         invalidatesTags: [Tags.RECIPES],
-      }),
-   }),
-});
-
-export const {
-   useGetRecipesQuery,
-   useLikeRecipeMutation,
-   useDislikeRecipeMutation,
-   useBookmarkRecipeMutation,
-   useRemoveBookmarkRecipeMutation,
-   useGetDetailRecipeQuery,
-   useAddRecipeMutation,
-} = recipeApi;
+export const action = async (params: any) => {
+   try {
+      const { data } = await baseApiInstance.put(
+         `v1/actions/${params.actionId}/${params.objectTypeId}/${params.objectId}`
+      );
+      return data;
+   } catch (error) {
+      console.log(error);
+   }
+};

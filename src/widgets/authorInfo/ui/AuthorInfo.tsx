@@ -1,13 +1,17 @@
 import { FC } from 'react';
-import styles from './styles.module.scss';
-import classNames from 'classnames';
 import { useAuth } from '@/shared/lib/hooks';
 import { useAppDispatch } from '@/app/appStore';
 import { showModal } from '@/widgets/modal';
-import { useFollowMutation, useUnfollowMutation } from '@/entities/users';
 import { toast } from 'react-toastify';
 
+import styles from './styles.module.scss';
+import classNames from 'classnames';
+import { follow, unFollow } from '@/entities/user';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Tags } from '@/shared/api';
+
 interface Props {
+   id: string;
    isLoading: boolean;
    isError: any;
    userId: number;
@@ -21,6 +25,7 @@ interface Props {
 }
 
 const AuthorInfo: FC<Props> = ({
+   id,
    isLoading,
    isError,
    userId,
@@ -34,9 +39,34 @@ const AuthorInfo: FC<Props> = ({
 }) => {
    const { isAuth } = useAuth();
    const dispatch = useAppDispatch();
+   const queryClient = useQueryClient();
 
-   const [follow, { isLoading: followLoading }] = useFollowMutation();
-   const [unfollow, { isLoading: unfollowLoading }] = useUnfollowMutation();
+   const { mutate: followMutate, isPending: followLoading } = useMutation({
+      mutationFn: (userId: number) => follow(userId),
+      onSuccess: (data) => {
+         console.log(data);
+         queryClient.setQueryData([Tags.USERS, id], (oldUser: any) => {
+            return { ...oldUser, isFollowed: true, followers: followers + 1 };
+         });
+      },
+      onError: (error) => {
+         toast.error('follow failed');
+         console.log(error);
+      },
+   });
+   const { mutate: unFollowMutate, isPending: unfollowLoading } = useMutation({
+      mutationFn: (userId: number) => unFollow(userId),
+      onSuccess: (data) => {
+         console.log(data);
+         queryClient.setQueryData([Tags.USERS, id], (oldUser: any) => {
+            return { ...oldUser, isFollowed: false, followers: followers - 1 };
+         });
+      },
+      onError: (error) => {
+         toast.error('unFollow failed');
+         console.log(error);
+      },
+   });
 
    const handlefollowClick = async () => {
       if (!isAuth) {
@@ -45,31 +75,9 @@ const AuthorInfo: FC<Props> = ({
       }
 
       if (!isFollowed) {
-         try {
-            const response: any = await follow({ userId });
-            if (response.error) {
-               console.log(response.error);
-               toast.error('Error try follow');
-            } else {
-               console.log(response);
-            }
-         } catch (error) {
-            console.log(error);
-            toast.error('error follow');
-         }
+         followMutate(userId);
       } else {
-         try {
-            const response: any = await unfollow({ userId });
-            if (response.error) {
-               console.log(response.error);
-               toast.error('Error try unfollow');
-            } else {
-               console.log(response);
-            }
-         } catch (error) {
-            console.log(error);
-            toast.error('error unfollow');
-         }
+         unFollowMutate(userId);
       }
    };
 

@@ -1,34 +1,34 @@
-import { ResetPasswordForm } from '@/features/authentication';
+import { FC } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useResetPasswordMutation } from '@/features/authentication/api/authApi';
+import { ResetPasswordForm, resetPassword } from '@/features/authentication';
 import { toast } from 'react-toastify';
+import { useMutation } from '@tanstack/react-query';
+import { IResetPasswordRequest } from '@/shared/lib/types';
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
    const [searchParams] = useSearchParams();
    const navigate = useNavigate();
 
-   const [resetPassword, { isLoading }] = useResetPasswordMutation();
+   const rpt = searchParams.get('rpt');
 
-   const token = searchParams.get('rpt');
+   const { mutate: resetPasswordMutate, isPending } = useMutation({
+      mutationFn: (params: IResetPasswordRequest) => resetPassword(params),
+      onSuccess: (data) => {
+         console.log(data);
+         toast.success('Succesfully changed password!');
+         navigate('/signin');
+      },
+      onError: (error) => {
+         toast.error('reset password error');
+         console.log(error);
+      },
+   });
 
-   const handleResetPassword = async (password: string) => {
-      if (token) {
-         try {
-            const response: any = await resetPassword({ password, token });
-            if (response.error) {
-               console.log('error in try - ', response.error);
-               toast.error(response.error.data);
-            } else {
-               toast.success('Succesfully changed password!');
-               console.log(response);
-               navigate('/signin');
-            }
-         } catch (error) {
-            console.log(error);
-         }
-      }
+   const handleResetPassword = (password: string) => {
+      const params = { password, rpt };
+      resetPasswordMutate(params);
    };
-   return <ResetPasswordForm handleResetPassword={handleResetPassword} isLoading={isLoading} />;
+   return <ResetPasswordForm handleResetPassword={handleResetPassword} isLoading={isPending} />;
 };
 
 export default ResetPassword;

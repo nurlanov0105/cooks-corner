@@ -1,7 +1,7 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.scss';
 import arrowBack from '@/shared/assets/imgs/main/arrow-back.svg';
-import { useNavigate } from 'react-router-dom';
 
 const BackArrow: FC = () => {
    const navigate = useNavigate();

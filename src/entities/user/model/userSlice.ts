@@ -10,8 +10,8 @@ const initialState = {
    },
 };
 
-const profileSlice = createSlice({
-   name: 'profile',
+const userSlice = createSlice({
+   name: 'user',
    initialState,
    reducers: {
       addProfileCategory(state, action) {
@@ -33,6 +33,6 @@ const profileSlice = createSlice({
 });
 
 export const { addUserProfile, addProfileCategory, setProfileRecipes, addProfileData } =
-   profileSlice.actions;
+   userSlice.actions;
 
-export default profileSlice.reducer;
+export default userSlice.reducer;

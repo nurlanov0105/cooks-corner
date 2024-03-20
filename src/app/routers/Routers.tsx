@@ -1,5 +1,8 @@
+import { FC } from 'react';
 import { Routes, Route } from 'react-router';
+
 import { AuthLayout } from '../layouts';
+import ProtectedRoute from './ProtectedRoute';
 
 import { SignIn } from '@/pages/signin';
 import { SignUp } from '@/pages/signup';
@@ -10,13 +13,12 @@ import { Profile } from '@/pages/profile';
 import { DetailsRecipe } from '@/pages/detailsRecipe';
 import { NotFound } from '@/pages/notFound';
 import { SearchPage } from '@/pages/searchPage';
-import { Modal } from '@/widgets/modal';
 import { Verification } from '@/pages/verification';
 import { ForgotPassword } from '@/pages/forgotPassword';
 import { ResetPassword } from '@/pages/resetPassword';
-import ProtectedRoute from './ProtectedRoute';
+import { Modal } from '@/widgets/modal';
 
-const Routers = () => {
+const Routers: FC = () => {
    return (
       <>
          <Routes>

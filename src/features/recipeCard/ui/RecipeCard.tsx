@@ -1,22 +1,19 @@
-import styles from './styles.module.scss';
 import { FC, useState } from 'react';
-
-import likeIcon from '@/shared/assets/imgs/cards/like.svg';
-import unlikeIcon from '@/shared/assets/imgs/cards/unlike.svg';
-import savedIcon from '@/shared/assets/imgs/cards/saved.svg';
-import unsavedIcon from '@/shared/assets/imgs/cards/unsaved.svg';
 import { Link } from 'react-router-dom';
-import {
-   useBookmarkRecipeMutation,
-   useDislikeRecipeMutation,
-   useLikeRecipeMutation,
-   useRemoveBookmarkRecipeMutation,
-} from '@/entities/recipes';
-import { toast } from 'react-toastify';
 import { useAuth } from '@/shared/lib/hooks';
 import { useAppDispatch } from '@/app/appStore';
 import { showModal } from '@/widgets/modal';
 import { handleLikenBookmark } from '@/shared/lib/helpers';
+
+import { toast } from 'react-toastify';
+import styles from './styles.module.scss';
+import likeIcon from '@/shared/assets/imgs/cards/like.svg';
+import unlikeIcon from '@/shared/assets/imgs/cards/unlike.svg';
+import savedIcon from '@/shared/assets/imgs/cards/saved.svg';
+import unsavedIcon from '@/shared/assets/imgs/cards/unsaved.svg';
+import { action } from '@/entities/recipes';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Tags } from '@/shared/api';
 
 interface Props {
    imageUrl: string;
@@ -28,6 +25,23 @@ interface Props {
    isBookmarked: boolean;
    recipeId: number;
 }
+
+// const likeIpdateFunctions = {
+//    1: {isLiked: true, likes: likes + 1},
+//    10: (oldRecipe: Props) => ({ ...oldRecipe, isLiked: false, likes: oldRecipe.likes - 1 }),
+// };
+// const bookmarkUpdateFunctions = {
+//    2: (oldRecipe: Props) => ({
+//       ...oldRecipe,
+//       isBookmarked: true,
+//       bookmarks: oldRecipe.bookmarks + 1,
+//    }),
+//    20: (oldRecipe: Props) => ({
+//       ...oldRecipe,
+//       isBookmarked: false,
+//       bookmarks: oldRecipe.bookmarks - 1,
+//    }),
+// };
 
 const RecipeCard: FC<Props> = ({
    imageUrl,
@@ -41,46 +55,74 @@ const RecipeCard: FC<Props> = ({
 }) => {
    const { isAuth } = useAuth();
    const dispatch = useAppDispatch();
-
-   const [like, { isLoading: isLoadingLike }] = useLikeRecipeMutation();
-   const [dislike, { isLoading: isLoadingDislike }] = useDislikeRecipeMutation();
-   const [bookmark, { isLoading: isLoadingBookmark }] = useBookmarkRecipeMutation();
-   const [removeBookmark, { isLoading: isLoadingRemoveMark }] = useRemoveBookmarkRecipeMutation();
-
-   const [localIsLiked, setLocalIsLiked] = useState(isLiked);
-   const [localIsBookmarked, setLocalIsBookmarked] = useState(isBookmarked);
+   const [isLocalLike, setIsLocalLike] = useState(isLiked);
+   const [isLocalBookmark, setIsLocalBookmark] = useState(isBookmarked);
    const [localLikes, setLocalLikes] = useState(likes);
    const [localBookmarks, setLocalBookmarks] = useState(bookmarks);
+   const [actionId, setActionId] = useState(1);
+
+   const { mutate: likeAction, isPending: isLikeLoading } = useMutation({
+      mutationFn: (params: any) => action(params),
+      onSuccess: () => {
+         setIsLocalLike(!isLocalLike);
+         if (actionId === 1) {
+            setLocalLikes(localLikes + 1);
+         } else {
+            setLocalLikes(localLikes - 1);
+         }
+      },
+      onError: (error) => {
+         toast.error('like error');
+         console.log(error);
+      },
+   });
+   const { mutate: bookmarkAction, isPending: isBookmarkLoading } = useMutation({
+      mutationFn: (params: any) => action(params),
+      onSuccess: () => {
+         setIsLocalBookmark(!isLocalBookmark);
+         if (actionId === 2) {
+            setLocalBookmarks(localBookmarks + 1);
+         } else {
+            setLocalBookmarks(localBookmarks - 1);
+         }
+      },
+      onError: (error) => {
+         toast.error('like error');
+         console.log(error);
+      },
+   });
 
    const handleLikeClick = () => {
-      handleLikenBookmark({
-         isItem: localIsLiked,
-         setLocalItem: setLocalIsLiked,
-         item: like,
-         removeItem: dislike,
-         dispatch: dispatch,
-         showModal: showModal,
-         isAuth: isAuth,
-         toast: toast,
-         recipeId: recipeId,
-         count: localLikes,
-         setCount: setLocalLikes,
-      });
+      if (!isAuth) {
+         dispatch(showModal('NotAuthNotice'));
+         return;
+      }
+
+      if (!isLiked) {
+         const params = { actionId: 1, objectTypeId: 2, objectId: recipeId };
+         likeAction(params);
+         setActionId(params.actionId);
+      } else {
+         const params = { actionId: 10, objectTypeId: 2, objectId: recipeId };
+         likeAction(params);
+         setActionId(params.actionId);
+      }
    };
    const handleBookmarkClick = () => {
-      handleLikenBookmark({
-         isItem: localIsBookmarked,
-         setLocalItem: setLocalIsBookmarked,
-         item: bookmark,
-         removeItem: removeBookmark,
-         dispatch: dispatch,
-         showModal: showModal,
-         isAuth: isAuth,
-         toast: toast,
-         recipeId: recipeId,
-         count: localBookmarks,
-         setCount: setLocalBookmarks,
-      });
+      if (!isAuth) {
+         dispatch(showModal('NotAuthNotice'));
+         return;
+      }
+
+      if (!isBookmarked) {
+         const params = { actionId: 2, objectTypeId: 2, objectId: recipeId };
+         bookmarkAction(params);
+         setActionId(params.actionId);
+      } else {
+         const params = { actionId: 20, objectTypeId: 2, objectId: recipeId };
+         bookmarkAction(params);
+         setActionId(params.actionId);
+      }
    };
 
    return (
@@ -96,22 +138,22 @@ const RecipeCard: FC<Props> = ({
             <div className={styles.card__row}>
                <button
                   className={styles.card__box}
-                  disabled={isLoadingLike || isLoadingDislike}
+                  disabled={isLikeLoading}
                   onClick={handleLikeClick}>
                   <img
                      className={styles.card__icon}
-                     src={localIsLiked ? likeIcon : unlikeIcon}
+                     src={isLocalLike ? likeIcon : unlikeIcon}
                      alt='icon'
                   />
                   <span className={styles.card__count}>{localLikes}</span>
                </button>
                <button
                   className={styles.card__box}
-                  disabled={isLoadingBookmark || isLoadingRemoveMark}
+                  disabled={isBookmarkLoading}
                   onClick={handleBookmarkClick}>
                   <img
                      className={styles.card__icon}
-                     src={localIsBookmarked ? savedIcon : unsavedIcon}
+                     src={isLocalBookmark ? savedIcon : unsavedIcon}
                      alt='icon'
                   />
 

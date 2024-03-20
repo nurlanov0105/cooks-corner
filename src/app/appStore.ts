@@ -1,22 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { rootReducer } from './appReducer';
-import { authApi } from '@/features/authentication';
-import { recipeApi } from '@/entities/recipes';
-import { searchApi } from '@/entities/search';
-import { profileApi } from '@/entities/profile';
-import { usersAPi } from '@/entities/users';
 
 export const store = configureStore({
    reducer: rootReducer,
-   middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(
-         authApi.middleware,
-         recipeApi.middleware,
-         searchApi.middleware,
-         usersAPi.middleware,
-         profileApi.middleware
-      ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

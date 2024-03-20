@@ -1,15 +1,15 @@
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './styles.module.scss';
 import { useAppDispatch } from '@/app/appStore';
 import { closeModal } from '@/widgets/modal';
-import { closeModalBlur } from '@/widgets/modalBlur';
+import styles from './styles.module.scss';
 
-const NotAuthNotice = () => {
+const NotAuthNotice: FC = () => {
    const dispatch = useAppDispatch();
    const handleCloseModal = () => {
-      dispatch(closeModalBlur());
       dispatch(closeModal());
    };
+
    return (
       <div className={styles.wrapper}>
          <h2 className='h2'>You need to be authorized</h2>

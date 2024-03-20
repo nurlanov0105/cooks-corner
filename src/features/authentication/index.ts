@@ -9,15 +9,16 @@ import authSlice, {
    addUserId,
    removeUserId,
 } from './model/authSlice';
-import { authApi } from './api/authApi';
+
 import {
-   useRegisterMutation,
-   useLoginMutation,
-   useConfirmationMutation,
-   useResendConfirmationMutation,
-   useLogoutMutation,
-   useForgotPasswordMutation,
-   useEmailAvailableMutation,
+   login,
+   register,
+   emailAvailable,
+   resendEmail,
+   confirm,
+   sendForgotPassword,
+   resetPassword,
+   logout,
 } from './api/authApi';
 
 export {
@@ -30,12 +31,12 @@ export {
    removeAccessToken,
    addUserId,
    removeUserId,
-   authApi,
-   useRegisterMutation,
-   useLoginMutation,
-   useConfirmationMutation,
-   useResendConfirmationMutation,
-   useLogoutMutation,
-   useForgotPasswordMutation,
-   useEmailAvailableMutation,
+   login,
+   register,
+   emailAvailable,
+   resendEmail,
+   confirm,
+   sendForgotPassword,
+   resetPassword,
+   logout,
 };

@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from 'react';
-import styles from './styles.module.scss';
-
-import searchIcon from '@/shared/assets/imgs/search/search.svg';
-import crossIcon from '@/shared/assets/imgs/search/cross.svg';
-import classNames from 'classnames';
 import { useDebounce } from '@/shared/lib/hooks';
 import { useAppDispatch } from '@/app/appStore';
 import { setChefsSearchParams, setRecipesSearchParams } from '@/entities/search';
+
+import classNames from 'classnames';
+import styles from './styles.module.scss';
+import searchIcon from '@/shared/assets/imgs/search/search.svg';
+import crossIcon from '@/shared/assets/imgs/search/cross.svg';
 
 interface Props {
    handleChefsSearch?: (value: string) => void;

@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import styles from './styles.module.scss';
 import { BackArrow } from '@/entities/backArrow';
+import styles from './styles.module.scss';
 
 interface Props {
    imageUrl: string;

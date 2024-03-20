@@ -1,11 +1,13 @@
 import { useAppDispatch } from '@/app/appStore';
+import { useAuth } from '@/shared/lib/hooks';
+import { showModal } from '@/widgets/modal';
+
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import plusIcon from '@/shared/assets/imgs/search/plus.svg';
-import { showModal } from '@/widgets/modal';
-import { useAuth } from '@/shared/lib/hooks';
+import { FC } from 'react';
 
-const AddRecipeBtn = () => {
+const AddRecipeBtn: FC = () => {
    const { isAuth } = useAuth();
 
    const dispatch = useAppDispatch();

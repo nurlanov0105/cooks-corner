@@ -1,11 +1,11 @@
 import { FC, useState } from 'react';
-import styles from './styles.module.scss';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { pswValidationSchema } from '../model/validation';
 import { getInputClassNames } from '../model/getInputClassNames';
 import ErrorMessage from './ErrorMessage';
-import { Link } from 'react-router-dom';
 
+import styles from './styles.module.scss';
 import eyeClosedIcon from '@/shared/assets/imgs/auth/eye-closed.svg';
 import eyeOpenedIcon from '@/shared/assets/imgs/auth/eye-opened.svg';
 

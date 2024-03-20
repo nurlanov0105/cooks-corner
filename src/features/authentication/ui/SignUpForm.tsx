@@ -1,23 +1,23 @@
 import { FC, useEffect, useState } from 'react';
-import styles from './styles.module.scss';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { registerValidationSchema } from '../model/validation';
 import { getInputClassNames } from '../model/getInputClassNames';
 import ErrorMessage from './ErrorMessage';
-import { Link } from 'react-router-dom';
+import { useDebounce } from '@/shared/lib/hooks/useDebounce';
 
+import styles from './styles.module.scss';
 import userIcon from '@/shared/assets/imgs/auth/user.svg';
 import dogIcon from '@/shared/assets/imgs/auth/dog.svg';
 import eyeClosedIcon from '@/shared/assets/imgs/auth/eye-closed.svg';
 import eyeOpenedIcon from '@/shared/assets/imgs/auth/eye-opened.svg';
-import { useDebounce } from '@/shared/lib/hooks/useDebounce';
 
 interface Props {
    handleRegister: (name: string, email: string, password: string) => void;
    checkEmailAvailable: (email: string) => void;
    isLoading: boolean;
    emailLoading: boolean;
-   emailSucces: boolean;
+   emailSucces: any;
 }
 
 const SignUpForm: FC<Props> = ({
@@ -114,6 +114,31 @@ const SignUpForm: FC<Props> = ({
                         {emailLoading ? (
                            <div className={styles.form__emailAnswer}>
                               <div className='loader'></div>
+                           </div>
+                        ) : emailSucces === false ? (
+                           <div className={styles.form__emailAnswer}>
+                              <svg
+                                 xmlns='http://www.w3.org/2000/svg'
+                                 width='50'
+                                 height='50'
+                                 viewBox='0 0 50 50'>
+                                 <line
+                                    x1='10'
+                                    y1='10'
+                                    x2='40'
+                                    y2='40'
+                                    stroke='red'
+                                    strokeWidth='4'
+                                 />
+                                 <line
+                                    x1='40'
+                                    y1='10'
+                                    x2='10'
+                                    y2='40'
+                                    stroke='red'
+                                    strokeWidth='4'
+                                 />
+                              </svg>
                            </div>
                         ) : emailSucces && !formik.errors.email ? (
                            <div className={styles.form__emailAnswer}>

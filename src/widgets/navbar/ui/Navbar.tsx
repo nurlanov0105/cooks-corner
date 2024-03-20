@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from 'react';
-import { useAppDispatch } from '@/app/appStore';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/shared/lib/hooks';
+import { useAppDispatch } from '@/app/appStore';
+import { closeModal, showModal } from '@/widgets/modal';
+
 import classNames from 'classnames';
 import styles from './styles.module.scss';
-
-import { closeModal, showModal } from '@/widgets/modal';
-import { useAuth } from '@/shared/lib/hooks';
 
 const Navbar: FC = () => {
    const dispatch = useAppDispatch();
