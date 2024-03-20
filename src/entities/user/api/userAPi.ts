@@ -20,7 +20,7 @@ export const getProfileRecipes = async (category: string) => {
 };
 export const getUserRecipes = async (userId: string) => {
    try {
-      const { data } = await baseApiInstance.get(UsersEndpoints.USERS_RECIPES + userId);
+      const { data }: any = await baseApiInstance.get(UsersEndpoints.USERS_RECIPES + userId);
       return data;
    } catch (error) {
       console.log(error);
@@ -29,7 +29,10 @@ export const getUserRecipes = async (userId: string) => {
 
 export const updateProfile = async (formData: string) => {
    try {
-      const { data } = await baseApiInstance.post(UsersEndpoints.USERS, formData);
+      const { data }: any = await baseApiInstance.put(UsersEndpoints.USERS, formData, {
+         headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
       return data;
    } catch (error) {
       console.log(error);

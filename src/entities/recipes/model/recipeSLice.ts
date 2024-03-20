@@ -17,6 +17,12 @@ const recipeSLice = createSlice({
       setRecipes(state, action) {
          state.recipes = action.payload;
       },
+
+      likeAction(state, action) {
+         // const filteredItem = state.recipes.
+      },
+
+      bookmarkAction(state, action) {},
    },
 });
 

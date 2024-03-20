@@ -12,7 +12,9 @@ import unlikeIcon from '@/shared/assets/imgs/cards/unlike.svg';
 import savedIcon from '@/shared/assets/imgs/cards/saved.svg';
 import unsavedIcon from '@/shared/assets/imgs/cards/unsaved.svg';
 import { action } from '@/entities/recipes';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Tags } from '@/shared/api';
+import { handleActionClick } from '@/shared/lib/helpers';
 // import { Tags } from '@/shared/api';
 
 interface Props {
@@ -25,23 +27,6 @@ interface Props {
    isBookmarked: boolean;
    recipeId: number;
 }
-
-// const likeIpdateFunctions = {
-//    1: {isLiked: true, likes: likes + 1},
-//    10: (oldRecipe: Props) => ({ ...oldRecipe, isLiked: false, likes: oldRecipe.likes - 1 }),
-// };
-// const bookmarkUpdateFunctions = {
-//    2: (oldRecipe: Props) => ({
-//       ...oldRecipe,
-//       isBookmarked: true,
-//       bookmarks: oldRecipe.bookmarks + 1,
-//    }),
-//    20: (oldRecipe: Props) => ({
-//       ...oldRecipe,
-//       isBookmarked: false,
-//       bookmarks: oldRecipe.bookmarks - 1,
-//    }),
-// };
 
 const RecipeCard: FC<Props> = ({
    imageUrl,
@@ -59,35 +44,28 @@ const RecipeCard: FC<Props> = ({
    const [isLocalBookmark, setIsLocalBookmark] = useState(isBookmarked);
    const [localLikes, setLocalLikes] = useState(likes);
    const [localBookmarks, setLocalBookmarks] = useState(bookmarks);
-   const [actionId, setActionId] = useState(1);
+   const queryClient = useQueryClient();
 
-   const { mutate: likeAction, isPending: isLikeLoading } = useMutation({
+   const { mutate: actionLike, isPending: isLikeLoading } = useMutation({
       mutationFn: (params: any) => action(params),
       onSuccess: () => {
-         setIsLocalLike(!isLocalLike);
-         if (actionId === 1) {
-            setLocalLikes(localLikes + 1);
-         } else {
-            setLocalLikes(localLikes - 1);
-         }
+         // @ts-ignore
+         queryClient.invalidateQueries([Tags.RECIPES, { recipeId }]);
       },
       onError: (error) => {
          toast.error('like error');
          console.log(error);
       },
    });
-   const { mutate: bookmarkAction, isPending: isBookmarkLoading } = useMutation({
+
+   const { mutate: actionBookmark, isPending: isBookmarkLoading } = useMutation({
       mutationFn: (params: any) => action(params),
       onSuccess: () => {
-         setIsLocalBookmark(!isLocalBookmark);
-         if (actionId === 2) {
-            setLocalBookmarks(localBookmarks + 1);
-         } else {
-            setLocalBookmarks(localBookmarks - 1);
-         }
+         // @ts-ignore
+         queryClient.invalidateQueries([Tags.RECIPES, { recipeId }]);
       },
       onError: (error) => {
-         toast.error('like error');
+         toast.error('save error');
          console.log(error);
       },
    });
@@ -98,31 +76,41 @@ const RecipeCard: FC<Props> = ({
          return;
       }
 
-      if (!isLiked) {
-         const params = { actionId: 1, objectTypeId: 2, objectId: recipeId };
-         likeAction(params);
-         setActionId(params.actionId);
-      } else {
-         const params = { actionId: 10, objectTypeId: 2, objectId: recipeId };
-         likeAction(params);
-         setActionId(params.actionId);
+      if (isLikeLoading) {
+         return;
       }
+      handleActionClick({
+         isLocalAction: isLocalLike,
+         setLocalAction: setIsLocalLike,
+         localCount: localLikes,
+         setLocalCount: setLocalLikes,
+         actionId: 10,
+         newActionId: 1,
+         recipeId,
+         actionMutate: actionLike,
+      });
    };
+
    const handleBookmarkClick = () => {
       if (!isAuth) {
          dispatch(showModal('NotAuthNotice'));
          return;
       }
 
-      if (!isBookmarked) {
-         const params = { actionId: 2, objectTypeId: 2, objectId: recipeId };
-         bookmarkAction(params);
-         setActionId(params.actionId);
-      } else {
-         const params = { actionId: 20, objectTypeId: 2, objectId: recipeId };
-         bookmarkAction(params);
-         setActionId(params.actionId);
+      if (isBookmarkLoading) {
+         return;
       }
+
+      handleActionClick({
+         isLocalAction: isLocalBookmark,
+         setLocalAction: setIsLocalBookmark,
+         localCount: localBookmarks,
+         setLocalCount: setLocalBookmarks,
+         actionId: 20,
+         newActionId: 2,
+         recipeId,
+         actionMutate: actionBookmark,
+      });
    };
 
    return (

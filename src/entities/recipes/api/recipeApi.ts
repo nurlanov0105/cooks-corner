@@ -6,6 +6,7 @@ export const getrecipes = async (params: any) => {
       const { data } = await baseApiInstance.get(
          `${RecipesEndpoints.RECIPES}?query=category:${params.category}&size=${params.size}&page=${params.page}`
       );
+
       return data;
    } catch (error) {
       console.log(error);
@@ -21,7 +22,9 @@ export const getDetailRecipe = async (recipeId: string) => {
 };
 export const addRecipe = async (formData: string) => {
    try {
-      const { data } = await baseApiInstance.post(RecipesEndpoints.RECIPES, formData);
+      const { data } = await baseApiInstance.post(RecipesEndpoints.RECIPES, formData, {
+         headers: { 'Content-Type': 'multipart/form-data' },
+      });
       return data;
    } catch (error) {
       console.log(error);

@@ -24,10 +24,6 @@ const SignIn: FC = () => {
          navigate('/');
          toast.success('Succesfully login!');
       },
-      onError: (error) => {
-         toast.error('login failed');
-         console.log(error);
-      },
    });
 
    const handleLogin = (email: string, password: string) => {

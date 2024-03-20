@@ -1,8 +1,8 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/appStore';
 import { Categories } from '@/features/categories';
 import { CardsSection } from '@/widgets/cardsSection';
-import { addRecipeCategory, getrecipes } from '@/entities/recipes';
+import { addRecipeCategory, getrecipes, setRecipes } from '@/entities/recipes';
 
 import styles from './styles.module.scss';
 import classNames from 'classnames';
@@ -17,6 +17,12 @@ const Home: FC = () => {
       queryKey: [Tags.RECIPES, category, limit, currentPage],
       queryFn: () => getrecipes({ category: category, size: limit, page: currentPage }),
    });
+
+   // useEffect(() => {
+   //    if (!isLoading && recipesData) {
+   //       dispatch(setRecipes(recipesData.content));
+   //    }
+   // }, [isLoading, recipesData, dispatch]);
 
    // const { isLoading } = useGetRecipesQuery({ size: limit, page: currentPage, category });
 

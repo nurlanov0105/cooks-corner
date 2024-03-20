@@ -1,26 +1,31 @@
 import { baseApiInstance } from '@/shared/api/instance';
 import {
    ILoginRequest,
+   ILoginResponse,
    IRegisterRequest,
    IResendEmailRequest,
    IResetPasswordRequest,
 } from '@/shared/lib/types';
 import { AuthEndpoints } from '@/shared/api';
+import { toast } from 'react-toastify';
+import { apiErrorMessages } from '@/shared/lib/helpers/apiErrorMessages';
 
 export const login = async (params: ILoginRequest) => {
    try {
-      const { data } = await baseApiInstance.post(AuthEndpoints.LOGIN, params);
+      const { data } = await baseApiInstance.post<ILoginResponse>(AuthEndpoints.LOGIN, params);
+
       return data;
-   } catch (error) {
-      console.log(error);
+   } catch (error: any) {
+      apiErrorMessages({ queryName: 'Login', error });
    }
 };
 export const register = async (params: IRegisterRequest) => {
    try {
       const { data } = await baseApiInstance.post(AuthEndpoints.REGISTER, params);
+
       return data;
-   } catch (error) {
-      console.log(error);
+   } catch (error: any) {
+      apiErrorMessages({ queryName: 'Register', error });
    }
 };
 export const emailAvailable = async (email: string) => {
