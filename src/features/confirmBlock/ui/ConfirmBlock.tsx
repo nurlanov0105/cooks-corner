@@ -10,7 +10,7 @@ interface Props {
 
 const ConfirmBlock: FC<Props> = ({ isSuccess, isLoading }) => {
    const navigate = useNavigate();
-   const [countdown, setCountdown] = useState(10);
+   const [countdown, setCountdown] = useState(5);
 
    useEffect(() => {
       const timer = setInterval(() => {

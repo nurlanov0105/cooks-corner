@@ -1,9 +1,14 @@
 import axios from 'axios';
 import { addTokensToLS, getTokensFromLS } from '../lib/helpers';
 import { AuthEndpoints } from '.';
-import { useNavigate } from 'react-router-dom';
+import { apiErrorMessages } from '../lib/helpers/apiErrorMessages';
 
 export const BASE_URL = import.meta.env.VITE_TOURS_BASE_API_URL;
+
+export const authApiInstance = axios.create({
+   baseURL: BASE_URL,
+   headers: { 'Content-Type': 'application/json' },
+});
 
 export const baseApiInstance = axios.create({
    baseURL: BASE_URL,
@@ -52,6 +57,25 @@ const refreshAccessToken = async () => {
    return data.accessToken;
 };
 
+authApiInstance.interceptors.response.use(
+   (response) => {
+      return response;
+   },
+   async (error) => {
+      let url = new URL(window.location.href);
+
+      if (
+         error.response.data === 'Account has not been enabled' &&
+         url.pathname !== '/verification'
+      ) {
+         apiErrorMessages({ queryName: 'authApiInstance', error: error });
+         window.location.href = '/verification';
+         return;
+      }
+      apiErrorMessages({ queryName: 'authApiInstance', error: error });
+   }
+);
+
 baseApiInstance.interceptors.response.use(
    (response) => {
       return response;
@@ -72,8 +96,7 @@ baseApiInstance.interceptors.response.use(
             localStorage.removeItem('currentUserId');
             localStorage.removeItem('currentEmail');
 
-            const navigate = useNavigate();
-            navigate('/');
+            window.location.href = '/';
 
             throw refreshError;
          }

@@ -14,7 +14,7 @@ const EmailNoticeModal = () => {
    return (
       <div className={styles.block}>
          <h3 className={styles.block__title}>
-            We have sent another letter to the email address you provided.
+            We have sent another letter to the email address you provided.{' '}
             <span>{email ? email : null}</span>
          </h3>
          <p className={styles.block__descr}>Don't forget to check your Spam box !</p>

@@ -53,6 +53,9 @@ export const pswValidationSchema = yup.object({
 export const singleEmailValidationSchema = yup.object({
    email: emailSchema,
 });
+export const singlePasswordValidationSchema = yup.object({
+   password: passwordSchema,
+});
 
 // new password
 // export const newPswValidationSchema = yup.object({

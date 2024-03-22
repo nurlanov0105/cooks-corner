@@ -8,6 +8,7 @@ const initialState = {
       name: null,
       bio: null,
    },
+   profileImg: '',
 };
 
 const userSlice = createSlice({
@@ -29,10 +30,19 @@ const userSlice = createSlice({
          state.profileData.name = name;
          state.profileData.bio = bio;
       },
+
+      addProfileImg(state, action) {
+         state.profileImg = action.payload;
+      },
    },
 });
 
-export const { addUserProfile, addProfileCategory, setProfileRecipes, addProfileData } =
-   userSlice.actions;
+export const {
+   addUserProfile,
+   addProfileCategory,
+   setProfileRecipes,
+   addProfileData,
+   addProfileImg,
+} = userSlice.actions;
 
 export default userSlice.reducer;

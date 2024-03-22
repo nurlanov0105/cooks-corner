@@ -44,10 +44,10 @@ const StandartCard: FC<Props> = ({
    const queryClient = useQueryClient();
 
    const { mutate: actionLike, isPending: isLikeLoading } = useMutation({
-      mutationFn: (params: any) => action(params),
+      mutationFn: action,
       onSuccess: () => {
          // @ts-ignore
-         queryClient.invalidateQueries([Tags.RECIPES, { recipeId }]);
+         queryClient.invalidateQueries([Tags.RECIPES]);
       },
       onError: (error) => {
          toast.error('like error');
@@ -56,10 +56,10 @@ const StandartCard: FC<Props> = ({
    });
 
    const { mutate: actionBookmark, isPending: isBookmarkLoading } = useMutation({
-      mutationFn: (params: any) => action(params),
+      mutationFn: action,
       onSuccess: () => {
          // @ts-ignore
-         queryClient.invalidateQueries([Tags.RECIPES, { recipeId }]);
+         queryClient.invalidateQueries([Tags.RECIPES]);
       },
       onError: (error) => {
          toast.error('save error');
@@ -85,6 +85,7 @@ const StandartCard: FC<Props> = ({
          newActionId: 1,
          recipeId,
          actionMutate: actionLike,
+         objectTypeId: 2,
       });
    };
 
@@ -107,6 +108,7 @@ const StandartCard: FC<Props> = ({
          newActionId: 2,
          recipeId,
          actionMutate: actionBookmark,
+         objectTypeId: 2,
       });
    };
 

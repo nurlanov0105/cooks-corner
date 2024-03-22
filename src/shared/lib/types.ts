@@ -23,3 +23,13 @@ export interface IResetPasswordRequest {
    rpt: string | undefined | null;
    password: string;
 }
+// export interface ICommentResponse {
+//    rpt: string | undefined | null;
+//    password: string;
+// }
+
+export interface ICommentForm {
+   objectId: number | string;
+   text: string;
+   isReply: boolean;
+}

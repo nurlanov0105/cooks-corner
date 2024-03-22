@@ -4,6 +4,7 @@ import { userSlice } from '@/entities/user';
 import { searchSlice } from '@/entities/search';
 import { modalSlice } from '@/widgets/modal';
 import { authSlice } from '@/features/authentication';
+import { commentSlice } from '@/features/comments';
 
 export const rootReducer = combineReducers({
    auth: authSlice,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
    user: userSlice,
    search: searchSlice,
    modal: modalSlice,
+   comments: commentSlice,
 });

@@ -7,6 +7,7 @@ interface ActionParams {
    newActionId: number;
    recipeId: number;
    actionMutate: (params: any) => void;
+   objectTypeId: number;
 }
 
 export const handleActionClick = (params: ActionParams) => {
@@ -19,6 +20,7 @@ export const handleActionClick = (params: ActionParams) => {
       newActionId,
       recipeId,
       actionMutate,
+      objectTypeId,
    } = params;
 
    setLocalAction(!isLocalAction);
@@ -26,7 +28,7 @@ export const handleActionClick = (params: ActionParams) => {
 
    const actionParams = {
       actionId: isLocalAction ? actionId : newActionId,
-      objectTypeId: 2,
+      objectTypeId: objectTypeId,
       objectId: recipeId,
    };
    actionMutate(actionParams);
