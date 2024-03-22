@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-   category: 'main dishes',
+   categoryId: 1,
    limit: 12,
    currentPage: 0,
    recipes: [],
@@ -12,7 +12,7 @@ const recipeSLice = createSlice({
    initialState,
    reducers: {
       addRecipeCategory(state, action) {
-         state.category = action.payload;
+         state.categoryId = action.payload;
       },
       setRecipes(state, action) {
          state.recipes = action.payload;

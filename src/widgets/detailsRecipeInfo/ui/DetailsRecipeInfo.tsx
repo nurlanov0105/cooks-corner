@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import { Tags } from '@/shared/api';
 
 interface Props {
+   id: number;
    recipeId: number;
    title: 'string';
    author: 'string';
@@ -41,7 +42,7 @@ interface Props {
 }
 
 const DetailsRecipeInfo: FC<Props> = ({
-   // isLoading,
+   id,
    recipeId,
    title,
    author,
@@ -64,10 +65,21 @@ const DetailsRecipeInfo: FC<Props> = ({
    const queryClient = useQueryClient();
 
    const { mutate: actionLike, isPending: isLikeLoading } = useMutation({
-      mutationFn: (params: any) => action(params),
+      mutationFn: action,
       onSuccess: () => {
          // @ts-ignore
-         queryClient.invalidateQueries([Tags.RECIPES, { recipeId }]);
+         queryClient.invalidateQueries([Tags.RECIPES, id]);
+         // queryClient.setQueryData([Tags.RECIPES, id], (oldRecipe: any) => {
+         //    return {
+         //       ...oldRecipe,
+         //       isLiked: isLiked ? false : true,
+         //       likes: isLiked ? likes - 1 : likes + 1,
+         //    };
+         // });
+      },
+      onMutate: () => {
+         // Очистка кэша
+         queryClient.clear();
       },
       onError: (error) => {
          toast.error('like error');
@@ -79,7 +91,11 @@ const DetailsRecipeInfo: FC<Props> = ({
       mutationFn: (params: any) => action(params),
       onSuccess: () => {
          // @ts-ignore
-         queryClient.invalidateQueries([Tags.RECIPES, { recipeId }]);
+         queryClient.invalidateQueries([Tags.RECIPES, id]);
+      },
+      onMutate: () => {
+         // Очистка кэша
+         queryClient.clear();
       },
       onError: (error) => {
          toast.error('save error');
@@ -105,6 +121,7 @@ const DetailsRecipeInfo: FC<Props> = ({
          newActionId: 1,
          recipeId,
          actionMutate: actionLike,
+         objectTypeId: 2,
       });
    };
 
@@ -127,6 +144,7 @@ const DetailsRecipeInfo: FC<Props> = ({
          newActionId: 2,
          recipeId,
          actionMutate: actionBookmark,
+         objectTypeId: 2,
       });
    };
 

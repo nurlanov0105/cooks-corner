@@ -13,7 +13,7 @@ import { useAuth } from '@/shared/lib/hooks';
 
 const Author: FC = () => {
    const { id } = useParams();
-   const isAuth = useAuth();
+   const { isAuth } = useAuth();
    const { userId } = getUserIdFromLS();
    const navigate = useNavigate();
 

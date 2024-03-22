@@ -3,6 +3,7 @@ import userSlice, {
    addProfileCategory,
    setProfileRecipes,
    addProfileData,
+   addProfileImg,
 } from './model/userSlice';
 
 import {
@@ -20,6 +21,7 @@ export {
    addProfileCategory,
    addProfileData,
    setProfileRecipes,
+   addProfileImg,
    getUser,
    getProfileRecipes,
    getUserRecipes,

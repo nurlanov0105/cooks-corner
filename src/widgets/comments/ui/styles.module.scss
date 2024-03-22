@@ -1,0 +1,61 @@
+.comments {
+   max-width: 982px;
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+   padding: 20px 0;
+   margin-bottom: 4rem;
+
+   h2 {
+      margin-bottom: 20px;
+   }
+
+   &__form {
+      display: flex;
+      flex-direction: column;
+      row-gap: 16px;
+
+      margin-bottom: 2rem;
+   }
+
+   &__textarea {
+      width: 100%;
+      height: 12rem;
+      padding: 14px 19px;
+      border-radius: 10px;
+      border: 1px solid $text-fedded;
+      resize: none;
+
+      @include transition;
+
+      &:focus,
+      &:active {
+         outline: none;
+         border: 1px solid $primary-color;
+      }
+   }
+
+   &__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 10px;
+   }
+
+   &__auth {
+      display: flex;
+      align-items: center;
+      column-gap: 5px;
+   }
+
+   &__btn {
+      max-width: 38rem;
+      margin-left: auto;
+   }
+
+   &__container {
+      display: flex;
+      flex-direction: column;
+      row-gap: 3rem;
+   }
+}

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/shared/lib/hooks';
 import { useAppDispatch } from '@/app/appStore';
 import { showModal } from '@/widgets/modal';
-// import { handleLikenBookmark } from '@/shared/lib/helpers';
 
 import { toast } from 'react-toastify';
 import styles from './styles.module.scss';
@@ -47,10 +46,10 @@ const RecipeCard: FC<Props> = ({
    const queryClient = useQueryClient();
 
    const { mutate: actionLike, isPending: isLikeLoading } = useMutation({
-      mutationFn: (params: any) => action(params),
+      mutationFn: action,
       onSuccess: () => {
          // @ts-ignore
-         queryClient.invalidateQueries([Tags.RECIPES, { recipeId }]);
+         queryClient.invalidateQueries([Tags.RECIPES, recipeId]);
       },
       onError: (error) => {
          toast.error('like error');
@@ -59,10 +58,10 @@ const RecipeCard: FC<Props> = ({
    });
 
    const { mutate: actionBookmark, isPending: isBookmarkLoading } = useMutation({
-      mutationFn: (params: any) => action(params),
+      mutationFn: action,
       onSuccess: () => {
          // @ts-ignore
-         queryClient.invalidateQueries([Tags.RECIPES, { recipeId }]);
+         queryClient.invalidateQueries([Tags.RECIPES, recipeId]);
       },
       onError: (error) => {
          toast.error('save error');
@@ -79,6 +78,7 @@ const RecipeCard: FC<Props> = ({
       if (isLikeLoading) {
          return;
       }
+
       handleActionClick({
          isLocalAction: isLocalLike,
          setLocalAction: setIsLocalLike,
@@ -88,6 +88,7 @@ const RecipeCard: FC<Props> = ({
          newActionId: 1,
          recipeId,
          actionMutate: actionLike,
+         objectTypeId: 2,
       });
    };
 
@@ -110,6 +111,7 @@ const RecipeCard: FC<Props> = ({
          newActionId: 2,
          recipeId,
          actionMutate: actionBookmark,
+         objectTypeId: 2,
       });
    };
 

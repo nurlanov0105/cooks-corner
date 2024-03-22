@@ -7,21 +7,24 @@ import { toast } from 'react-toastify';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 const LogoutModal = () => {
    const dispatch = useAppDispatch();
    const { refreshToken } = getTokensFromLS();
+   // const queryClient = useQueryClient();
+   const navigate = useNavigate();
 
    const { mutate: logoutMutate, isPending } = useMutation({
-      mutationFn: (refreshToken: string) => logout(refreshToken),
+      mutationFn: logout,
       onSuccess: () => {
-         localStorage.removeItem('currentUserId');
-         localStorage.removeItem('currentTokens');
-
+         localStorage.removeItem('currentEmail');
          dispatch(removeAccessToken());
          dispatch(removeUserId());
-
-         toast.success('Succefsully logout!');
+         toast.success('Succesfully logout');
+         navigate('/');
+         location.reload();
+         // queryClient.removeQueries();
       },
       onError: (error) => {
          toast.error('Logout error');

@@ -16,6 +16,7 @@ import { Tags } from '@/shared/api';
 
 const SearchPage: FC = () => {
    const dispatch = useAppDispatch();
+
    const category = useAppSelector((state) => state.search.category);
    const {
       chefsSearchParams,

@@ -6,6 +6,7 @@ import { NotAuthNotice } from '@/features/modals';
 import { RecipeModal } from '@/features/modals';
 import { closeModal } from '..';
 import { LogoutModal } from '@/features/modals';
+import { DeleteAccountModal } from '@/features/modals';
 
 import classNames from 'classnames';
 import styles from './styles.module.scss';
@@ -25,6 +26,7 @@ const Modal: FC = () => {
       RecipeModal,
       EmailNoticeModal,
       NotAuthNotice,
+      DeleteAccountModal,
    };
    let RenderComponent;
    if (componentName) {
