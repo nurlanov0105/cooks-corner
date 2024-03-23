@@ -19,6 +19,7 @@ interface Props {
    isLoading: boolean;
    emailLoading: boolean;
    emailSucces: any;
+   emailError: any;
 }
 
 const SignUpForm: FC<Props> = ({
@@ -27,6 +28,7 @@ const SignUpForm: FC<Props> = ({
    isLoading,
    emailLoading,
    emailSucces,
+   emailError,
 }) => {
    const [email, setEmail] = useState('');
    const debouncedEmail = useDebounce(email, 700);
@@ -221,7 +223,7 @@ const SignUpForm: FC<Props> = ({
             <button
                className='btn'
                type='submit'
-               disabled={!!Object.keys(formik.errors).length || isLoading}>
+               disabled={!!Object.keys(formik.errors).length || isLoading || emailError}>
                {isLoading ? <span>Loading...</span> : <span>Sign In</span>}
             </button>
          </form>

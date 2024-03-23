@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@/app/appStore';
-import { SignInForm, addAccessToken, addUserId, login } from '@/features/authentication';
-import { addEmailToLS, addTokensToLS, addUserIdToLS } from '@/shared/lib/helpers';
+import { SignInForm, addAccessToken, addUserInfo, login } from '@/features/authentication';
+import { addEmailToLS, addTokensToLS, addUserInfoToLS } from '@/shared/lib/helpers';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
@@ -20,9 +20,9 @@ const SignIn: FC = () => {
                accessToken: result.data.accessToken,
                refreshToken: result.data.refreshToken,
             });
-            addUserIdToLS(result.data.userId);
+            addUserInfoToLS({ userId: result.data.userId, name: result.data.name });
             dispatch(addAccessToken(result.data.accessToken));
-            dispatch(addUserId(result.data.userId));
+            dispatch(addUserInfo({ userId: result.data.userId, name: result.data.name }));
 
             navigate('/');
             toast.success('Succesfully login!');

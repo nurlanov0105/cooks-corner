@@ -21,6 +21,7 @@ const ManageProfileModal: FC = () => {
 
    const [image, setImage] = useState(cameraIcon);
    const [label, setLabel] = useState('Upload a new photo');
+   // @ts-ignore
    const userId = useAppSelector((state) => state.auth.userId);
 
    const { mutate: updateProfileMutate } = useMutation({

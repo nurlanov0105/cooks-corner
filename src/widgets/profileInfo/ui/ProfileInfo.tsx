@@ -50,10 +50,6 @@ const ProfileInfo: FC<Props> = ({
       queryFn: () => getUserFollowing(userId),
    });
 
-   if (!followingLoading) {
-      console.log(followingData);
-   }
-
    const onFollowersClick = () => {
       const props = {
          componentName: 'FollowsModal',

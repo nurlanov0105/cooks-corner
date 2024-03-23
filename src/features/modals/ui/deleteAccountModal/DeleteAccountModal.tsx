@@ -6,7 +6,7 @@ import {
    deleteAccount,
    getInputClassNames,
    removeAccessToken,
-   removeUserId,
+   removeUserInfo,
    singlePasswordValidationSchema,
 } from '@/features/authentication';
 
@@ -32,7 +32,7 @@ const DeleteAccountModal: FC = () => {
       onSuccess: () => {
          localStorage.removeItem('currentEmail');
          dispatch(removeAccessToken());
-         dispatch(removeUserId());
+         dispatch(removeUserInfo());
          dispatch(closeModal());
          toast.success('Succesfully logout');
          navigate('/');

@@ -1,6 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IAuthorCard } from './types';
+import { IRecipeCard } from '@/shared/lib/types';
 
-const initialState = {
+interface IState {
+   category: string;
+
+   chefsCards: IAuthorCard[];
+   chefsSearchParams: string;
+   chefsPage: number;
+   chefsLimit: number;
+   chefsTotalPages: number;
+
+   recipesCards: IRecipeCard[];
+   recipesSearchParams: string;
+   recipesPage: number;
+   recipesLimit: number;
+   recipesTotalPages: number;
+}
+
+const initialState: IState = {
    category: 'Chefs',
 
    chefsCards: [],

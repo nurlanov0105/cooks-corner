@@ -1,6 +1,15 @@
+import { IRecipeCard } from '@/shared/lib/types';
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+interface IState {
+   categoryId: number;
+   limit: number;
+   currentPage: number;
+   recipes: IRecipeCard[];
+   totalPages: number;
+}
+
+const initialState: IState = {
    categoryId: 1,
    limit: 12,
    currentPage: 0,

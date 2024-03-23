@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import { Tags } from '@/shared/api';
 import { CommentReply, deleteComment, updateComment } from '..';
 import ReplyForm from '../replyForm/ReplyForm';
-import { getUserIdFromLS } from '@/shared/lib/helpers/getUserId';
+import { getUserInfoFomLS } from '@/shared/lib/helpers/getUserInfoFomLS';
 
 interface Props {
    commentId: number;
@@ -51,7 +51,7 @@ const Comment: FC<Props> = ({
    const { isAuth } = useAuth();
    const dispatch = useAppDispatch();
    const queryClient = useQueryClient();
-   const { userId } = getUserIdFromLS();
+   const { userId } = getUserInfoFomLS();
 
    const [isLocalLike, setIsLocalLike] = useState(isLiked);
    const [localLikes, setLocalLikes] = useState(likeCount);

@@ -18,6 +18,7 @@ import {
 } from '@/entities/user';
 import { Tags } from '@/shared/api';
 import { useQuery } from '@tanstack/react-query';
+import { getUserInfoFomLS } from '@/shared/lib/helpers';
 
 const Profile: FC = () => {
    const { isAuth } = useAuth();
@@ -29,8 +30,7 @@ const Profile: FC = () => {
    }
 
    const dispatch = useAppDispatch();
-   const userObj: any = localStorage.getItem('currentUserId');
-   const readyObj = JSON.parse(userObj);
+   const { userId } = getUserInfoFomLS();
 
    // const [profileRecipes, setProfileRecipes] = useState<any[]>([]);
    const { profileRecipes, category, currentPage, limit } = useAppSelector((state) => state.user);
@@ -42,7 +42,7 @@ const Profile: FC = () => {
       isError: userError,
    } = useQuery({
       queryKey: [Tags.USERS],
-      queryFn: () => getUser(readyObj.userId),
+      queryFn: () => getUser(userId),
    });
 
    useEffect(() => {
@@ -101,12 +101,7 @@ const Profile: FC = () => {
       <div className='container'>
          <h2 className={classNames('h2', styles.title)}>Profile</h2>
 
-         <ProfileInfo
-            {...userData}
-            isLoading={userLoading}
-            isError={userError}
-            userId={readyObj.userId}
-         />
+         <ProfileInfo {...userData} isLoading={userLoading} isError={userError} userId={userId} />
          <div className={styles.categories}>
             <ProfileCategories value={category} onClickCategory={onClickCategory} />
          </div>

@@ -1,9 +1,9 @@
 import { useAppSelector } from '@/app/appStore';
 
 export function useAuth() {
-   const userId = useAppSelector((state) => state.auth.userId);
+   const accessToken = useAppSelector((state) => state.auth.accessToken);
 
    return {
-      isAuth: !!userId,
+      isAuth: !!accessToken,
    };
 }

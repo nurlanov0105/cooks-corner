@@ -29,6 +29,8 @@ export const resendEmail = async (params: IResendEmailRequest) => {
 
 export const confirm = async (ct: string) => {
    const response = await authApiInstance.put(`${AuthEndpoints.CONFIRMATION}?ct=${ct}`);
+   console.log(response);
+
    return response;
 };
 
