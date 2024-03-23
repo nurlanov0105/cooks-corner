@@ -9,7 +9,7 @@ interface Props {
    isError: boolean;
 }
 
-const ConfirmBlock: FC<Props> = ({ isSuccess, isLoading, isError }) => {
+const ConfirmBlock: FC<Props> = ({ isSuccess, isLoading }) => {
    const navigate = useNavigate();
    const [countdown, setCountdown] = useState(5);
 
