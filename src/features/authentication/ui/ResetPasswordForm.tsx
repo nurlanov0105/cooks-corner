@@ -8,6 +8,7 @@ import ErrorMessage from './ErrorMessage';
 import styles from './styles.module.scss';
 import eyeClosedIcon from '@/shared/assets/imgs/auth/eye-closed.svg';
 import eyeOpenedIcon from '@/shared/assets/imgs/auth/eye-opened.svg';
+import classNames from 'classnames';
 
 interface Props {
    handleResetPassword: (password: string) => void;
@@ -55,7 +56,10 @@ const ResetPasswordForm: FC<Props> = ({ handleResetPassword, isLoading }) => {
                      <div className={styles.form__box}>
                         <input
                            type={showPassword ? 'text' : 'password'}
-                           className={pswClassNames}
+                           className={classNames(
+                              pswClassNames,
+                              formik.values.password && styles.form__input_active
+                           )}
                            placeholder='Enter your new Password'
                            name='password'
                            onChange={formik.handleChange}
@@ -78,7 +82,10 @@ const ResetPasswordForm: FC<Props> = ({ handleResetPassword, isLoading }) => {
                      <div className={styles.form__box}>
                         <input
                            type={showConfirmPassword ? 'text' : 'password'}
-                           className={passwordConfirmClassNames}
+                           className={classNames(
+                              passwordConfirmClassNames,
+                              formik.values.passwordConfirm && styles.form__input_active
+                           )}
                            placeholder='Re-Enter your Password'
                            name='passwordConfirm'
                            onChange={formik.handleChange}

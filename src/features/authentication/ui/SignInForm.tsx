@@ -9,6 +9,7 @@ import styles from './styles.module.scss';
 import dogIcon from '@/shared/assets/imgs/auth/dog.svg';
 import eyeClosedIcon from '@/shared/assets/imgs/auth/eye-closed.svg';
 import eyeOpenedIcon from '@/shared/assets/imgs/auth/eye-opened.svg';
+import classNames from 'classnames';
 
 interface Props {
    handleLogin: (email: string, password: string) => void;
@@ -48,7 +49,10 @@ const SignInForm: FC<Props> = ({ handleLogin, isLoading }) => {
                      <div className={styles.form__box}>
                         <input
                            type='email'
-                           className={emailClassNames}
+                           className={classNames(
+                              emailClassNames,
+                              formik.values.email && styles.form__input_active
+                           )}
                            placeholder='Enter your Gmail'
                            name='email'
                            onChange={formik.handleChange}
@@ -66,7 +70,10 @@ const SignInForm: FC<Props> = ({ handleLogin, isLoading }) => {
                      <div className={styles.form__box}>
                         <input
                            type={showPassword ? 'text' : 'password'}
-                           className={pswClassNames}
+                           className={classNames(
+                              pswClassNames,
+                              formik.values.password && styles.form__input_active
+                           )}
                            placeholder='Enter your Password'
                            name='password'
                            onChange={formik.handleChange}

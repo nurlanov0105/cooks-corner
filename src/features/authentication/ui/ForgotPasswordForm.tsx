@@ -7,6 +7,7 @@ import { getInputClassNames } from '../model/getInputClassNames';
 
 import styles from './styles.module.scss';
 import dogIcon from '@/shared/assets/imgs/auth/dog.svg';
+import classNames from 'classnames';
 
 interface Props {
    handleForgotPassword: (password: string) => void;
@@ -46,7 +47,10 @@ const ForgetPasswordForm: FC<Props> = ({ handleForgotPassword, isLoading }) => {
                      <div className={styles.form__box}>
                         <input
                            type='email'
-                           className={emailClassNames}
+                           className={classNames(
+                              emailClassNames,
+                              formik.values.email && styles.form__input_active
+                           )}
                            placeholder='Enter your Gmail'
                            name='email'
                            onChange={formik.handleChange}

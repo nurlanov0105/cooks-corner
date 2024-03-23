@@ -43,6 +43,8 @@
       &_error {
          color: $error-color;
       }
+
+      @include transition;
    }
 
    &__icon {
@@ -88,4 +90,9 @@
       color: $primary-color !important;
       cursor: pointer;
    }
+}
+
+.form__input_active {
+   border: 1px solid $primary-color !important;
+   background-color: $white-color !important;
 }
