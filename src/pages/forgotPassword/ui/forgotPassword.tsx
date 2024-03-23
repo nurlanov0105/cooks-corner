@@ -13,7 +13,7 @@ const ForgotPassword: FC = () => {
    });
 
    const handleForgotPassword = (email: string) => {
-      const params = { email, url: 'http://localhost:5173/reset-password' };
+      const params = { email, url: 'https://neobis-cooks-corner.vercel.app/reset-password' };
       sendForgotPasswordMutate.mutate(params);
    };
 
