@@ -8,13 +8,13 @@ import styles from './styles.module.scss';
 import { useQuery } from '@tanstack/react-query';
 import { getUser, getUserRecipes } from '@/entities/user';
 import { Tags } from '@/shared/api';
-import { getUserIdFromLS } from '@/shared/lib/helpers/getUserId';
+import { getUserInfoFomLS } from '@/shared/lib/helpers/getUserInfoFomLS';
 import { useAuth } from '@/shared/lib/hooks';
 
 const Author: FC = () => {
    const { id } = useParams();
    const { isAuth } = useAuth();
-   const { userId } = getUserIdFromLS();
+   const { userId } = getUserInfoFomLS();
    const navigate = useNavigate();
 
    useEffect(() => {
@@ -47,7 +47,7 @@ const Author: FC = () => {
    return (
       <div className='container'>
          <BackArrow />
-         <AuthorInfo {...userData} id={id} isLoading={userLoading} isError={userError} />
+         <AuthorInfo {...userData} userId={id} isLoading={userLoading} isError={userError} />
          <div className={styles.row}>
             {recipesError ? (
                'Error'

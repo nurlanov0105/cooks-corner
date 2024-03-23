@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 import { ConfirmBlock } from '@/features/confirmBlock';
 import { useMutation } from '@tanstack/react-query';
 import { confirm } from '@/features/authentication';
-import { toast } from 'react-toastify';
 
 const Confirm: FC = () => {
    const [searchParams] = useSearchParams();
@@ -14,12 +13,11 @@ const Confirm: FC = () => {
       isSuccess,
       isError,
    } = useMutation({
-      mutationFn: (ct: string) => confirm(ct),
+      mutationFn: confirm,
       onSuccess: (data) => {
          console.log(data);
       },
       onError: (error) => {
-         toast.error('confirm error');
          console.log(error);
       },
    });

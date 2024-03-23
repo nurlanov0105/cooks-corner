@@ -5,21 +5,28 @@ import styles from './styles.module.scss';
 type Props = {
    handelResendConfirmation: () => void;
    isLoading: boolean;
+   isError: boolean;
 };
 
-const VerifyBlock: FC<Props> = ({ handelResendConfirmation, isLoading }) => {
+const VerifyBlock: FC<Props> = ({ handelResendConfirmation, isLoading, isError }) => {
    const handleClick = () => {
-      handelResendConfirmation();
+      if (!isError) {
+         handelResendConfirmation();
+      }
    };
 
    return (
       <div className={styles.block}>
          <div className={styles.block__descr}>
-            <p>
-               If the letter has not arrived, do not rush to wait for the owl mail - it is better to{' '}
-               <br />
-               <b>check your Spam box</b>
-            </p>
+            {isError ? (
+               <p>Error</p>
+            ) : (
+               <p>
+                  If the letter has not arrived, do not rush to wait for the owl mail - it is better
+                  to <br />
+                  <b>check your Spam box</b>
+               </p>
+            )}
          </div>
 
          <button

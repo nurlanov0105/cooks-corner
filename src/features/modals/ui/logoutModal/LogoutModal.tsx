@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/app/appStore';
 import { getTokensFromLS } from '@/shared/lib/helpers';
-import { logout, removeAccessToken, removeUserId } from '@/features/authentication';
+import { logout, removeAccessToken, removeUserInfo } from '@/features/authentication';
 import { closeModal } from '@/widgets/modal';
 import { toast } from 'react-toastify';
 
@@ -20,7 +20,7 @@ const LogoutModal = () => {
       onSuccess: () => {
          localStorage.removeItem('currentEmail');
          dispatch(removeAccessToken());
-         dispatch(removeUserId());
+         dispatch(removeUserInfo());
          toast.success('Succesfully logout');
          navigate('/');
          location.reload();

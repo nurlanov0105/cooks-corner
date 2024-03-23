@@ -9,8 +9,8 @@ import ErrorMessage from './ui/ErrorMessage';
 import authSlice, {
    addAccessToken,
    removeAccessToken,
-   addUserId,
-   removeUserId,
+   addUserInfo,
+   removeUserInfo,
 } from './model/authSlice';
 
 import {
@@ -33,8 +33,8 @@ export {
    authSlice,
    addAccessToken,
    removeAccessToken,
-   addUserId,
-   removeUserId,
+   addUserInfo,
+   removeUserInfo,
    login,
    register,
    emailAvailable,

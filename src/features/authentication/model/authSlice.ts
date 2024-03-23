@@ -1,11 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getTokensFromLS } from '@/shared/lib/helpers';
-import { getUserIdFromLS } from '@/shared/lib/helpers/getUserId';
+import { getUserInfoFomLS } from '@/shared/lib/helpers/getUserInfoFomLS';
 
 const { accessToken } = getTokensFromLS();
-const { userId } = getUserIdFromLS();
+const { userId, name } = getUserInfoFomLS();
 
-const initialState = { accessToken: accessToken, userId };
+const initialState = {
+   accessToken: accessToken,
+   userInfo: { userId, name },
+};
 const authSlice = createSlice({
    name: 'auth',
    initialState,
@@ -16,15 +19,17 @@ const authSlice = createSlice({
       removeAccessToken(state) {
          state.accessToken = null;
       },
-      addUserId(state, action) {
-         state.userId = action.payload;
+      addUserInfo(state, action) {
+         state.userInfo.name = action.payload.name;
+         state.userInfo.userId = action.payload.userId;
       },
-      removeUserId(state) {
-         state.userId = null;
+      removeUserInfo(state) {
+         state.userInfo.name = '';
+         state.userInfo.userId = '';
       },
    },
 });
 
-export const { addAccessToken, removeAccessToken, addUserId, removeUserId } = authSlice.actions;
+export const { addAccessToken, removeAccessToken, addUserInfo, removeUserInfo } = authSlice.actions;
 
 export default authSlice.reducer;

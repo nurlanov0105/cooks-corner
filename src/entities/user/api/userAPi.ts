@@ -1,5 +1,6 @@
 import { RecipesEndpoints, UsersEndpoints } from '@/shared/api';
 import { baseApiInstance } from '@/shared/api/instance';
+import { IUserRecipes } from '../model/types';
 
 export const getUser = async (userId: string) => {
    try {
@@ -10,7 +11,7 @@ export const getUser = async (userId: string) => {
    }
 };
 
-export const getProfileRecipes = async (params: any) => {
+export const getProfileRecipes = async (params: IUserRecipes) => {
    try {
       const { data } = await baseApiInstance.get(
          `${RecipesEndpoints.RECIPES}?query=${params.category}&size=${params.size}&page=${params.page}`

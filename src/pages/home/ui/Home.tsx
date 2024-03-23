@@ -10,10 +10,13 @@ import { useQuery } from '@tanstack/react-query';
 import { Tags } from '@/shared/api';
 import { useAuth } from '@/shared/lib/hooks';
 import { Pagaination } from '@/features/pagination';
+import { getUserInfoFomLS } from '@/shared/lib/helpers';
+import { Link } from 'react-router-dom';
 
 const Home: FC = () => {
    const dispatch = useAppDispatch();
    const { isAuth } = useAuth();
+   const { name } = getUserInfoFomLS();
    const { categoryId, limit, currentPage, totalPages } = useAppSelector((state) => state.recipe);
 
    const {
@@ -45,7 +48,20 @@ const Home: FC = () => {
       <div className={classNames('container', styles.container)}>
          <section className={styles.section}>
             <h1 className={classNames('h2', styles.section__title)}>
-               Hi, Sarthak. UI Designer & Cook
+               Hi,{' '}
+               {name ? (
+                  name
+               ) : (
+                  <>
+                     <Link to='/signin' className='accent-color'>
+                        Signin
+                     </Link>{' '}
+                     or{' '}
+                     <Link to='/signup' className='accent-color'>
+                        Signup
+                     </Link>
+                  </>
+               )}
             </h1>
             <div className={styles.section__col}>
                <div className={styles.section__category}>

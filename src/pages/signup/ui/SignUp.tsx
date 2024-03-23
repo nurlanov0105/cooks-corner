@@ -44,6 +44,7 @@ const SignUp: FC = () => {
          isLoading={registerMutate.isPending}
          emailLoading={emailAvailableMutate.isPending}
          emailSucces={isEmailAvailable}
+         emailError={emailAvailableMutate.isError}
       />
    );
 };

@@ -6,7 +6,7 @@ import { getDetailRecipe } from '@/entities/recipes';
 import { useQuery } from '@tanstack/react-query';
 import { Tags } from '@/shared/api';
 import { Comments } from '@/widgets/comments';
-import { getUserIdFromLS } from '@/shared/lib/helpers/getUserId';
+import { getUserInfoFomLS } from '@/shared/lib/helpers/getUserInfoFomLS';
 import { addProfileImg, getUser } from '@/entities/user';
 import { useAppDispatch } from '@/app/appStore';
 import { useAuth } from '@/shared/lib/hooks';
@@ -14,12 +14,12 @@ import { useAuth } from '@/shared/lib/hooks';
 const DetailsRecipe: FC = () => {
    const { id } = useParams();
    const { isAuth } = useAuth();
-   const { userId } = getUserIdFromLS();
+   const { userId } = getUserInfoFomLS();
    const dispatch = useAppDispatch();
 
    const { data, isLoading, isError } = useQuery({
       queryKey: [Tags.RECIPES, id],
-      queryFn: () => getDetailRecipe(id),
+      queryFn: () => getDetailRecipe(id!),
    });
 
    if (isAuth) {

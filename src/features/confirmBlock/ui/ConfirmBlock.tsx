@@ -36,13 +36,7 @@ const ConfirmBlock: FC<Props> = ({ isSuccess, isLoading, isError }) => {
             <h2 className={styles.confirm__title}>Загрузка...</h2>
          ) : isSuccess ? (
             <>
-               {!isError ? (
-                  <h2 className={styles.confirm__title}>
-                     Произошла ошибка при верификации. <br />
-                  </h2>
-               ) : (
-                  <h2 className={styles.confirm__title}>Подтверждение аккаунта прошло успешно!</h2>
-               )}
+               <h2 className={styles.confirm__title}>Подтверждение аккаунта прошло успешно!</h2>
 
                <div className={styles.confirm__block}>
                   Через <b>{countdown}</b> секунд вас перенест на страницу логина.

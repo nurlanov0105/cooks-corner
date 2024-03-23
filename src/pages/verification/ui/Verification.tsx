@@ -27,6 +27,7 @@ const Verification: FC = () => {
       <VerifyBlock
          handelResendConfirmation={handelResendConfirmation}
          isLoading={resendEmailMutate.isPending}
+         isError={resendEmailMutate.isError}
       />
    );
 };
