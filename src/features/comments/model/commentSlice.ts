@@ -2,8 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
    comments: [],
-   size: 12,
-   page: 0,
+   limit: 6,
+   currentPage: 0,
+   totalPages: 1,
 };
 
 const commentSlice = createSlice({
@@ -13,15 +14,18 @@ const commentSlice = createSlice({
       setComments(state, action) {
          state.comments = action.payload;
       },
-      setSize(state, action) {
-         state.size = action.payload;
+      setLimit(state, action) {
+         state.limit = action.payload;
       },
-      setPage(state, action) {
-         state.page = action.payload;
+      setCurrentPage(state, action) {
+         state.currentPage = action.payload;
+      },
+      setTotalPages(state, action) {
+         state.totalPages = action.payload;
       },
    },
 });
 
-export const { setComments, setSize, setPage } = commentSlice.actions;
+export const { setComments, setLimit, setCurrentPage, setTotalPages } = commentSlice.actions;
 
 export default commentSlice.reducer;

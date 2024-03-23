@@ -6,6 +6,7 @@ import { closeModal, showModal } from '@/widgets/modal';
 
 import classNames from 'classnames';
 import styles from './styles.module.scss';
+import { closeMobileModal } from '@/widgets/mobileModal';
 
 const Navbar: FC = () => {
    const dispatch = useAppDispatch();
@@ -35,17 +36,21 @@ const Navbar: FC = () => {
          return;
       }
       dispatch(closeModal());
+      dispatch(closeMobileModal());
       navigate(item.path);
    };
 
    const onLoginClick = () => {
       dispatch(closeModal());
+      dispatch(closeMobileModal());
       navigate('/signin');
    };
    const onLogoutClick = () => {
+      dispatch(closeMobileModal());
       dispatch(showModal('LogoutModal'));
    };
    const onDeleteClick = () => {
+      dispatch(closeMobileModal());
       dispatch(showModal('DeleteAccountModal'));
    };
 

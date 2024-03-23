@@ -15,10 +15,10 @@ import classNames from 'classnames';
 const categories = [
    'breakfasts',
    'soups',
-   'seafoods',
    'salads',
    'main dishes',
    'desserts',
+   'seafoods',
    'beverages',
 ];
 

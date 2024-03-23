@@ -5,8 +5,8 @@
 
          &.selected {
             a {
-               background-color: #fe5f1e;
-               color: #fff;
+               background-color: $grey-light;
+               color: $text-color;
             }
          }
 
@@ -19,20 +19,18 @@
          display: inline-flex;
          align-items: center;
          justify-content: center;
-         width: 40px;
-         height: 40px;
 
-         border: 1px solid #fe5f1e;
-         border-radius: 30px;
          cursor: pointer;
 
-         color: #fe5f1e;
+         padding: 5px 15px;
+         color: $text-color;
+         border-radius: 50%;
 
          transition: background-color 0.15s ease, color 0.15s ease;
 
          &:hover {
-            background-color: #fe5f1e;
-            color: #fff;
+            background-color: $grey-light;
+            color: $text-color;
          }
       }
    }

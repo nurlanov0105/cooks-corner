@@ -10,9 +10,11 @@ export const getUser = async (userId: string) => {
    }
 };
 
-export const getProfileRecipes = async (category: string) => {
+export const getProfileRecipes = async (params: any) => {
    try {
-      const { data } = await baseApiInstance.get(`${RecipesEndpoints.RECIPES}?query=${category}`);
+      const { data } = await baseApiInstance.get(
+         `${RecipesEndpoints.RECIPES}?query=${params.category}&size=${params.size}&page=${params.page}`
+      );
       return data;
    } catch (error) {
       console.log(error);
@@ -51,6 +53,23 @@ export const unFollow = async (userId: number) => {
    try {
       const { data } = await baseApiInstance.post(UsersEndpoints.USERS_UNFOLLOW + userId);
       return data;
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+export const getUserFollowers = async (userId: number) => {
+   try {
+      const response = await baseApiInstance.get(`${UsersEndpoints.USERS}/${userId}/followers`);
+      return response;
+   } catch (error) {
+      console.log(error);
+   }
+};
+export const getUserFollowing = async (userId: number) => {
+   try {
+      const response = await baseApiInstance.get(`${UsersEndpoints.USERS}/${userId}/following`);
+      return response;
    } catch (error) {
       console.log(error);
    }

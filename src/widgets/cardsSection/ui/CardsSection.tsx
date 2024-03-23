@@ -9,16 +9,17 @@ interface Props {
    cards: any;
    isLoading: boolean;
    isCenter?: boolean;
+   isProfile?: boolean;
 }
 
-const CardsSection: FC<Props> = ({ cards, isLoading, isCenter = false }) => {
+const CardsSection: FC<Props> = ({ cards, isLoading, isCenter = false, isProfile = false }) => {
    return (
       <section className={classNames(styles.section, isCenter ? styles.section_center : '')}>
          {cards.map((card: any, i: number) =>
-            isLoading ? (
+            isLoading && !isProfile ? (
                <RecipeCardSkeleton key={i} />
             ) : (
-               <RecipeCard key={card.recipeId} {...card} />
+               <RecipeCard key={isLoading ? i : card.recipeId} {...card} />
             )
          )}
       </section>

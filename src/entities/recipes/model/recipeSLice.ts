@@ -5,6 +5,7 @@ const initialState = {
    limit: 12,
    currentPage: 0,
    recipes: [],
+   totalPages: 1,
 };
 
 const recipeSLice = createSlice({
@@ -17,9 +18,15 @@ const recipeSLice = createSlice({
       setRecipes(state, action) {
          state.recipes = action.payload;
       },
+      addCurrentPage(state, action) {
+         state.currentPage = action.payload;
+      },
+      addTotalPages(state, action) {
+         state.totalPages = action.payload;
+      },
    },
 });
 
-export const { addRecipeCategory, setRecipes } = recipeSLice.actions;
+export const { addRecipeCategory, setRecipes, addCurrentPage, addTotalPages } = recipeSLice.actions;
 
 export default recipeSLice.reducer;

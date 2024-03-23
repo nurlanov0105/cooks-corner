@@ -72,6 +72,11 @@
          font-size: 16px;
          font-weight: 400;
       }
+
+      &_active {
+         border: 1px solid $primary-color;
+         background-color: $white-color !important;
+      }
    }
 
    &__textarea {

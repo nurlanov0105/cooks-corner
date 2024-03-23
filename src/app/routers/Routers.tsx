@@ -17,6 +17,7 @@ import { Verification } from '@/pages/verification';
 import { ForgotPassword } from '@/pages/forgotPassword';
 import { ResetPassword } from '@/pages/resetPassword';
 import { Modal } from '@/widgets/modal';
+import { MobileModal } from '@/widgets/mobileModal';
 
 const Routers: FC = () => {
    return (
@@ -41,6 +42,7 @@ const Routers: FC = () => {
             <Route path='*' element={<NotFound />} />
          </Routes>
          <Modal />
+         <MobileModal />
       </>
    );
 };

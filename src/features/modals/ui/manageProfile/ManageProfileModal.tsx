@@ -87,7 +87,10 @@ const ManageProfileModal: FC = () => {
                <input
                   type='text'
                   id='name'
-                  className={styles.form__input}
+                  className={classNames(
+                     styles.form__input,
+                     formik.values.name && styles.form__input_active
+                  )}
                   {...formik.getFieldProps('name')}
                />
             </div>

@@ -6,6 +6,8 @@ import searchSlice, {
    setRecipesSearchParams,
    setChefsCards,
    setRecipesCards,
+   addChefsTotalPages,
+   addRecipesTotalPages,
 } from './model/searchSlice';
 
 import { searchUsers, searchRecipes } from './api/searchApi';
@@ -21,4 +23,6 @@ export {
    setRecipesCards,
    searchUsers,
    searchRecipes,
+   addChefsTotalPages,
+   addRecipesTotalPages,
 };

@@ -7,13 +7,13 @@ const initialState = {
    chefsSearchParams: '',
    chefsPage: 0,
    chefsLimit: 12,
-   chefsTotalPages: 0,
+   chefsTotalPages: 1,
 
    recipesCards: [],
    recipesSearchParams: '',
    recipesPage: 0,
    recipesLimit: 12,
-   recipesTotalPages: 0,
+   recipesTotalPages: 1,
 };
 
 const searchSlice = createSlice({
@@ -39,7 +39,7 @@ const searchSlice = createSlice({
       },
 
       addRecipesTotalPages(state, action) {
-         state.chefsTotalPages = action.payload;
+         state.recipesTotalPages = action.payload;
       },
 
       setRecipesPage(state, action) {

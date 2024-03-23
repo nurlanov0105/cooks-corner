@@ -9,6 +9,9 @@ const initialState = {
       bio: null,
    },
    profileImg: '',
+   wrapperRef: null,
+   currentPage: 0,
+   limit: 12,
 };
 
 const userSlice = createSlice({
@@ -34,6 +37,15 @@ const userSlice = createSlice({
       addProfileImg(state, action) {
          state.profileImg = action.payload;
       },
+      setWrapperRef(state, action) {
+         state.wrapperRef = action.payload;
+      },
+      setCurrentPage(state, action) {
+         state.currentPage = action.payload;
+      },
+      setLimit(state, action) {
+         state.limit = action.payload;
+      },
    },
 });
 
@@ -43,6 +55,9 @@ export const {
    setProfileRecipes,
    addProfileData,
    addProfileImg,
+   setWrapperRef,
+   setCurrentPage,
+   setLimit,
 } = userSlice.actions;
 
 export default userSlice.reducer;

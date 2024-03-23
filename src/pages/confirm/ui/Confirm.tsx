@@ -12,6 +12,7 @@ const Confirm: FC = () => {
       mutate: confirmMutate,
       isPending,
       isSuccess,
+      isError,
    } = useMutation({
       mutationFn: (ct: string) => confirm(ct),
       onSuccess: (data) => {
@@ -33,7 +34,7 @@ const Confirm: FC = () => {
          handleConfirm(ct);
       }
    }, []);
-   return <ConfirmBlock isSuccess={isSuccess} isLoading={isPending} />;
+   return <ConfirmBlock isSuccess={isSuccess} isLoading={isPending} isError={isError} />;
 };
 
 export default Confirm;
