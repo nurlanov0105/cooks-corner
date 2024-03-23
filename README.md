@@ -1,30 +1,86 @@
-# React + TypeScript + Vite
+# CooksCorner cooking
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CooksCorner - это инновационное предложение, спроектированное для удобного и вдохновляющего опыта в мире кулинарии. Предлагая разнообразные категории, включая обширный список рецептов, CooksCorner создает удобную платформу для кулинарных энтузиастов. Погружайтесь в атмосферу кулинарных шедевров с захватывающими фотографиями, изучайте подробные описания рецептов, а также управляйте своим кулинарным опытом, сохраняя, лайкая и даже создавая собственные блюда. 
+CooksCorner -  путь к беспроблемным и вдохновляющим кулинарным приключениям.
 
-Currently, two official plugins are available:
+## Используемые технологии
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+В проекте использовались следующие технологии:
 
-## Expanding the ESLint configuration
+- React
+- Redux-Toolkit
+- React query (Tanstak Query)
+- axios
+- TypeScript
+- Vite
+- Formik + Yup
+- SASS/SCSS
+- BEM + SCSS modules
+- FSD Arhitecture 
+  
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Установка
 
-- Configure the top-level `parserOptions` property like this:
+1. **Установите Node.js и Yarn**
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+   Node.js и Yarn (пакетный менеджер) необходимы для установки и использования Vite, React и других библиотек. Вы можете скачать их с официального сайта Node.js и Yarn.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+3. **Установите Vite**
+
+   Vite - это современный сборщик, который вы использовали в своем проекте. Вы можете установить его, используя Yarn:
+
+   ```
+   yarn global add create-vite
+   ```
+
+5. **Склонируйте проект**
+
+   Используйте git для клонирования вашего проекта на вашу машину.
+
+7. **Установите зависимости**
+
+   Перейдите в каталог проекта и установите необходимые зависимости с помощью Yarn:
+
+   ```
+   yarn add @reduxjs/toolkit react-redux react-router-dom typescript @types/node @types/react-redux @tanstack/react-query axios date-fns react-toastify sass formik yup classnames
+   ```
+
+9. **Запустите проект**
+
+   После установки всех зависимостей вы можете запустить проект с помощью команды:
+
+   ```
+   yarn dev
+   ```
+
+## Использование
+
+После запуска проекта, вы попадете на главную страницу
+
+![image](https://github.com/nurlanov0105/neobis-cooks-corner/assets/126797112/920a19a3-3840-4e8a-ba1d-acd58c879fec)
+
+Если у вас нету аккаунта, вы можете авторизоваться. Для этого нужно перейти на страницу с авторизацией,
+кликнув на кнопку, которая находитсья внизу страницы с лева.
+
+![image](https://github.com/nurlanov0105/neobis-cooks-corner/assets/126797112/3cecb41f-3bfa-437f-a075-7102733ea5d0)
+
+На странице авторизации вы можете залогиниться, зарегистрироваться и если забыли пароль, можете сбросить пароль.
+
+На главной странице есть 3 страницы: Главная, страницы поиска и профиля.
+
+Страница поиска.
+
+![image](https://github.com/nurlanov0105/neobis-cooks-corner/assets/126797112/73ad4433-d3ef-4281-8178-e9126f50f247)
+
+Страница профиля
+
+![image](https://github.com/nurlanov0105/neobis-cooks-corner/assets/126797112/678c1e48-6bee-40ca-b59b-b214f00fbded)
+
+
+## Вклад
+
+Кто хочет помочь в развитии данного проекта, можете написать мне в телеграм: @nnnNursultan
+
+## Авторы
+
+https://github.com/nurlanov0105/
