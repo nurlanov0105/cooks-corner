@@ -27,4 +27,4 @@ export const Comments = {
    COMMENTS: '/v1/comments',
 };
 
-export const BaseURL = 'http://localhost:5173/confirm';
+export const BaseURL = 'https://neobis-cooks-corner.vercel.app/confirm';
