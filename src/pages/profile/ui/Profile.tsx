@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '@/app/appStore';
+import { useAppDispatch, useAppSelector } from '@/app/appStore';
 import { useAuth } from '@/shared/lib/hooks';
 
 import { ProfileInfo } from '@/widgets/profileInfo';
@@ -9,7 +9,13 @@ import { ProfileCategories } from '@/features/profileCategories';
 
 import classNames from 'classnames';
 import styles from './styles.module.scss';
-import { getProfileRecipes, getUser } from '@/entities/user';
+import {
+   addProfileCategory,
+   getProfileRecipes,
+   getUser,
+   setCurrentPage,
+   setProfileRecipes,
+} from '@/entities/user';
 import { Tags } from '@/shared/api';
 import { useQuery } from '@tanstack/react-query';
 
@@ -22,10 +28,13 @@ const Profile: FC = () => {
       return;
    }
 
+   const dispatch = useAppDispatch();
    const userObj: any = localStorage.getItem('currentUserId');
    const readyObj = JSON.parse(userObj);
 
-   const { category } = useAppSelector((state) => state.user);
+   // const [profileRecipes, setProfileRecipes] = useState<any[]>([]);
+   const { profileRecipes, category, currentPage, limit } = useAppSelector((state) => state.user);
+   const [isLoading, setIsLoading] = useState(true);
 
    const {
       data: userData,
@@ -36,23 +45,74 @@ const Profile: FC = () => {
       queryFn: () => getUser(readyObj.userId),
    });
 
-   const { data: profileRecipes, isLoading: recipeLoading } = useQuery({
-      queryKey: [Tags.USERS, category],
-      queryFn: () => getProfileRecipes(category),
-   });
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            setIsLoading(true);
+            const response = await getProfileRecipes({
+               category: category,
+               page: currentPage,
+               size: limit,
+            });
+            setIsLoading(false);
 
-   const preparedCards = recipeLoading ? [...Array(12)] : profileRecipes.content;
+            // Удаление дубликатов
+            const uniqueRecipes = response.content.filter(
+               (recipe: any) =>
+                  !profileRecipes.find(
+                     // @ts-ignore
+                     (existingRecipe) => existingRecipe.recipeId === recipe.recipeId
+                  )
+            );
+
+            dispatch(setProfileRecipes([...profileRecipes, ...uniqueRecipes]));
+         } catch (error) {
+            console.error('Error fetching data: ', error);
+         }
+      };
+
+      fetchData();
+   }, [category, currentPage, limit]);
+
+   const onClickCategory = (category: string) => {
+      dispatch(addProfileCategory(category));
+
+      dispatch(setProfileRecipes([]));
+      dispatch(setCurrentPage(0));
+   };
+
+   // const {
+   //    data: newProfileRecipes,
+   //    isLoading: recipeLoading,
+   //    isSuccess,
+   // } = useQuery({
+   //    queryKey: [Tags.USERS, activeCategory, currentPage],
+   //    queryFn: () =>
+   //       getProfileRecipes({ category: activeCategory, page: currentPage, size: limit }),
+   // });
+
+   // useEffect(() => {
+   //    if (isSuccess) {
+   //       setProfileRecipes((oldData) => [...oldData, ...newProfileRecipes.content]);
+   //    }
+   // }, [isSuccess]);
 
    return (
       <div className='container'>
          <h2 className={classNames('h2', styles.title)}>Profile</h2>
 
-         <ProfileInfo {...userData} isLoading={userLoading} isError={userError} />
+         <ProfileInfo
+            {...userData}
+            isLoading={userLoading}
+            isError={userError}
+            userId={readyObj.userId}
+         />
          <div className={styles.categories}>
-            <ProfileCategories />
+            <ProfileCategories value={category} onClickCategory={onClickCategory} />
          </div>
 
-         <CardsSection cards={preparedCards} isLoading={recipeLoading} />
+         <CardsSection cards={profileRecipes} isLoading={isLoading} isProfile={true} />
+         {isLoading ? <div className='infiniteLoader'></div> : ''}
       </div>
    );
 };

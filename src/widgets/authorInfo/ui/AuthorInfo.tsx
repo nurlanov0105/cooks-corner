@@ -45,7 +45,7 @@ const AuthorInfo: FC<Props> = ({
       mutationFn: (userId: number) => follow(userId),
       onSuccess: (data) => {
          console.log(data);
-         queryClient.setQueryData([Tags.USERS, Tags, id], (oldUser: any) => {
+         queryClient.setQueryData([Tags.USERS, id], (oldUser: any) => {
             return { ...oldUser, isFollowed: true, followers: followers + 1 };
          });
       },

@@ -36,10 +36,13 @@ const RecipeModal: FC = () => {
    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
    const [isIngredientOpen, setIsIngredientOpen] = useState(false);
    const [ingredients, setIngredients] = useState<any>([]);
+   const [categoryActive, setCategoryActive] = useState(false);
+   const [ingredientUnitActive, setIngredientUnitActive] = useState(false);
+
    const queryClient = useQueryClient();
    const dispatch = useAppDispatch();
 
-   const { mutate: addRecipeMutate } = useMutation({
+   const { mutate: addRecipeMutate, isPending } = useMutation({
       mutationFn: (formData: any) => addRecipe(formData),
       onSuccess: (data) => {
          queryClient.invalidateQueries({ queryKey: [Tags.RECIPES] });
@@ -99,6 +102,7 @@ const RecipeModal: FC = () => {
          handleRecipeAdd(formData);
       },
    });
+   const { handleChange, values } = formik;
 
    const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files.length > 0) {
@@ -113,6 +117,7 @@ const RecipeModal: FC = () => {
    const handleCategoryChange = (category: string) => {
       setSelectedCategory(category);
       setIsCategoryOpen(false);
+      setCategoryActive(true);
    };
 
    const handleIngredientClick = () => {
@@ -121,9 +126,12 @@ const RecipeModal: FC = () => {
    const handleMeasueUnitClick = (unit: string) => {
       formik.setFieldValue('ingredientUnit', unit);
       setIsIngredientOpen(!isIngredientOpen);
+      setIngredientUnitActive(true);
    };
 
    const addIngredient = () => {
+      setIsIngredientOpen(false);
+
       const newIngredient = {
          ingredient: formik.values.ingredient,
          amount: formik.values.ingredientAmount,
@@ -183,7 +191,10 @@ const RecipeModal: FC = () => {
                <input
                   type='text'
                   id='recipe'
-                  className={styles.form__input}
+                  className={classNames(
+                     styles.form__input,
+                     formik.values.recipe && styles.form__input_active
+                  )}
                   placeholder='Name your recipe'
                   value={formik.values.recipe}
                   onChange={formik.handleChange}
@@ -197,7 +208,11 @@ const RecipeModal: FC = () => {
                   id='description'
                   value={formik.values.description}
                   onChange={formik.handleChange}
-                  className={classNames(styles.form__input, styles.form__textarea)}
+                  className={classNames(
+                     styles.form__input,
+                     styles.form__textarea,
+                     formik.values.description && styles.form__input_active
+                  )}
                   placeholder='Description'></textarea>
             </div>
             <div className={classNames(styles.form__group, styles.form__group_100)}>
@@ -208,12 +223,20 @@ const RecipeModal: FC = () => {
                   <input
                      type='text'
                      id='ingredient'
-                     className={classNames(styles.form__input, styles.form__input_ingredient)}
+                     className={classNames(
+                        styles.form__input,
+                        styles.form__input_ingredient,
+                        formik.values.ingredient && styles.form__input_active
+                     )}
                      placeholder='Ingredient name'
                      value={formik.values.ingredient}
                      onChange={formik.handleChange}
                   />
-                  <div className={styles.form__select}>
+                  <div
+                     className={classNames(
+                        styles.form__select,
+                        ingredientUnitActive && styles.form__input_active
+                     )}>
                      <input
                         type='text'
                         id='ingredientAmount'
@@ -225,8 +248,8 @@ const RecipeModal: FC = () => {
                         <input
                            type='text'
                            placeholder='kg'
-                           value={formik.values.ingredientUnit}
-                           onChange={formik.handleChange}
+                           value={values.ingredientUnit}
+                           onChange={handleChange('ingredientUnit')}
                         />
                         <img src={arrowDownIcon} alt='icon down' />
                      </div>
@@ -287,7 +310,11 @@ const RecipeModal: FC = () => {
                <div
                   className={styles.form__categorySelect}
                   onClick={() => setIsCategoryOpen(!isCategoryOpen)}>
-                  <div className={styles.form__categorySelected}>
+                  <div
+                     className={classNames(
+                        styles.form__categorySelected,
+                        categoryActive ? styles.form__input_active : ''
+                     )}>
                      <span>{selectedCategory}</span>
                      <img src={arrowDownIcon} alt='arrow icon' />
                   </div>
@@ -309,7 +336,10 @@ const RecipeModal: FC = () => {
                <input
                   type='number'
                   id='time'
-                  className={styles.form__input}
+                  className={classNames(
+                     styles.form__input,
+                     formik.values.time && styles.form__input_active
+                  )}
                   placeholder='How much time does it need?(minutes)'
                   value={formik.values.time}
                   onChange={formik.handleChange}
@@ -321,10 +351,11 @@ const RecipeModal: FC = () => {
                   !formik.isValid ||
                   !formik.dirty ||
                   ingredients.length === 0 ||
+                  isPending ||
                   formik.values.photo === null
                }
                className={classNames('btn', styles.form__btn)}>
-               <span>Create a recipe</span>
+               {isPending ? <span>Loading...</span> : <span>Create a recipe</span>}
             </button>
          </form>
       </div>

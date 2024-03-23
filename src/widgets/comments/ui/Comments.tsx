@@ -1,8 +1,15 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Tags } from '@/shared/api';
-import { Comment, addComment, getComments } from '@/features/comments';
+import {
+   Comment,
+   CommentPagination,
+   addComment,
+   getComments,
+   setCurrentPage,
+   setTotalPages,
+} from '@/features/comments';
 import { useAppDispatch, useAppSelector } from '@/app/appStore';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
@@ -19,12 +26,12 @@ const Comments: FC<Props> = ({ recipeId }) => {
    const queryClient = useQueryClient();
    const dispatch = useAppDispatch();
 
-   const { size, page } = useAppSelector((state) => state.comments);
+   const { limit, totalPages, currentPage } = useAppSelector((state) => state.comments);
    const [commentValue, setCommentValue] = useState('');
 
    const { data, isLoading, isError, isSuccess } = useQuery({
-      queryKey: [Tags.COMMENTS, recipeId],
-      queryFn: () => getComments({ objectId: recipeId, size, page }),
+      queryKey: [Tags.COMMENTS, recipeId, limit, totalPages, currentPage],
+      queryFn: () => getComments({ objectId: recipeId, size: limit, page: currentPage }),
    });
 
    const addCommentMutation = useMutation({
@@ -50,6 +57,16 @@ const Comments: FC<Props> = ({ recipeId }) => {
       }
       const newComment = { objectId: recipeId, text: commentValue, isReply: false };
       addCommentMutation.mutate(newComment);
+   };
+
+   useEffect(() => {
+      if (isSuccess) {
+         dispatch(setTotalPages(data.totalPages));
+      }
+   }, [isSuccess]);
+
+   const onChangePage = (num: number) => {
+      dispatch(setCurrentPage(num));
    };
 
    return (
@@ -79,7 +96,7 @@ const Comments: FC<Props> = ({ recipeId }) => {
                <button
                   disabled={!commentValue || addCommentMutation.isPending}
                   className={classNames('btn', styles.comments__btn)}>
-                  <span>Send</span>
+                  {addCommentMutation.isPending ? <span>Sending...</span> : <span>Send</span>}
                </button>
             </div>
          </form>
@@ -89,6 +106,13 @@ const Comments: FC<Props> = ({ recipeId }) => {
                data?.content?.map((comment: any) => (
                   <Comment key={comment.commentId} {...comment} />
                ))}
+            <div className={styles.comments__pagination}>
+               <CommentPagination
+                  currentPage={currentPage}
+                  onChangePages={(num: number) => onChangePage(num)}
+                  totalPages={totalPages}
+               />
+            </div>
          </div>
       </div>
    );

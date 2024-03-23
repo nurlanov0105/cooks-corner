@@ -23,18 +23,12 @@ const DetailsRecipe: FC = () => {
    });
 
    if (isAuth) {
-      const {
-         data: profileData,
-         isLoading: profileLoading,
-         isError: profilerError,
-      } = useQuery({
+      const { data: profileData, isSuccess } = useQuery({
          queryKey: [Tags.USERS, userId],
          queryFn: () => getUser(userId),
       });
 
-      if (!profileLoading && !profilerError) {
-         dispatch(addProfileImg(profileData.imageUrl));
-      }
+      isSuccess && dispatch(addProfileImg(profileData.imageUrl));
    }
 
    return isError ? (

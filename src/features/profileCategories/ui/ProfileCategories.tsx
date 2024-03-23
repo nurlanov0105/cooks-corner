@@ -1,37 +1,40 @@
-import { FC, useState } from 'react';
-import { useAppDispatch } from '@/app/appStore';
-import { addProfileCategory } from '@/entities/user';
+import { FC } from 'react';
 
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
-const categories = ['My recipe', 'Saved recipe'];
-const endpointCategories = {
-   'My recipe': 'my',
-   'Saved recipe': 'saved',
-};
+const categories = [
+   {
+      name: 'My recipe',
+      endpointName: 'my',
+   },
+   {
+      name: 'Saved recipe',
+      endpointName: 'saved',
+   },
+];
 
-const ProfileCategories: FC = () => {
-   const dispatch = useAppDispatch();
+interface Props {
+   value: string;
+   onClickCategory: (category: string) => void;
+}
 
-   const [activeCategory, setActiveCategory] = useState('My recipe');
-
-   const onClickCategory = (category: string) => {
-      setActiveCategory(category);
-      dispatch(addProfileCategory(endpointCategories[category as keyof typeof endpointCategories]));
+const ProfileCategories: FC<Props> = ({ value, onClickCategory }) => {
+   const onClick = (category: string) => {
+      onClickCategory(category);
    };
 
    return (
       <div className={styles.categories}>
          {categories.map((category) => (
             <button
-               onClick={() => onClickCategory(category)}
+               onClick={() => onClick(category.endpointName)}
                className={classNames(
                   styles.categories__btn,
-                  activeCategory === category ? styles.active : ''
+                  value === category.endpointName ? styles.active : ''
                )}
-               key={category}>
-               {category}
+               key={category.endpointName}>
+               {category.name}
             </button>
          ))}
       </div>

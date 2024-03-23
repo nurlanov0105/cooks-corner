@@ -58,4 +58,9 @@
       flex-direction: column;
       row-gap: 3rem;
    }
+
+   &__pagination {
+      display: flex;
+      justify-content: center;
+   }
 }

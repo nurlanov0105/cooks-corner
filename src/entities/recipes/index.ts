@@ -1,4 +1,9 @@
-import recipeSLice, { addRecipeCategory, setRecipes } from './model/recipeSLice';
+import recipeSLice, {
+   addRecipeCategory,
+   setRecipes,
+   addCurrentPage,
+   addTotalPages,
+} from './model/recipeSLice';
 import { getrecipes, getDetailRecipe, addRecipe, action } from './api/recipeApi';
 
 export {
@@ -9,4 +14,6 @@ export {
    getDetailRecipe,
    addRecipe,
    action,
+   addCurrentPage,
+   addTotalPages,
 };

@@ -4,6 +4,9 @@ import userSlice, {
    setProfileRecipes,
    addProfileData,
    addProfileImg,
+   setWrapperRef,
+   setCurrentPage,
+   setLimit,
 } from './model/userSlice';
 
 import {
@@ -13,6 +16,8 @@ import {
    updateProfile,
    follow,
    unFollow,
+   getUserFollowers,
+   getUserFollowing,
 } from './api/userAPi';
 
 export {
@@ -28,4 +33,9 @@ export {
    updateProfile,
    follow,
    unFollow,
+   setWrapperRef,
+   setCurrentPage,
+   setLimit,
+   getUserFollowers,
+   getUserFollowing,
 };

@@ -1,2 +1,2 @@
-import Pagination from './ui/Pagination';
-export { Pagination };
+import Pagaination from './ui/Pagaination';
+export { Pagaination };
