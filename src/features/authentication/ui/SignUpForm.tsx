@@ -11,6 +11,7 @@ import userIcon from '@/shared/assets/imgs/auth/user.svg';
 import dogIcon from '@/shared/assets/imgs/auth/dog.svg';
 import eyeClosedIcon from '@/shared/assets/imgs/auth/eye-closed.svg';
 import eyeOpenedIcon from '@/shared/assets/imgs/auth/eye-opened.svg';
+import classNames from 'classnames';
 
 interface Props {
    handleRegister: (name: string, email: string, password: string) => void;
@@ -86,7 +87,10 @@ const SignUpForm: FC<Props> = ({
                      <div className={styles.form__box}>
                         <input
                            type='name'
-                           className={nameClassNames}
+                           className={classNames(
+                              nameClassNames,
+                              formik.values.name && styles.form__input_active
+                           )}
                            placeholder='Enter your name'
                            name='name'
                            onChange={formik.handleChange}
@@ -104,7 +108,10 @@ const SignUpForm: FC<Props> = ({
                      <div className={styles.form__box}>
                         <input
                            type='email'
-                           className={emailClassNames}
+                           className={classNames(
+                              emailClassNames,
+                              formik.values.email && styles.form__input_active
+                           )}
                            placeholder='Enter your Gmail'
                            name='email'
                            onChange={handleEmailChange}
@@ -164,7 +171,10 @@ const SignUpForm: FC<Props> = ({
                      <div className={styles.form__box}>
                         <input
                            type={showPassword ? 'text' : 'password'}
-                           className={pswClassNames}
+                           className={classNames(
+                              pswClassNames,
+                              formik.values.password && styles.form__input_active
+                           )}
                            placeholder='Enter your Password'
                            name='password'
                            onChange={formik.handleChange}
@@ -187,7 +197,10 @@ const SignUpForm: FC<Props> = ({
                      <div className={styles.form__box}>
                         <input
                            type={showConfirmPassword ? 'text' : 'password'}
-                           className={passwordConfirmClassNames}
+                           className={classNames(
+                              passwordConfirmClassNames,
+                              formik.values.passwordConfirm && styles.form__input_active
+                           )}
                            placeholder='Re-Enter your Password'
                            name='passwordConfirm'
                            onChange={formik.handleChange}
