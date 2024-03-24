@@ -82,5 +82,16 @@
 @media (max-width: 600px) {
    .modal {
       width: 100%;
+      h2 {
+         max-width: 280px;
+      }
+   }
+}
+@media (max-width: 392px) {
+   .modal {
+      width: 100%;
+      h2 {
+         max-width: 200px;
+      }
    }
 }
