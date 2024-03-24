@@ -22,8 +22,60 @@
 
 .container__pagination {
    margin-top: auto;
-   margin-bottom: 4rem;
+   padding-bottom: 4rem;
    display: flex;
    justify-content: center;
    z-index: 1;
+}
+
+@media (max-width: 1024px) {
+   .section {
+      padding-top: 0;
+
+      &__col {
+         padding-left: 16px;
+      }
+
+      &__category {
+         row-gap: 20px;
+      }
+
+      &__title {
+         padding-right: 16px;
+         padding-left: 16px;
+         padding-top: 10px;
+         padding-bottom: 42px;
+
+         display: flex;
+         flex-direction: column;
+         row-gap: 7px;
+
+         margin-bottom: 20px;
+         font-weight: 400;
+         background-color: $primary-color;
+         color: $white-color;
+
+         span {
+            font-weight: 400;
+            color: #fff;
+
+            font-size: 20px;
+            font-weight: 300;
+         }
+         a {
+            color: $white-color !important;
+            text-decoration: underline;
+         }
+      }
+   }
+}
+
+@media (max-width: 600px) {
+   .section {
+      &__category {
+         h2 {
+            font-size: 18px;
+         }
+      }
+   }
 }

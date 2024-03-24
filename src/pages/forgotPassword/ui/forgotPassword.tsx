@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { ForgetPasswordForm, sendForgotPassword } from '@/features/authentication';
 import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
+import { SECONDARY_URL } from '@/shared/api/instance';
 
 const ForgotPassword: FC = () => {
    const sendForgotPasswordMutate = useMutation({
@@ -13,7 +14,7 @@ const ForgotPassword: FC = () => {
    });
 
    const handleForgotPassword = (email: string) => {
-      const params = { email, url: 'https://neobis-cooks-corner.vercel.app/reset-password' };
+      const params = { email, url: `${SECONDARY_URL}/reset-password` };
       sendForgotPasswordMutate.mutate(params);
    };
 

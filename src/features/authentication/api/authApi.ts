@@ -52,8 +52,10 @@ export const logout = async (refreshToken: string) => {
    return response;
 };
 export const deleteAccount = async (password: string) => {
-   const response = await baseApiInstance.delete(
-      UsersEndpoints.USERS_DELETE + '?' + 'password=' + password
-   );
+   console.log(password);
+   const response = await baseApiInstance.delete(UsersEndpoints.USERS, {
+      data: password,
+      headers: { 'Content-Type': 'text/plain' },
+   });
    return response;
 };

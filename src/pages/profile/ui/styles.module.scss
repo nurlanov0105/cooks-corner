@@ -1,3 +1,7 @@
+.section__top {
+   position: relative;
+}
+
 .title {
    text-align: center;
    margin-bottom: 3rem;
@@ -6,4 +10,119 @@
 
 .categories {
    margin-bottom: 32px;
+}
+
+.navbar {
+   display: none;
+   position: absolute;
+
+   top: 50%;
+   right: 16px;
+   transform: translateY(-50%);
+
+   &__btn {
+      width: 40px;
+      height: 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 10px;
+      background: $grey-light;
+      @include transition;
+
+      &_search {
+         path {
+            fill: transparent !important;
+            stroke: #8a8a8a;
+         }
+      }
+
+      svg {
+         width: 24px;
+         height: 24px;
+         overflow: hidden;
+         path {
+            fill: #8a8a8a;
+         }
+      }
+
+      &_active {
+         background-color: $primary-color;
+         svg {
+            path {
+               fill: $grey-light;
+               stroke: $grey-light;
+            }
+         }
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+         &:hover {
+            background-color: $primary-color;
+            svg {
+               path {
+                  fill: $grey-light;
+                  stroke: $grey-light;
+               }
+            }
+         }
+      }
+
+      &:active {
+         background-color: $primary-color;
+         svg {
+            path {
+               fill: $grey-light;
+               stroke: $grey-light;
+            }
+         }
+      }
+   }
+   &__logout {
+      svg {
+         path {
+            fill: #ff5151;
+         }
+      }
+   }
+
+   &__bottom {
+      display: flex;
+      flex-direction: column;
+      row-gap: 15px;
+   }
+
+   &__bottom {
+      display: flex;
+      flex-direction: column;
+      row-gap: 15px;
+   }
+}
+
+@media (max-width: 1024px) {
+   .section {
+      padding-right: 16px !important;
+      padding-left: 16px !important;
+   }
+}
+
+@media (max-width: 600px) {
+   .navbar {
+      display: flex;
+      align-items: center;
+      column-gap: 20px;
+   }
+   .title {
+      margin-right: 16px;
+   }
+}
+
+@media (max-width: 360px) {
+   .section__top {
+      display: flex;
+      align-items: center;
+      column-gap: 16px;
+   }
 }

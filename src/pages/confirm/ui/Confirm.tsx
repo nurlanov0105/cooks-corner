@@ -14,12 +14,6 @@ const Confirm: FC = () => {
       isError,
    } = useMutation({
       mutationFn: confirm,
-      onSuccess: (data) => {
-         console.log(data);
-      },
-      onError: (error) => {
-         console.log(error);
-      },
    });
 
    const handleConfirm = (ct: any) => {

@@ -19,7 +19,7 @@ const CommentReply: FC<Props> = ({ parentId, replyCount, isDeleted }) => {
 
    const { data, isLoading, isSuccess } = useQuery({
       queryKey: [Tags.COMMENTS, parentId],
-      queryFn: () => getNestedComments({ parentId: parentId }),
+      queryFn: () => getNestedComments(parentId),
    });
 
    return (

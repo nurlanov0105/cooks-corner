@@ -4,16 +4,16 @@ export interface IUserRecipes {
    page: number;
 }
 
-// interface IState {
-//    category: string;
-//    user: any;
-//    profileRecipes: [];
-//    profileData: {
-//       name: null;
-//       bio: null;
-//    };
-//    profileImg: '';
-//    wrapperRef: null;
-//    currentPage: 0;
-//    limit: 12;
-// }
+export interface IUserState {
+   category: string;
+   user: any;
+   profileRecipes: [];
+   profileData: {
+      name: null;
+      bio: null;
+   };
+   profileImg: '';
+   wrapperRef: null;
+   currentPage: 0;
+   limit: 12;
+}

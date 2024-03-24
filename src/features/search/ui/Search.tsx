@@ -9,8 +9,6 @@ import searchIcon from '@/shared/assets/imgs/search/search.svg';
 import crossIcon from '@/shared/assets/imgs/search/cross.svg';
 
 interface Props {
-   handleChefsSearch?: (value: string) => void;
-   handleRecipesSearch?: (value: string) => void;
    type: string;
 }
 
@@ -30,11 +28,11 @@ const Search: FC<Props> = ({ type }) => {
       dispatch(setRecipesSearchParams(debouncedRecipesSearchValue));
    }, [debouncedRecipesSearchValue]);
 
-   const onChefsInputChange = (e: any) => {
+   const onChefsInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setChefsSearchValue(e.target.value);
    };
 
-   const onRecipesInputChange = (e: any) => {
+   const onRecipesInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setRecipesSearchValue(e.target.value);
    };
 

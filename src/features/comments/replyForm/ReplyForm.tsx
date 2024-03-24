@@ -1,10 +1,11 @@
 import { FC, useRef, useState } from 'react';
-import styles from './styles.module.scss';
+import { useAppSelector } from '@/app/appStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addComment } from '..';
 import { resizeTextarea } from '@/shared/lib/helpers';
+
+import styles from './styles.module.scss';
 import { ICommentForm } from '@/shared/lib/types';
-import { useAppSelector } from '@/app/appStore';
 
 interface Props {
    objectId: number;
@@ -24,12 +25,9 @@ const ReplyForm: FC<Props> = ({ objectId, setShowForm }) => {
       onSuccess: () => {
          setCommentValue('');
          setShowForm(false);
+
          // @ts-ignore
-         queryClient.invalidateQueries(Tags.COMMENTS);
-      },
-      onMutate: () => {
-         // Очистка кэша
-         queryClient.clear();
+         queryClient.invalidateQueries(Tags.COMMENTS, objectId);
       },
    });
 

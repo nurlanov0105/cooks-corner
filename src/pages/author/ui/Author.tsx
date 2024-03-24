@@ -10,6 +10,7 @@ import { getUser, getUserRecipes } from '@/entities/user';
 import { Tags } from '@/shared/api';
 import { getUserInfoFomLS } from '@/shared/lib/helpers/getUserInfoFomLS';
 import { useAuth } from '@/shared/lib/hooks';
+import classNames from 'classnames';
 
 const Author: FC = () => {
    const { id } = useParams();
@@ -45,7 +46,7 @@ const Author: FC = () => {
    const preparedRecipes = recipesLoading ? [...Array(12)] : userRecipes?.content || [];
 
    return (
-      <div className='container'>
+      <div className={classNames('container', styles.container)}>
          <BackArrow />
          <AuthorInfo {...userData} userId={id} isLoading={userLoading} isError={userError} />
          <div className={styles.row}>

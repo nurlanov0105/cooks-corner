@@ -25,7 +25,7 @@ const DeleteAccountModal: FC = () => {
    const navigate = useNavigate();
 
    const [showPassword, setShowPassword] = useState(false);
-   const handlePasswordShow = () => setShowPassword(!showPassword);
+   const handlePasswordShow = () => setShowPassword(showPassword);
 
    const deleteMutation = useMutation({
       mutationFn: deleteAccount,
@@ -39,7 +39,7 @@ const DeleteAccountModal: FC = () => {
          location.reload();
       },
       onError: (error) => {
-         toast.error('Logout error');
+         toast.error('Delete error');
          console.log(error);
       },
    });

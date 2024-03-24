@@ -14,7 +14,6 @@ import { action } from '@/entities/recipes';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Tags } from '@/shared/api';
 import { handleActionClick } from '@/shared/lib/helpers';
-// import { Tags } from '@/shared/api';
 
 interface Props {
    imageUrl: string;
@@ -93,7 +92,7 @@ const RecipeCard: FC<Props> = ({
    };
 
    const handleBookmarkClick = () => {
-      if (!isAuth) {
+      if (isAuth) {
          dispatch(showModal('NotAuthNotice'));
          return;
       }

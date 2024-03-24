@@ -16,6 +16,7 @@ import { addRecipe } from '@/entities/recipes';
 import { Tags } from '@/shared/api';
 import { useAppDispatch } from '@/app/appStore';
 import { closeModal } from '@/widgets/modal';
+import { IIngredient } from '../../model/types';
 
 const levelCategories = ['Easy', 'Medium', 'Hard'];
 const measurementUnits = ['kg', 'grams', 'tablespoon', 'teaspoon', 'cup'];
@@ -74,15 +75,6 @@ const RecipeModal: FC = () => {
       validationSchema: recipeValidationSchema,
       onSubmit: (values) => {
          const { photo, recipe, description, time } = values;
-
-         console.log({
-            title: recipe,
-            description,
-            ingredients,
-            difficulty: selectedDifficulty,
-            category: selectedCategory,
-            cookingTimeMinutes: time,
-         });
 
          const fields: any = {
             title: recipe,
@@ -143,7 +135,7 @@ const RecipeModal: FC = () => {
       formik.setFieldValue('ingredientUnit', 'kg');
    };
 
-   const deleteIngredient = (ingredient: any) => {
+   const deleteIngredient = (ingredient: IIngredient) => {
       const filteredIngredients = ingredients.filter(
          (obj: any) =>
             obj.ingredient !== ingredient.ingredient ||
@@ -151,6 +143,15 @@ const RecipeModal: FC = () => {
             obj.measureUnit !== ingredient.measureUnit
       );
       setIngredients([...filteredIngredients]);
+   };
+
+   const onTimeInputChange = (e: any) => {
+      const value = parseInt(e.target.value);
+      if (!isNaN(value) && value <= 1000) {
+         formik.setFieldValue('time', value);
+      } else if (e.target.value === '') {
+         formik.setFieldValue('time', '');
+      }
    };
 
    return (
@@ -342,7 +343,7 @@ const RecipeModal: FC = () => {
                   )}
                   placeholder='How much time does it need?(minutes)'
                   value={formik.values.time}
-                  onChange={formik.handleChange}
+                  onChange={onTimeInputChange}
                />
             </div>
             <button

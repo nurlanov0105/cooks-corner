@@ -302,3 +302,17 @@
    &__btn {
    }
 }
+
+@media (max-width: 600px) {
+   .wrapper {
+      padding: 24px 16px;
+   }
+   .form {
+      &__group {
+         width: 100%;
+      }
+      &__fileUpload {
+         overflow: hidden;
+      }
+   }
+}

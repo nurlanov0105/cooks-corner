@@ -35,4 +35,14 @@
          transform: scale(1);
       }
    }
+
+   @media (max-width: 600px) {
+      &.active {
+         z-index: 4;
+      }
+      .content {
+         width: 90%;
+         overflow-x: hidden;
+      }
+   }
 }

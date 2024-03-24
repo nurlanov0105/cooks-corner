@@ -60,4 +60,12 @@
          }
       }
    }
+
+   @media (max-width: 600px) {
+      height: 44px;
+
+      span {
+         font-size: 14px;
+      }
+   }
 }

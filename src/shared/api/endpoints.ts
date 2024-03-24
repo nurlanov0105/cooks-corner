@@ -20,11 +20,8 @@ export const UsersEndpoints = {
    USERS_FOLLOW: '/v1/users/follow/',
    USERS_UNFOLLOW: '/v1/users/unfollow/',
    USERS_SEARCH: '/v1/users/search',
-   USERS_DELETE: '/v1/users',
 };
 
 export const Comments = {
    COMMENTS: '/v1/comments',
 };
-
-export const BaseURL = 'https://neobis-cooks-corner.vercel.app/confirm';

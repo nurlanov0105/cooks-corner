@@ -1,6 +1,7 @@
 import { FC, memo } from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames';
+import { SearchCategoryTabs } from '@/shared/lib/consts';
 
 interface Props {
    value: string;
@@ -8,10 +9,9 @@ interface Props {
 }
 
 const SearchCategories: FC<Props> = memo(({ value, onClickCategory }) => {
-   const categories = ['Chefs', 'Recipes'];
    return (
       <div className={styles.categories}>
-         {categories.map((category) => (
+         {SearchCategoryTabs.map((category) => (
             <button
                key={category}
                onClick={() => onClickCategory(category)}
