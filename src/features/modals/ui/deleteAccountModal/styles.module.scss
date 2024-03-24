@@ -78,3 +78,9 @@
    margin-left: 5px;
    color: $error-color;
 }
+
+@media (max-width: 600px) {
+   .modal {
+      width: 100%;
+   }
+}
