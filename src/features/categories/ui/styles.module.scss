@@ -3,6 +3,12 @@
    align-items: center;
    column-gap: 6.4rem;
 
+   overflow-y: hidden;
+   overflow-x: auto;
+   white-space: nowrap;
+   scrollbar-width: none;
+   scroll-behavior: smooth;
+
    &__btn {
       color: $text-fedded;
       font-size: 16px;
@@ -35,5 +41,13 @@
          height: 2px;
          background-color: $text-color;
       }
+   }
+
+   @media (max-width: 1024px) {
+      column-gap: 4.6rem;
+   }
+
+   @media (max-width: 600px) {
+      column-gap: 3.6rem;
    }
 }

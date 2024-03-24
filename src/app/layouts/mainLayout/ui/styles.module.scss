@@ -9,3 +9,15 @@
    overflow-y: auto;
    scrollbar-width: none;
 }
+
+@media (max-width: 1024px) {
+   .main {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: space-between;
+   }
+   .wrapper {
+      height: 100%;
+      background-color: $grey-light;
+   }
+}

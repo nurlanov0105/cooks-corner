@@ -1,38 +1,24 @@
-import { Link } from 'react-router-dom';
-import styles from './styles.module.scss';
-import { formatDistanceStrict } from 'date-fns';
-import classNames from 'classnames';
-import { useAuth } from '@/shared/lib/hooks';
-import { useAppDispatch } from '@/app/appStore';
 import { FC, useEffect, useRef, useState } from 'react';
+import { useAppDispatch } from '@/app/appStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { showModal } from '@/widgets/modal';
-import { handleActionClick } from '@/shared/lib/helpers';
+import { Link } from 'react-router-dom';
+import { useAuth } from '@/shared/lib/hooks';
+
 import { action } from '@/entities/recipes';
-import { toast } from 'react-toastify';
-import { Tags } from '@/shared/api';
 import { CommentReply, deleteComment, updateComment } from '..';
-import ReplyForm from '../replyForm/ReplyForm';
+import { handleActionClick } from '@/shared/lib/helpers';
+import { showModal } from '@/widgets/modal';
+import { formatDistanceStrict } from 'date-fns';
+import { Tags } from '@/shared/api';
 import { getUserInfoFomLS } from '@/shared/lib/helpers/getUserInfoFomLS';
+import { toast } from 'react-toastify';
+import ReplyForm from '../replyForm/ReplyForm';
 
-interface Props {
-   commentId: number;
-   parentCommentId: number;
-   authorId: number;
-   imageUrl: string;
-   author: string;
-   createdAt: string;
-   updatedAt: string;
-   isUpdated: true;
-   replyCount: number;
-   likeCount: number;
-   isLiked: true;
-   text: string;
-   isNested: boolean;
-   isDeleted: boolean;
-}
+import classNames from 'classnames';
+import { IComment, IUpdateComment } from '../model/types';
+import styles from './styles.module.scss';
 
-const Comment: FC<Props> = ({
+const Comment: FC<IComment> = ({
    commentId,
    parentCommentId,
    authorId,
@@ -61,7 +47,7 @@ const Comment: FC<Props> = ({
    const [isEditing, setIsEditing] = useState(false);
    const [editedText, setEditedText] = useState(text);
 
-   const listRef = useRef(null);
+   const listRef = useRef<HTMLUListElement>(null);
 
    const likeMutation = useMutation({
       mutationFn: action,
@@ -89,7 +75,7 @@ const Comment: FC<Props> = ({
       },
    });
    const updateCommentMutation = useMutation({
-      mutationFn: (updatedData: any) => {
+      mutationFn: (updatedData: IUpdateComment) => {
          return updateComment(updatedData);
       },
       onSuccess: (data) => {

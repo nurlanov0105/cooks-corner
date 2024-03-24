@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IUserState } from './types';
 
-const initialState = {
+const initialState: IUserState = {
    category: 'my',
    user: {},
    profileRecipes: [],

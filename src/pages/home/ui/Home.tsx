@@ -50,9 +50,11 @@ const Home: FC = () => {
             <h1 className={classNames('h2', styles.section__title)}>
                Hi,{' '}
                {name ? (
-                  name
-               ) : (
                   <>
+                     {name}. <span>UI Designer & Cook</span>
+                  </>
+               ) : (
+                  <span>
                      <Link to='/signin' className='accent-color'>
                         Signin
                      </Link>{' '}
@@ -60,7 +62,7 @@ const Home: FC = () => {
                      <Link to='/signup' className='accent-color'>
                         Signup
                      </Link>
-                  </>
+                  </span>
                )}
             </h1>
             <div className={styles.section__col}>

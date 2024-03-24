@@ -2,6 +2,14 @@ html {
    font-size: 62.5%;
    scroll-behavior: smooth;
    scrollbar-width: none;
+
+   @media (max-width: 1200px) {
+      font-size: 56.25%;
+   }
+
+   @media (max-width: 900px) {
+      font-size: 50%;
+   }
 }
 
 body {
@@ -22,8 +30,14 @@ body {
 
 .container {
    width: 100%;
-   padding: 0 32px;
+   padding-left: 32px;
+   padding-right: 32px;
    position: relative;
+
+   @media (max-width: 1024px) {
+      padding-right: 0;
+      padding-left: 0;
+   }
 }
 
 .wrapper {

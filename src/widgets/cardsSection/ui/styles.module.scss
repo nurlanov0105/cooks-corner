@@ -6,4 +6,8 @@
    &_center {
       justify-content: center;
    }
+
+   @media (max-width: 1024px) {
+      padding-right: 16px;
+   }
 }

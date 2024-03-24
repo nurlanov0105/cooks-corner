@@ -1,0 +1,11 @@
+.container {
+   @media (max-width: 1024px) {
+      transform: translateY(-5%);
+
+      background-color: $grey-light;
+      border-radius: 20px 20px 0px 0px;
+
+      padding-right: 16px;
+      padding-left: 16px;
+   }
+}

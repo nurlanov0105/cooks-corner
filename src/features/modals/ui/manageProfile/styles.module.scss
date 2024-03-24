@@ -122,3 +122,15 @@
       margin-top: 20px;
    }
 }
+
+@media (max-width: 600px) {
+   .wrapper {
+      padding: 24px 16px;
+   }
+   .form {
+      input,
+      textarea {
+         width: 100%;
+      }
+   }
+}

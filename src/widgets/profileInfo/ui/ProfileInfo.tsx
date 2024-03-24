@@ -76,6 +76,11 @@ const ProfileInfo: FC<Props> = ({
             style={{ backgroundImage: `url(${isError ? '' : isLoading ? '' : imageUrl})` }}></div>
          <div className={styles.profile__body}>
             <div className={styles.profile__social}>
+               <div
+                  className={styles.profile__imgMobile}
+                  style={{
+                     backgroundImage: `url(${isError ? '' : isLoading ? '' : imageUrl})`,
+                  }}></div>
                <button className={styles.profile__box}>
                   <span className={styles.profile__amount}>
                      {isError ? '0' : isLoading ? '0' : recipes}

@@ -15,7 +15,6 @@ const SignIn: FC = () => {
       onSuccess: (result) => {
          if (result.data) {
             console.log(result.data);
-            // localStorage.removeItem('currentEmail');
             addTokensToLS({
                accessToken: result.data.accessToken,
                refreshToken: result.data.refreshToken,

@@ -61,7 +61,7 @@ const SignUpForm: FC<Props> = ({
       formik.handleChange(event);
       formik.validateField('email');
 
-      const isEmailValid = !formik.errors.email;
+      const isEmailValid = formik.errors.email;
 
       if (isEmailValid) {
          setEmail(email);

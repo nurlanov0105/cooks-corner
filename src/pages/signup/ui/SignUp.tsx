@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { SignUpForm, emailAvailable, register } from '@/features/authentication';
 import { useMutation } from '@tanstack/react-query';
-import { BaseURL } from '@/shared/api/endpoints';
 import { addEmailToLS } from '@/shared/lib/helpers';
+import { SECONDARY_URL } from '@/shared/api/instance';
 
 const SignUp: FC = () => {
    const navigate = useNavigate();
@@ -27,7 +27,7 @@ const SignUp: FC = () => {
    });
 
    const handleRegister = (name: string, email: string, password: string) => {
-      const params = { name, email, password, url: BaseURL };
+      const params = { name, email, password, url: `${SECONDARY_URL}/confirm` };
 
       addEmailToLS(email);
       registerMutate.mutate(params);

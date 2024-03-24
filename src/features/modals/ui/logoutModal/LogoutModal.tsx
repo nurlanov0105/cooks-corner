@@ -8,11 +8,11 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { FC } from 'react';
 
-const LogoutModal = () => {
+const LogoutModal: FC = () => {
    const dispatch = useAppDispatch();
    const { refreshToken } = getTokensFromLS();
-   // const queryClient = useQueryClient();
    const navigate = useNavigate();
 
    const { mutate: logoutMutate, isPending } = useMutation({

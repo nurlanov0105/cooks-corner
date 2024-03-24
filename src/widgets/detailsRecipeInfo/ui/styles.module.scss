@@ -113,4 +113,17 @@
          color: $text-fedded;
       }
    }
+
+   @media (max-width: 600px) {
+      &__description {
+         p {
+            font-size: 14px;
+            line-height: auto;
+         }
+      }
+
+      &__item {
+         font-size: 14px;
+      }
+   }
 }

@@ -11,6 +11,8 @@ import { addProfileImg, getUser } from '@/entities/user';
 import { useAppDispatch } from '@/app/appStore';
 import { useAuth } from '@/shared/lib/hooks';
 
+import styles from './styles.module.scss';
+
 const DetailsRecipe: FC = () => {
    const { id } = useParams();
    const { isAuth } = useAuth();
@@ -38,8 +40,10 @@ const DetailsRecipe: FC = () => {
    ) : (
       <>
          <DetailsBackground imageUrl={data.imageUrl} />
-         <DetailsRecipeInfo {...data} isLoading={isLoading} id={id} />
-         <Comments recipeId={id!} />
+         <div className={styles.container}>
+            <DetailsRecipeInfo {...data} isLoading={isLoading} id={id} />
+            <Comments recipeId={Number(id)} />
+         </div>
       </>
    );
 };

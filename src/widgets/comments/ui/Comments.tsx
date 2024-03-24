@@ -16,9 +16,10 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/shared/lib/hooks';
 import { ICommentForm } from '@/shared/lib/types';
 import { showModal } from '@/widgets/modal';
+import { IComment } from '@/features/comments/model/types';
 
 interface Props {
-   recipeId: string;
+   recipeId: number;
 }
 
 const Comments: FC<Props> = ({ recipeId }) => {
@@ -31,7 +32,7 @@ const Comments: FC<Props> = ({ recipeId }) => {
 
    const { data, isLoading, isError, isSuccess } = useQuery({
       queryKey: [Tags.COMMENTS, recipeId, limit, totalPages, currentPage],
-      queryFn: () => getComments({ objectId: recipeId, size: limit, page: currentPage }),
+      queryFn: () => getComments({ objectId: Number(recipeId), size: limit, page: currentPage }),
    });
 
    const addCommentMutation = useMutation({
@@ -55,7 +56,7 @@ const Comments: FC<Props> = ({ recipeId }) => {
          dispatch(showModal('NotAuthNotice'));
          return;
       }
-      const newComment = { objectId: recipeId, text: commentValue, isReply: false };
+      const newComment = { objectId: Number(recipeId), text: commentValue, isReply: false };
       addCommentMutation.mutate(newComment);
    };
 
@@ -103,7 +104,7 @@ const Comments: FC<Props> = ({ recipeId }) => {
          <div className={styles.comments__container}>
             {isError ? <h2>Error</h2> : isLoading && <h2>Loading...</h2>}
             {isSuccess &&
-               data?.content?.map((comment: any) => (
+               data?.content?.map((comment: IComment) => (
                   <Comment key={comment.commentId} {...comment} />
                ))}
             <div className={styles.comments__pagination}>

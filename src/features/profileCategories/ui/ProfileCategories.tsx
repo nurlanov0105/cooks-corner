@@ -2,17 +2,7 @@ import { FC } from 'react';
 
 import classNames from 'classnames';
 import styles from './styles.module.scss';
-
-const categories = [
-   {
-      name: 'My recipe',
-      endpointName: 'my',
-   },
-   {
-      name: 'Saved recipe',
-      endpointName: 'saved',
-   },
-];
+import { ProfilecategoryTabs } from '@/shared/lib/consts';
 
 interface Props {
    value: string;
@@ -26,7 +16,7 @@ const ProfileCategories: FC<Props> = ({ value, onClickCategory }) => {
 
    return (
       <div className={styles.categories}>
-         {categories.map((category) => (
+         {ProfilecategoryTabs.map((category) => (
             <button
                onClick={() => onClick(category.endpointName)}
                className={classNames(

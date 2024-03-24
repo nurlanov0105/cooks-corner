@@ -26,6 +26,8 @@
       border: 1px solid $text-fedded;
       resize: none;
 
+      background-color: transparent;
+
       @include transition;
 
       &:focus,
@@ -40,6 +42,10 @@
       align-items: center;
       justify-content: space-between;
       padding-left: 10px;
+      column-gap: 15px;
+      h3 {
+         flex-shrink: 0;
+      }
    }
 
    &__auth {
@@ -62,5 +68,9 @@
    &__pagination {
       display: flex;
       justify-content: center;
+   }
+
+   @media (max-width: 600px) {
+      font-size: 14px;
    }
 }

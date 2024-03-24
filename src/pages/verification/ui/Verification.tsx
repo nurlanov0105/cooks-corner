@@ -5,7 +5,7 @@ import { VerifyBlock } from '@/features/verifyBlock';
 import { getEmailFromLS } from '@/shared/lib/helpers';
 import { resendEmail } from '@/features/authentication';
 import { useMutation } from '@tanstack/react-query';
-import { BaseURL } from '@/shared/api/endpoints';
+import { SECONDARY_URL } from '@/shared/api/instance';
 
 const Verification: FC = () => {
    const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ const Verification: FC = () => {
 
    const handelResendConfirmation = async () => {
       const { email } = getEmailFromLS();
-      const params = { email, url: BaseURL };
+      const params = { email, url: `${SECONDARY_URL}/confirm` };
 
       resendEmailMutate.mutate(params);
    };

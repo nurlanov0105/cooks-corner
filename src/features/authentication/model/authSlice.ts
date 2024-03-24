@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getTokensFromLS } from '@/shared/lib/helpers';
 import { getUserInfoFomLS } from '@/shared/lib/helpers/getUserInfoFomLS';
+import { IAuthState } from './types';
 
 const { accessToken } = getTokensFromLS();
 const { userId, name } = getUserInfoFomLS();
 
-const initialState = {
+const initialState: IAuthState = {
    accessToken: accessToken,
    userInfo: { userId, name },
 };
@@ -24,8 +25,8 @@ const authSlice = createSlice({
          state.userInfo.userId = action.payload.userId;
       },
       removeUserInfo(state) {
-         state.userInfo.name = '';
-         state.userInfo.userId = '';
+         state.userInfo.name = null;
+         state.userInfo.userId = null;
       },
    },
 });

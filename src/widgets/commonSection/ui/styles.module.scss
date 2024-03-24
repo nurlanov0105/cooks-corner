@@ -7,8 +7,17 @@
    justify-content: center;
 
    background-color: $primary-color;
+   padding: 0 16px;
 
    h1 {
       text-align: center;
+
+      @media (max-width: 600px) {
+         text-align: left;
+      }
+   }
+
+   @media (max-width: 390px) {
+      justify-content: start;
    }
 }

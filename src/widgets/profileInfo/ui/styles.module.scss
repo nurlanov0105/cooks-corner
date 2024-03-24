@@ -20,6 +20,10 @@
       background-repeat: no-repeat;
    }
 
+   &__imgMobile {
+      display: none;
+   }
+
    &__body {
       display: flex;
       flex-direction: column;
@@ -73,6 +77,51 @@
 
       span {
          color: $primary-color !important;
+      }
+   }
+
+   @media (max-width: 1024px) {
+      &__img {
+         display: none;
+         background-color: #fff;
+      }
+
+      &__imgMobile {
+         display: block;
+         flex-shrink: 0;
+
+         width: 88px;
+         height: 88px;
+         border-radius: 50%;
+         overflow: hidden;
+
+         background-color: $white-color;
+         background-position: center;
+         background-size: cover;
+         background-repeat: no-repeat;
+      }
+   }
+
+   @media (max-width: 600px) {
+      &__imgMobile {
+         margin-right: 5px;
+      }
+      &__social {
+         column-gap: 17px;
+      }
+   }
+
+   @media (max-width: 392px) {
+      flex-direction: column;
+      row-gap: 20px;
+      &__img {
+         display: block;
+
+         width: 88px;
+         height: 88px;
+      }
+      &__imgMobile {
+         display: none;
       }
    }
 }

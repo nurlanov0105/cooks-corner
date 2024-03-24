@@ -5,6 +5,7 @@
    &__img {
       width: 4rem;
       height: 4rem;
+      flex-shrink: 0;
       background-color: $bg-input;
       background-position: center;
       background-size: cover;
@@ -296,6 +297,22 @@
       &:active {
          background-color: $primary-color;
          color: $grey-light;
+      }
+   }
+
+   @media (max-width: 1024px) {
+      &__list {
+         background-color: $white-color;
+      }
+   }
+
+   @media (max-width: 600px) {
+      &__span {
+         font-size: 12px;
+      }
+
+      &__text {
+         font-size: 14px;
       }
    }
 }
