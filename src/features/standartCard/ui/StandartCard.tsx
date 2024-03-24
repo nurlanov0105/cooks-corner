@@ -118,7 +118,9 @@ const StandartCard: FC<Props> = ({
             to={`/details-recipe/${recipeId}`}
             className={styles.card__img}
             style={{ backgroundImage: `url(${imageUrl})` }}></Link>
-         <h4 className={styles.card__title}>{title}</h4>
+         <Link to={`/details-recipe/${recipeId}`} className={styles.card__title}>
+            {title}
+         </Link>
          <Link to={`/details-recipe/${recipeId}`} className={styles.card__author}>
             by {author}
          </Link>
