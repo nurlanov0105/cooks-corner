@@ -92,7 +92,7 @@ const RecipeCard: FC<Props> = ({
    };
 
    const handleBookmarkClick = () => {
-      if (isAuth) {
+      if (!isAuth) {
          dispatch(showModal('NotAuthNotice'));
          return;
       }
