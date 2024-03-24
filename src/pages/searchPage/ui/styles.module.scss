@@ -82,4 +82,10 @@
          justify-content: center;
       }
    }
+
+   @media (max-width: 600px) {
+      &__btn {
+         width: 100%;
+      }
+   }
 }
