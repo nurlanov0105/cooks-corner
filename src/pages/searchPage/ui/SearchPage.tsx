@@ -94,7 +94,7 @@ const SearchPage: FC = () => {
          </div>
 
          <div className={styles.search__input}>
-            {category === 'Chefs' ? <Search type={category} /> : <Search type={category} />}
+            <Search type={category} />
          </div>
          <p className={styles.search__result}>Search results</p>
 

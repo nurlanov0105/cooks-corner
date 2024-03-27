@@ -68,6 +68,10 @@
       &:active {
          outline: none;
       }
+      &_active {
+         border: 1px solid $primary-color;
+         background-color: transparent;
+      }
    }
 
    &__fileUpload {

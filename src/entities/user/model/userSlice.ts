@@ -31,6 +31,7 @@ const userSlice = createSlice({
 
       addProfileData(state, action) {
          const { name, bio } = action.payload;
+
          state.profileData.name = name;
          state.profileData.bio = bio;
       },

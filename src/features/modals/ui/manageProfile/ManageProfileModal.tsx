@@ -13,7 +13,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateProfile } from '@/entities/user';
 import { Tags } from '@/shared/api';
 
-const ManageProfileModal: FC = () => {
+interface Props {
+   data: any;
+}
+
+const ManageProfileModal: FC<Props> = () => {
    const queryClient = useQueryClient();
 
    const dispatch = useAppDispatch();
@@ -22,7 +26,7 @@ const ManageProfileModal: FC = () => {
    const [image, setImage] = useState(cameraIcon);
    const [label, setLabel] = useState('Upload a new photo');
    // @ts-ignore
-   const userId = useAppSelector((state) => state.auth.userId);
+   const { userId } = useAppSelector((state) => state.auth.userInfo);
 
    const { mutate: updateProfileMutate } = useMutation({
       mutationFn: (formData: any) => updateProfile(formData),
@@ -50,19 +54,19 @@ const ManageProfileModal: FC = () => {
 
    const formik = useFormik({
       initialValues: {
-         name: '',
-         bio: '',
+         name: profileData.name ? profileData.name : '',
+         bio: profileData.bio ? profileData.bio : '',
          photo: null,
       },
       validationSchema: profileValidationSchema,
       onSubmit: (values) => {
          const { name, bio, photo } = values;
-         // Создайте новый объект для отправки на сервер
+         // новый объект для отправки на сервер
          const fields: any = { userId };
 
          // Добавьте только те поля, которые были изменены
-         name ? (fields.name = name) : (fields.name = profileData.name);
-         bio ? (fields.bio = bio) : (fields.bio = profileData.bio);
+         fields.name = name ? name : profileData.name;
+         fields.bio = bio ? bio : profileData.bio;
 
          const formData = new FormData();
          formData.append('dto', JSON.stringify(fields));
@@ -102,9 +106,11 @@ const ManageProfileModal: FC = () => {
                </label>
                <textarea
                   id='bio'
-                  className={styles.form__textarea}
-                  {...formik.getFieldProps('bio')}
-               />
+                  className={classNames(
+                     styles.form__textarea,
+                     formik.values.bio && styles.form__textarea_active
+                  )}
+                  {...formik.getFieldProps('bio')}></textarea>
             </div>
 
             <div className={styles.form__inputGroup}>

@@ -37,6 +37,7 @@ const ProfileInfo: FC<Props> = ({
    const dispatch = useAppDispatch();
 
    const handleManageProfile = () => {
+      console.log(name, bio);
       dispatch(addProfileData({ name, bio }));
       dispatch(showModal('ManageProfileModal'));
    };
